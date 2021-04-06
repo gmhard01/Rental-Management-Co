@@ -140,11 +140,6 @@ select * from users;
 select * from addresses;
 select * from properties;
 select * from lease_agreements;
-
-update users SET user_role = 'landlord' where user_id = 1;
-update users SET user_role = 'tenant' where user_id = 2;
 update users SET user_role = 'maintenance' where user_id = 3;
+SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code FROM properties JOIN addresses ON properties.address_id = addresses.address_id;
 */
-
-
-
