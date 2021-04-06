@@ -84,7 +84,7 @@ export default {
   font-size: 20px;
   height: 20%;
   margin-left: 0px;
-  width: 300px;
+  width: 18rem;
 }
 
 .navList {
@@ -133,5 +133,42 @@ a:hover {
 .myAccount img {
   width: 40px;
   margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 60em){
+  .topnav {
+  padding-top: 1rem;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchBar {
+  font-size: 20px;
+  height: 20%;
+  margin-left: 0px;
+  width: 13rem;
+}
+
+.rightSide a{
+  font-size: 10px;
+  align-content: center;
+  padding: .3rem;
+}
+
+.logo {
+  width: 60px;
+  padding-right: 1rem;
+}
+.myAccount{
+  width: 20px;
+}
+.title{
+  display:none;
+}
+
+.signInText{
+  display:none;
+}
 }
 </style>

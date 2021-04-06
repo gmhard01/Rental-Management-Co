@@ -55,9 +55,10 @@ export default {
   }};
 </script>
 <style scoped>
-#propertyTileId {
-  margin-top: 7.5rem; 
+#headerBarId {
+  left: 0rem;
 }
-
-
+#propertyTileId {
+  margin-top: 8.5rem; 
+}
 </style>

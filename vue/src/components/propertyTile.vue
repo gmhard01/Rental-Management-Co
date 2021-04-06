@@ -4,40 +4,62 @@
       <div class="grid">
         <div class="gridItem">
           <div class="card">
-            <img class="cardImg" src="@/assets/rmc.png" alt="Property Picture" />
+            <img class="cardImg" src="@/assets/LibertyCrossing1.jpg" alt="Property Picture" />
             <div class="titleAndDetails">
-              <h1 class="cardHeader">Title of Card</h1>
+              <p>Available (date)</p>
+              <h1 class="cardHeader">The Apartment</h1>
+              <p>500 Demo St, City, OH, 43123</p>
               <p class="cardDetails">
-                This is where the card details will go
+                Lorem ut dolor in reLorem ut dolor in reLorem ut dolor in reLorem ut dolor in reLorem ut dolor in re
               </p>
-            </div>
               <ul>
-                <li>Price: </li>
-                <li>Address: </li>
-                <li>Bedrooms: </li>
-                <li>Bathrooms: </li>
-                <li>Contact Landlord: </li>
+                <li>$(rent amount goes here) </li>
+                <li>(#) Bedroom<span>s</span> | (#) Bathroom<span>s</span></li>
+                <li>(Phone Number)</li>
               </ul>
+            </div>
           </div>  
         </div>
       </div>
       <div class="grid">
         <div class="gridItem">
           <div class="card">
-            <img class="cardImg" src="@/assets/rmc.png" alt="Property Picture" />
+            <img class="cardImg" src="@/assets/2ndApartment.jpg" alt="Property Picture" />
             <div class="titleAndDetails">
-              <h1 class="cardHeader">Title of Card</h1>
+              <p>Available (date)</p>
+              <h1 class="cardHeader">Dublin View Apartments</h1>
+              <p>500 Demo St, City, OH, 43123</p>
               <p class="cardDetails">
-                This is where the card details will go
+                Lorem it enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
               </p>
-            </div>
               <ul>
-                <li>Price: </li>
-                <li>Address: </li>
-                <li>Bedrooms: </li>
-                <li>Bathrooms: </li>
-                <li>Contact Landlord: </li>
+                <li>$(rent amount goes here) </li>
+                <li>(#) Bedroom<span>s</span></li>
+                <li>(#) Bathroom<span>s</span></li>
+                <li>(Phone Number)</li>
               </ul>
+            </div>
+          </div>  
+        </div>
+      </div>
+      <div class="grid">
+        <div class="gridItem">
+          <div class="card">
+            <img class="cardImg" src="@/assets/PoolApartment.jpg" alt="Property Picture" />
+            <div class="titleAndDetails">
+              <p>Available (date)</p>
+              <h1 class="cardHeader">Idaho Homes</h1>
+              <p>500 Demo St, City, OH, 43123</p>
+              <p class="cardDetails">
+                Lorem ut dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+              <ul>
+                <li>$(rent amount goes here) </li>
+                <li>(#) Bedroom<span>s</span></li>
+                <li>(#) Bathroom<span>s</span></li>
+                <li>(Phone Number)</li>
+              </ul>
+            </div>
           </div>  
         </div>
       </div>
@@ -91,20 +113,15 @@ export default {
 
 <style>
 
-.cardImg {
-  display: block;
-  width: 25rem;
-  height: 20rem;
-  object-fit: cover;
-}
-
 .card {
   display: flex;
   align-items: center;
+  height: 19rem;
 }
 
 .gridHolder {
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
+  font-size: .9rem;
   display: flex;
   color: #808080;
   flex-direction: column;
@@ -114,90 +131,76 @@ export default {
 
 .gridItem {
   background-color: #fff;
-  border-radius: 0.4rem;
+  border-radius: 1.5rem;
   overflow: hidden;
   box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.589);
   cursor: pointer;
-  transition: 0.2s;
   margin-bottom: .5rem;
 }
 
-.titleAndDetails {
-  padding: 3rem;
-}
-/*
-.grid-border {
-  box-sizing: border-box;
-  font-size: 62.5%;
-  margin: 0;
-  padding: 0;
-}
-
-.gridHolder {
-  background-color: #eee;
-  font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.grid {
-  display: grid;
-  width: 144em;
-  grid-gap: 6rem;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  align-items: start;
-}
-
-.gridItem {
-  background-color: #fff;
-  border-radius: 0.4rem;
-  overflow: hidden;
-  box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.gridItem:hover {
-  transform: translateY(-.05%);
-  box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.5);
-}
-
-.card-img {
+.cardImg {
   display: block;
-  width: 100%;
-  height: 20rem;
+  width: 25rem;
+  height: 25rem;
   object-fit: cover;
 }
 
 .titleAndDetails {
-  padding: 3rem;
+  padding: 2rem;
 }
 
 .cardHeader{
-  font-size: 3rem;
-  font-weight: 500;
+  font-size: 2rem;
+  font-weight: bold;
   color: #0d0d0d;
-  margin-bottom: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+ul {
+  margin: 0;
+  padding-left: 0px;
+  list-style-type: none;
+}
+li{
+  margin-bottom: .3rem;
 }
 
 .cardDetails {
-  font-size: 1.6rem;
-  letter-spacing: 0.1rem;
-  line-height: 1.7;
-  color: #3d3d3d;
-  margin-bottom: 2.5rem;
+     max-height: 3rem;
+     overflow: hidden;
+}
+@media only screen and (max-width: 60em){
+.cardImg {
+  width: 10rem;
+  height: 10rem;
 }
 
-@media only screen and (max-width: 60em) {
-  body {
-    padding: 3rem;
-  }
+.card {
+  display: flex;
+  align-items: center;
+  height: 10rem;
+}
 
-  .grid {
-    grid-gap: 3rem;
-  }
-}*/
+.gridHolder {
+  font-size: .4rem;
+}
+
+.cardHeader{
+  font-size: .6rem;
+  margin-bottom: .1rem;
+}
+
+.cardDetails {
+     max-height: 2.8rem;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+.titleAndDetails{
+  padding-left: 1rem;
+}
+li{
+  margin-bottom: .1rem;
+}
+}
 </style>
