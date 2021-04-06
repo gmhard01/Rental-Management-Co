@@ -140,9 +140,11 @@ select * from users;
 select * from addresses;
 select * from properties;
 select * from lease_agreements;
-<<<<<<< HEAD
+
 update users SET user_role = 'landlord' where user_id = 1;
 update users SET user_role = 'tenant' where user_id = 2;
 update users SET user_role = 'maintenance' where user_id = 3;
 */
+
+
 
