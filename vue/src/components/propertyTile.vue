@@ -173,32 +173,36 @@ li{
 @media only screen and (max-width: 60em){
 .cardImg {
   width: 10rem;
-  height: 10rem;
+  height: 13rem;
 }
 
 .card {
   display: flex;
   align-items: center;
-  height: 10rem;
+  height: 13rem;
 }
 
 .gridHolder {
-  font-size: .4rem;
+  font-size: .5rem;
 }
 
 .cardHeader{
-  font-size: .6rem;
+  font-size: .65rem;
   margin-bottom: .1rem;
 }
 
 .cardDetails {
-     max-height: 2.8rem;
+     max-height: 5rem;
      overflow: hidden;
      text-overflow: ellipsis;
 }
+
 .titleAndDetails{
+  padding: .5rem;
   padding-left: 1rem;
+  padding-right: .8rem;
 }
+
 li{
   margin-bottom: .1rem;
 }
