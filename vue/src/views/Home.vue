@@ -1,17 +1,19 @@
 <template>
   <div class="home">
-    <headerBar />
-    <div v-for="propertyid in propertylist" v-bind:key="propertyid">
-    <propertyTile v-bind:property-id="propertyid"/>
-    </div>
-    <p>You must be authenticated to see this</p>
+    <headerBar id="headerBarId" />
+    <propertyTile id="propertyTileId" />
+    <body>
+      <div v-for="propertyid in propertylist" v-bind:key="propertyid">
+        <propertyTile v-bind:property-id="propertyid" />
+      </div>
+    </body>  
   </div>
 </template>
 
 <script>
 import headerBar from '@/components/headerBar.vue';
 import propertyTile from '@/components/propertyTile.vue';
-import PropService from '../services/PropService';
+import PropService from '@/services/PropService';
 
 export default {
   name: "home",
@@ -25,7 +27,7 @@ export default {
     headerBar,
     propertyTile
   },
-    /*created(){
+  /*created(){
       PropService.getPropertyList(
     ).then((resp) => {
       this.prop = resp;
@@ -52,3 +54,11 @@ export default {
     }
   }};
 </script>
+<style scoped>
+#headerBarId {
+  left: 0rem;
+}
+#propertyTileId {
+  margin-top: 8.5rem; 
+}
+</style>

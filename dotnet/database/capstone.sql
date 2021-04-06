@@ -32,10 +32,10 @@ CREATE TABLE properties (
 	number_beds int NOT NULL,
 	number_baths decimal(2,1) NOT NULL,
 	landlord_id int NOT NULL,
-	picture varchar (200),
+	picture nvarchar (500),
 	available bit NOT NULL,
 	available_date date,
-	property_description varchar(200)
+	property_description varchar(500)
 
 	CONSTRAINT PK_properties PRIMARY KEY (property_id)
 );
@@ -101,29 +101,48 @@ ALTER TABLE maintenance_requests ADD CONSTRAINT FK_maintenance_requester FOREIGN
 ALTER TABLE maintenance_requests ADD CONSTRAINT FK_maintenance_worker FOREIGN KEY (maintenance_worker_id) REFERENCES users(user_id);
 
 --create some starting data
+INSERT INTO users (username, password_hash, salt, user_role)
+VALUES ('rob', 'awzu8FzAwNmohJQ/+4NN/EonuYI=', 'etTD0ZEyYfA=', 'landlord'),
+	   ('eli', 'atwatjrvNvyzY07Gbn7gW7JQ+VU=', '3PeFjitagfk=', 'tenant');
+
 INSERT INTO addresses (street_number, unit_number, street_name, state_abbreviation, city, county, zip_code)
 VALUES (6505, 2, 'Hasler Ln', 'OH', 'Cincinnati', NULL, '45216'),
 	   (72, NULL, 'Stacy Ln', 'KY', 'Ft. Thomas', NULL, '41075'),
 	   (3149, 4, 'Auten Ave', 'OH', 'Cincinnati', NULL, '45213'),
 	   (407, NULL, 'Amherst Ave', 'OH', 'Terrace Park', NULL, '45174'),
-	   (7862, NULL, 'Martin St', 'OH', 'Cincinnati', NULL, '45231');
+	   (7862, NULL, 'Martin St', 'OH', 'Cincinnati', NULL, '45231'),
+	   (3459, NULL, 'Golf Club Ln', 'TN', 'Nashville', 'Davidson', '37215'),
+	   (603, NULL, 'Shadow Glen Dr', 'TN', 'Madison', 'Davidson', '37115')
 
 INSERT INTO properties (title, address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description)
 VALUES ('Hasler Ln Apartment', 1, 900.00, 3, 2, 1, NULL, 1, NULL, 'sweet apartment in cincy'),
 	   ('House on Stavey Lane!', 2, 1200.00, 2, 1.5, 1, NULL, 1, NULL, 'it is a house'),
 	   ('Auten Ave Apartment', 3, 1100.50, 4, 2.5, 1, NULL, 0, '2021-05-01', 'a swanky apartment for all your apartment needs'),
 	   ('House on Amherst', 4, 950.00, 2, 1, 1, NULL, 0, '2021-06-01', 'the nicest house in Terrace Park'),
-	   ('Super nice house in Cincy!', 5, 1400, 4, 3, 1, NULL, 1, NULL, 'house on martin st in cincinnati');
+	   ('Super nice house in Cincy!', 5, 1400, 4, 3, 1, NULL, 1, NULL, 'house on martin st in cincinnati'),
+	   ('Cozy Townhome Near Green Hills Mall!', 6, 1500, 2, 2.5, 1, 'https://i0.wp.com/movingtips.wpengine.com/wp-content/uploads/2020/08/new-townhouse.jpg?fit=1024%2C684&ssl=1', 1, '2021-05-15', 'Great 2 bedroom, 2.5 bathroom townhome! This unit is located just minutes from Green Hills Mall, The YMCA, and tons of restaurants. Inside features a corner fireplace, decorative columns, spacious living room and dining room, and a laundry area!'),
+	   ('Townhome in Madison!', 7, 1180, 2, 2.5, 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkO51xqEzdC0FzdlyZ6Zw4E2LwIehmtSBQOw&usqp=CAU', 1, NULL, 'Two Bedroom, 21/2 bath townhouse available immediately. In-suite bathrooms in both bedrooms, laminate flooring throughout, stainless steel appliances and granite counter tops. Washer/Dryer included! Soaker bath tub. Pets are possible with approval and a non-refundable pet fee.')
 
 INSERT INTO lease_agreements (property_id, landlord_id, renter_id, monthly_rent, lease_start_date, lease_end_date)
 VALUES (102, 1, 2, 1100.50, '2020-01-01', '2021-12-31');
+
+/*
+ALTER TABLE properties NOCHECK CONSTRAINT FK_property_address;
+ALTER TABLE lease_agreements NOCHECK CONSTRAINT FK_lease_property;
+DELETE FROM addresses;
+DELETE FROM properties;
+ALTER TABLE properties CHECK CONSTRAINT FK_property_address;
+ALTER TABLE lease_agreements CHECK CONSTRAINT FK_lease_property;
+*/
 
 /*
 select * from users;
 select * from addresses;
 select * from properties;
 select * from lease_agreements;
+<<<<<<< HEAD
 update users SET user_role = 'landlord' where user_id = 1;
 update users SET user_role = 'tenant' where user_id = 2;
 update users SET user_role = 'maintenance' where user_id = 3;
 */
+
