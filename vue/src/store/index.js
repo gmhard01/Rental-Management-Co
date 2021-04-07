@@ -19,9 +19,31 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
-    user: currentUser || {}
+    user: currentUser || {},
+    filter: 0,
+    currentIndex: 0,
+    properties: [],
   },
   mutations: {
+    SET_PROPERTIES(state, propertyArray){
+      state.properties = propertyArray;
+    },
+    GET_PROPERTIES(state){
+      return state.properties;
+    },
+    GET_PROPERTY(state, propId){
+      return state.properties.find(element => element.propertyId == propId);
+    },
+    GET_NEXT_PROPERTY_LIST(state, startingIndex = state.currentIndex, amountToRetreive){
+      let start = startingIndex;
+      let finish = amountToRetreive;
+      if(start + finish >= state.properties.length){
+        finish = state.properties.length - start;
+      }
+      let newPropertyArray = state.properties.slice(start, (start + finish));
+      state.currentIndex += finish;
+      return newPropertyArray;
+    },
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
       localStorage.setItem('token', token);

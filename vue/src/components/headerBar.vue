@@ -49,7 +49,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .leftSide{
@@ -85,6 +85,8 @@ export default {
   height: 20%;
   margin-left: 0px;
   width: 18rem;
+  border-radius: .5rem;
+  border: 2px solid #9bbdd3;
 }
 
 .navList {

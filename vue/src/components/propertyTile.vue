@@ -1,7 +1,7 @@
 <template>
   <div class="grid-border">
     <body class=gridHolder>
-      <div class="grid">
+      <!--<div class="grid">
         <div class="gridItem">
           <div class="card">
             <img class="cardImg" src="@/assets/LibertyCrossing1.jpg" alt="Property Picture" />
@@ -62,52 +62,55 @@
             </div>
           </div>  
         </div>
+      </div> -->
+      <div class="grid">
+        <div class="gridItem">
+          <div class="card">
+            <img class="cardImg" v-bind:src="imageGiven" alt="Property Picture" />
+            <div class="titleAndDetails">
+              <p>Available (date)</p>
+              <h1 class="cardHeader">{{property.title}}</h1>
+              <p>{{address}}</p>
+              <p class="cardDetails">
+                {{property.propertyDescription}}
+              </p>
+              <ul>
+                <li>${{property.rentAmount}} </li>
+                <li>{{property.numberOfBeds}} Bedroom<span>s</span></li>
+                <li>{{property.numberOfBaths}} Bathroom<span>s</span></li>
+                <li>555-555-5555</li>
+              </ul>
+            </div>
+          </div>  
+        </div>
       </div>
-      <!--<h1>{{property.title}}</h1>
-      <p>{{property.address}}</p>
-      <span><img v-bind:src='property.picture' alt="Picture of current property listing" /></span>
-      <span>
-        <ul>
-          <li>{{property.price}}</li>
-          <li>{{property.numBedrooms}}</li>
-          <li>{{property.details}}</li>
-          <li>{{property.phone}}</li>      
-        </ul>
-      </span>-->
     </body>
   </div>
 </template>
 
 <script>
-/*import PropService from '../services/PropService.js';*/
 
 export default {
     name: "propertyTile",
-    props: ['propertyId'],
+    props: ['property'],
     data() {
       return {
-        property: {
-          title: '',
-          address: '',
-          price: 0,
-          numBedrooms: 0,
-          details: '',
-          phone: '',
-          picture: ''
+        address: `${this.property.streetNumber} ${this.property.streetName} ${this.property.city} ${this.property.state}`,
+      }
+      },
+    computed: {
+      propertyobject() {
+        return this.$store.state.properties.find((property) => {property.propertyId == this.propertyTile})
+        },
+      imageGiven() {
+        if(this.property.picture == ""){
+          return require("@/assets/No_Image_Available.jpg");
+        }
+        else{
+          return this.property.picture;
         }
       }
-    },
-  /*created(){
-    PropService.getProperty(parseInt(this.propertyId)).then( (response) => {
-        this.property.title = response.data.title;
-        this.property.address = response.data.address;
-        this.property.price = parseInt(response.data.price);
-        this.property.numBedrooms = parseInt(response.data.numBedrooms);
-        this.property.details = response.data.details;
-        this.property.phone = response.data.phone;
-        this.property.picture = response.data.picture;
-      })
-    }*/
+    }
   }
 </script>
 
@@ -119,7 +122,7 @@ export default {
   height: 19rem;
 }
 
-.gridHolder {
+/*.gridHolder {
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
   font-size: .9rem;
   display: flex;
@@ -127,7 +130,7 @@ export default {
   flex-direction: column;
   padding: 0rem;
   min-height: 100vh;
-}
+}*/
 
 .gridItem {
   background-color: #fff;
