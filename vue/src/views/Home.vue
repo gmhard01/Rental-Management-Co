@@ -6,7 +6,7 @@
       </header>
     <div class=gridHolder>
       <main id="propertyTileId">
-      <div v-for="property in propertylist" v-bind:key="property.propertyId">
+      <div v-for="property in slicedArray" v-bind:key="property.propertyId">
         <propertyTile v-bind:property="property" />
       </div>
       </main>
@@ -43,11 +43,27 @@ export default {
     propertylist(){
       return this.$store.state.properties;
     },
+    slicedArray(){
+      let previousIndex = 0;
+      let newIndex = 7;
+      
+      if (this.propertylist.length <= newIndex){
+        newIndex = this.propertylist.length;
+      }
+
+      if (this.propertylist.length <= previousIndex){
+        previousIndex = 0;
+        newIndex = 1;
+      }
+
+      return this.propertylist.slice(previousIndex, newIndex);
+    },
   },
   methods: {
     next(indexNum = 0){
       let startingTileIndex = indexNum + 1;
       this.$router.push({name: "available-properties", params: {page: startingTileIndex}});
+      window.scrollTo(0, 0);      
     },
     previous(){
       this.startingTileIndex -=15;
