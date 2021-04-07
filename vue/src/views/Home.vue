@@ -65,7 +65,7 @@ export default {
   left: 0rem;
 }
 #propertyTileId {
-  margin-top: 8.5rem; 
+  margin-top: 8rem; 
 }
 .gridHolder {
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
@@ -84,5 +84,12 @@ export default {
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 60em){
+ .ArrowBtn {
+   width: 3rem;
+   padding-top: .5rem;
+ } 
 }
 </style>

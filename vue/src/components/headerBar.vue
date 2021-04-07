@@ -4,7 +4,7 @@
       <div class="leftSide">
         <div class="logoWithTitle">
           <a href="#">
-            <img src="@/assets/rmc.png" alt="Company Logo" class="logo" />
+            <router-link :to="{ name: 'home' }"><img src="@/assets/rmc.png" alt="Company Logo" class="logo" /></router-link>
           </a>
           <div class="title">Rental Management Co.</div>
         </div>
@@ -12,17 +12,17 @@
       </div>
       <div class="rightSide">
         <ul class="navList">
-          <li><router-link v-bind:to="{ name: 'home' }">Home</router-link></li>
+          <li><router-link :to="{ name: 'home' }">Home</router-link></li>
           <li>|</li>
           <li><a href="#">My Apartments</a></li>
           <li>|</li>
           <li><a href="#">Maintanance Requests</a></li>
         </ul>
         <div class="signIn">
-          <a href="#" class="myAccount"
+          <router-link :to="{ name: 'login' }" class="myAccount"
             ><img src="@/assets/user-circle-solid.png"
-          /></a>
-          <a href="#" class="signInText">Sign In</a>
+          /></router-link>
+          <router-link :to="{ name: 'login' }" class="signInText">Sign In</router-link>
         </div>
       </div>
     </header>
@@ -77,7 +77,7 @@ export default {
   padding-right: 5px;
 }
 .logo {
-  width: 80px;
+  width: 6rem;
 }
 
 .searchBar {
@@ -138,7 +138,7 @@ a:hover {
 }
 
 @media only screen and (max-width: 60em){
-  .topnav {
+.topnav {
   padding-top: 1rem;
   padding-bottom: 0;
   display: flex;
@@ -162,9 +162,11 @@ a:hover {
   width: 60px;
   padding-right: 1rem;
 }
+
 .myAccount{
   width: 20px;
 }
+
 .title{
   display:none;
 }
