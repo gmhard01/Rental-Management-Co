@@ -26,7 +26,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code FROM properties JOIN addresses ON properties.address_id = addresses.address_id;";
+                    string sqlString = "SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email FROM properties  JOIN addresses ON properties.address_id = addresses.address_id JOIN users ON properties.landlord_id = users.user_id WHERE available = 1;";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -44,16 +44,21 @@ namespace Capstone.DAO
                             Picture = Convert.ToString(reader["picture"]),
                             Available = Convert.ToBoolean(reader["available"]),
                             //available date may be null in the DB, if it is then set to default datetime (0001-01-01)
-                            AvailableDate =(reader["available_date"] == DBNull.Value) ? default(DateTime) : Convert.ToDateTime(reader["available_date"]),
+                            AvailableDate = (reader["available_date"] == DBNull.Value) ? default(DateTime) : Convert.ToDateTime(reader["available_date"]),
                             PropertyDescription = Convert.ToString(reader["property_description"]),
+                            SquareFeet = (reader["square_footage"] == DBNull.Value) ? -1 : Convert.ToInt32(reader["square_footage"]),
+                            PropertyType = Convert.ToString(reader["property_type"]),
+                            PetsAllowed = (reader["pets_allowed"] == DBNull.Value) ? false : Convert.ToBoolean(reader["pets_allowed"]),
                             StreetNumber = Convert.ToInt32(reader["street_number"]),
                             //unit number may be null in the DB, if so set to -1
-                            UnitNumber = (reader["unit_number"] == DBNull.Value) ? -1 : Convert.ToInt32(reader["unit_number"]),
+                            UnitNumber = (reader["unit_number"] == DBNull.Value) ? "-1" : Convert.ToString(reader["unit_number"]),
                             StreetName = Convert.ToString(reader["street_name"]),
                             State = Convert.ToString(reader["state_abbreviation"]),
                             City = Convert.ToString(reader["city"]),
                             County = Convert.ToString(reader["county"]),
-                            ZipCode = Convert.ToString(reader["zip_code"])
+                            ZipCode = Convert.ToString(reader["zip_code"]),
+                            ContactPhone = Convert.ToString(reader["phone"]),
+                            ContactEmail = Convert.ToString(reader["email"])
                         };
 
                         propertyList.Add(p);
