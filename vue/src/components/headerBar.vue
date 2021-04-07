@@ -138,7 +138,7 @@ a:hover {
 }
 
 @media only screen and (max-width: 60em){
-  .topnav {
+.topnav {
   padding-top: 1rem;
   padding-bottom: 0;
   display: flex;
@@ -162,9 +162,11 @@ a:hover {
   width: 60px;
   padding-right: 1rem;
 }
+
 .myAccount{
   width: 20px;
 }
+
 .title{
   display:none;
 }

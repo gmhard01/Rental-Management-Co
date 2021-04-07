@@ -85,4 +85,11 @@ export default {
   margin-right: auto;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 60em){
+ .ArrowBtn {
+   width: 3rem;
+   padding-top: .5rem;
+ } 
+}
 </style>
