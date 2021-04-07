@@ -1,16 +1,17 @@
 <template>
   <div class="home">
     <body>
-    <div class=gridHolder>
       <header>
-    <headerBar id="headerBarId" />
+        <headerBar id="headerBarId" />
       </header>
+    <div class=gridHolder>
       <main id="propertyTileId">
       <div v-for="property in propertylist" v-bind:key="property.propertyId">
         <propertyTile v-bind:property="property" />
       </div>
       </main>
-    </div> 
+    </div>
+    <img src="@/assets/DownArrow.png" alt="Next Arrow" class="ArrowBtn" />
     </body>
   </div>
 </template>
@@ -74,5 +75,21 @@ export default {
   flex-direction: column;
   padding: 0rem;
   min-height: 100vh;
+}
+
+.ArrowBtn {
+  width: 5rem;
+  display: block;
+  padding-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 60em){
+ .ArrowBtn {
+   width: 3rem;
+   padding-top: .5rem;
+ } 
 }
 </style>
