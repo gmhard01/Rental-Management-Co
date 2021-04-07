@@ -68,7 +68,7 @@
           <div class="card">
             <img class="cardImg" v-bind:src="imageGiven" alt="Property Picture" />
             <div class="titleAndDetails">
-              <p>Available (date)</p>
+              <p>{{property.availableDate}}</p>
               <h1 class="cardHeader">{{property.title}}</h1>
               <p>{{address}}</p>
               <p class="cardDetails">
