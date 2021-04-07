@@ -1,6 +1,6 @@
 <template>
   <div class="grid-border">
-    <body class=gridHolder>      
+    <body class=gridHolder>
       <div class="grid">
         <div class="gridItem">
           <div class="card">
@@ -59,16 +59,6 @@ export default {
   align-items: center;
   height: 19rem;
 }
-
-/*.gridHolder {
-  font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
-  font-size: .9rem;
-  display: flex;
-  color: #808080;
-  flex-direction: column;
-  padding: 0rem;
-  min-height: 100vh;
-}*/
 
 .gridItem {
   background-color: #fff;
