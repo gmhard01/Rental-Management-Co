@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <body>
-    <div class=gridHolder>
       <header>
-    <headerBar id="headerBarId" />
+        <headerBar id="headerBarId" />
       </header>
+    <div class=gridHolder>
       <main id="propertyTileId">
       <div v-for="property in propertylist" v-bind:key="property.propertyId">
         <propertyTile v-bind:property="property" />
