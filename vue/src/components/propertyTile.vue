@@ -15,8 +15,8 @@
               </p>
               <ul class="detailsList">
                 <li>${{property.rentAmount}} </li>
-                <li>{{property.numberOfBeds}} Bedroom<span>s</span></li>
-                <li>{{property.numberOfBaths}} Bathroom<span>s</span></li>
+                <li>{{property.numberOfBeds}} Bedroom<span v-if="property.numberOfBeds>1">s</span></li>
+                <li>{{property.numberOfBaths}} Bathroom<span v-if="property.numberOfBaths>1">s</span></li>
                 <li v-if="property.petsAllowed">Pets allowed</li>
                 <li v-else>No pets</li>
                 <li>{{property.contactPhone}}</li>
@@ -103,6 +103,7 @@ export default {
   flex-direction: column;
   flex-wrap: wrap;
 }
+
 li{
   margin-bottom: .3rem;
 }
@@ -113,6 +114,7 @@ li{
   text-overflow: ellipsis;
   overflow: auto;
 }
+
 @media only screen and (max-width: 60em){
 .cardImg {
   width: 10rem;

@@ -4,7 +4,7 @@
       <div class="leftSide">
         <div class="logoWithTitle">
           <a href="#">
-            <img src="@/assets/rmc.png" alt="Company Logo" class="logo" />
+            <router-link :to="{ name: 'home' }"><img src="@/assets/rmc.png" alt="Company Logo" class="logo" /></router-link>
           </a>
           <div class="title">Rental Management Co.</div>
         </div>
