@@ -77,7 +77,7 @@ export default {
   padding-right: 5px;
 }
 .logo {
-  width: 80px;
+  width: 6rem;
 }
 
 .searchBar {
