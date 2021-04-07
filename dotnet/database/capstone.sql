@@ -191,4 +191,21 @@ update users SET user_role = 'maintenance' where user_id = 3;
 SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email FROM properties  JOIN addresses ON properties.address_id = addresses.address_id JOIN users ON properties.landlord_id = users.user_id WHERE available = 1;
 */
 
+/*
+SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email 
+FROM properties
+JOIN addresses ON properties.address_id = addresses.address_id 
+JOIN users ON properties.landlord_id = users.user_id
+WHERE available = 1
+ORDER BY property_id ASC
+OFFSET 5 * 3 ROWS --5 is @PageSize (number of records per page), 1 is @PageNumber (index zero, i.e. 0 = page 1)
+FETCH NEXT 5 ROWS ONLY; --5 is @PageSize
+*/
+
+/*
+INSERT INTO maintenance_requests (property_id, requester_id, request_status, details, date_received)
+VALUES (@PropertyId, @RequesterId, @RequestStatus, @Details, @DateReceived); 
+*/
+
+
 
