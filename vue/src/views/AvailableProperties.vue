@@ -11,7 +11,7 @@
       </div>
       </main>
     </div>
-    <img src="@/assets/DownArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next()" />
+    <img src="@/assets/DownArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next(getCurrentIndex)" />
     </body>
   </div>
 </template>
@@ -22,11 +22,12 @@ import propertyTile from '@/components/propertyTile.vue';
 import PropService from '@/services/PropService';
 
 export default {
-  name: "home",
+  name: "availableProperties",
   data() {
     return {
       startingTileIndex: 0,
       TileIncrementNum: 7,
+      currentIndex: this.getCurrentIndex,
     }
   },
   components: {
@@ -43,6 +44,9 @@ export default {
     propertylist(){
       return this.$store.state.properties;
     },
+    getCurrentIndex(){
+      return parseInt(this.$route.params.page);
+    }
   },
   methods: {
     next(indexNum = 0){
