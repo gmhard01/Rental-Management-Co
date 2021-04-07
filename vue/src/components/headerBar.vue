@@ -12,17 +12,17 @@
       </div>
       <div class="rightSide">
         <ul class="navList">
-          <li><router-link v-bind:to="{ name: 'home' }">Home</router-link></li>
+          <li><router-link :to="{ name: 'home' }">Home</router-link></li>
           <li>|</li>
           <li><a href="#">My Apartments</a></li>
           <li>|</li>
           <li><a href="#">Maintanance Requests</a></li>
         </ul>
         <div class="signIn">
-          <a href="#" class="myAccount"
+          <router-link :to="{ name: 'login' }" class="myAccount"
             ><img src="@/assets/user-circle-solid.png"
-          /></a>
-          <a href="#" class="signInText">Sign In</a>
+          /></router-link>
+          <router-link :to="{ name: 'login' }" class="signInText">Sign In</router-link>
         </div>
       </div>
     </header>

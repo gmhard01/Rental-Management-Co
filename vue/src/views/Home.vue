@@ -65,7 +65,7 @@ export default {
   left: 0rem;
 }
 #propertyTileId {
-  margin-top: 8.5rem; 
+  margin-top: 8rem; 
 }
 .gridHolder {
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";

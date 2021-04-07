@@ -6,7 +6,8 @@
           <div class="card">
             <img class="cardImg" v-bind:src="imageGiven" alt="Property Picture" />
             <div class="titleAndDetails">
-              <p>{{property.availableDate}}</p>
+              <p v-if="Date.now() < Date.parse(property.availableDate.slice(0,10))">Available {{property.availableDate.slice(5,10)}}-{{property.availableDate.slice(0,4)}}</p>
+              <p v-else>Available Now</p>
               <h1 class="cardHeader">{{property.title}}</h1>
               <p>{{address}}</p>
               <p class="cardDetails">
