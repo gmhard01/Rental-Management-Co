@@ -1,84 +1,26 @@
 <template>
   <div class="grid-border">
     <body class=gridHolder>
-      <!--<div class="grid">
-        <div class="gridItem">
-          <div class="card">
-            <img class="cardImg" src="@/assets/LibertyCrossing1.jpg" alt="Property Picture" />
-            <div class="titleAndDetails">
-              <p>Available (date)</p>
-              <h1 class="cardHeader">The Apartment</h1>
-              <p>500 Demo St, City, OH, 43123</p>
-              <p class="cardDetails">
-                Lorem ut dolor in reLorem ut dolor in reLorem ut dolor in reLorem ut dolor in reLorem ut dolor in re
-              </p>
-              <ul>
-                <li>$(rent amount goes here) </li>
-                <li>(#) Bedroom<span>s</span> | (#) Bathroom<span>s</span></li>
-                <li>(Phone Number)</li>
-              </ul>
-            </div>
-          </div>  
-        </div>
-      </div>
-      <div class="grid">
-        <div class="gridItem">
-          <div class="card">
-            <img class="cardImg" src="@/assets/2ndApartment.jpg" alt="Property Picture" />
-            <div class="titleAndDetails">
-              <p>Available (date)</p>
-              <h1 class="cardHeader">Dublin View Apartments</h1>
-              <p>500 Demo St, City, OH, 43123</p>
-              <p class="cardDetails">
-                Lorem it enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              <ul>
-                <li>$(rent amount goes here) </li>
-                <li>(#) Bedroom<span>s</span></li>
-                <li>(#) Bathroom<span>s</span></li>
-                <li>(Phone Number)</li>
-              </ul>
-            </div>
-          </div>  
-        </div>
-      </div>
-      <div class="grid">
-        <div class="gridItem">
-          <div class="card">
-            <img class="cardImg" src="@/assets/PoolApartment.jpg" alt="Property Picture" />
-            <div class="titleAndDetails">
-              <p>Available (date)</p>
-              <h1 class="cardHeader">Idaho Homes</h1>
-              <p>500 Demo St, City, OH, 43123</p>
-              <p class="cardDetails">
-                Lorem ut dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              <ul>
-                <li>$(rent amount goes here) </li>
-                <li>(#) Bedroom<span>s</span></li>
-                <li>(#) Bathroom<span>s</span></li>
-                <li>(Phone Number)</li>
-              </ul>
-            </div>
-          </div>  
-        </div>
-      </div> -->
       <div class="grid">
         <div class="gridItem">
           <div class="card">
             <img class="cardImg" v-bind:src="imageGiven" alt="Property Picture" />
             <div class="titleAndDetails">
-              <p>Available (date)</p>
+              <p v-if="Date.now() < Date.parse(property.availableDate.slice(0,10))">{{property.propertyType}} available {{property.availableDate.slice(5,10)}}-{{property.availableDate.slice(0,4)}}</p>
+              <p v-else>{{property.propertyType}} available now</p>
               <h1 class="cardHeader">{{property.title}}</h1>
-              <p>{{address}}</p>
+              <p>{{address}} {{property.zipCode}}</p>
               <p class="cardDetails">
                 {{property.propertyDescription}}
               </p>
-              <ul>
+              <ul class="detailsList">
                 <li>${{property.rentAmount}} </li>
-                <li>{{property.numberOfBeds}} Bedroom<span>s</span></li>
-                <li>{{property.numberOfBaths}} Bathroom<span>s</span></li>
-                <li>555-555-5555</li>
+                <li>{{property.numberOfBeds}} Bedroom<span v-if="property.numberOfBeds>1">s</span></li>
+                <li>{{property.numberOfBaths}} Bathroom<span v-if="property.numberOfBaths>1">s</span></li>
+                <li v-if="property.petsAllowed">Pets allowed</li>
+                <li v-else>No pets</li>
+                <li>{{property.contactPhone}}</li>
+                <li>{{property.contactEmail}}</li>
               </ul>
             </div>
           </div>  
@@ -122,16 +64,6 @@ export default {
   height: 19rem;
 }
 
-/*.gridHolder {
-  font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
-  font-size: .9rem;
-  display: flex;
-  color: #808080;
-  flex-direction: column;
-  padding: 0rem;
-  min-height: 100vh;
-}*/
-
 .gridItem {
   background-color: #fff;
   border-radius: 1.5rem;
@@ -144,6 +76,7 @@ export default {
 .cardImg {
   display: block;
   width: 25rem;
+  min-width: 25rem;
   height: 25rem;
   object-fit: cover;
 }
@@ -160,23 +93,33 @@ export default {
   margin-bottom: 1rem;
 }
 
-ul {
+.detailsList {
   margin: 0;
   padding-left: 0px;
   list-style-type: none;
+  height: 5rem;
+  width: 35rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
+
 li{
   margin-bottom: .3rem;
 }
 
 .cardDetails {
-     max-height: 3rem;
-     overflow: hidden;
+  max-height: 4.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: auto;
 }
+
 @media only screen and (max-width: 60em){
 .cardImg {
   width: 10rem;
   height: 13rem;
+  min-width: 10rem;
 }
 
 .card {
@@ -196,14 +139,21 @@ li{
 
 .cardDetails {
      max-height: 5rem;
-     overflow: hidden;
-     text-overflow: ellipsis;
 }
 
 .titleAndDetails{
   padding: .5rem;
   padding-left: 1rem;
   padding-right: .8rem;
+  width: 8.5rem;
+}
+
+.detailsList {
+  height: 2.5rem;
+  width: 10rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 li{

@@ -14,16 +14,21 @@ namespace Capstone.Models
         public int NumberOfBeds { get; set; }
         public decimal NumberOfBaths { get; set; }
         public int LandlordId { get; set; }
-        public string? Picture { get; set; }
+        public string Picture { get; set; }
         public bool Available { get; set; }
-        public DateTime? AvailableDate { get; set; }
-        public string? PropertyDescription { get; set; }
+        public DateTime AvailableDate { get; set; }
+        public string PropertyDescription { get; set; }
+        public int SquareFeet { get; set; }
+        public string PropertyType { get; set; }
+        public bool PetsAllowed { get; set; }
         public int StreetNumber { get; set; }
-        public int? UnitNumber { get; set; }
+        public string UnitNumber { get; set; }
         public string StreetName { get; set; }
         public string State { get; set; }
         public string City { get; set; }
-        public string? County { get; set; }
+        public string County { get; set; }
         public string ZipCode { get; set; }
+        public string ContactPhone { get; set; }
+        public string ContactEmail { get; set; }
     }
 }
