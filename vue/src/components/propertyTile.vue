@@ -108,8 +108,10 @@ li{
 }
 
 .cardDetails {
-     max-height: 3rem;
-     overflow: hidden;
+  max-height: 4.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: auto;
 }
 @media only screen and (max-width: 60em){
 .cardImg {
@@ -135,8 +137,6 @@ li{
 
 .cardDetails {
      max-height: 5rem;
-     overflow: hidden;
-     text-overflow: ellipsis;
 }
 
 .titleAndDetails{
