@@ -1,68 +1,6 @@
 <template>
   <div class="grid-border">
     <body class=gridHolder>
-      <!--<div class="grid">
-        <div class="gridItem">
-          <div class="card">
-            <img class="cardImg" src="@/assets/LibertyCrossing1.jpg" alt="Property Picture" />
-            <div class="titleAndDetails">
-              <p>Available (date)</p>
-              <h1 class="cardHeader">The Apartment</h1>
-              <p>500 Demo St, City, OH, 43123</p>
-              <p class="cardDetails">
-                Lorem ut dolor in reLorem ut dolor in reLorem ut dolor in reLorem ut dolor in reLorem ut dolor in re
-              </p>
-              <ul>
-                <li>$(rent amount goes here) </li>
-                <li>(#) Bedroom<span>s</span> | (#) Bathroom<span>s</span></li>
-                <li>(Phone Number)</li>
-              </ul>
-            </div>
-          </div>  
-        </div>
-      </div>
-      <div class="grid">
-        <div class="gridItem">
-          <div class="card">
-            <img class="cardImg" src="@/assets/2ndApartment.jpg" alt="Property Picture" />
-            <div class="titleAndDetails">
-              <p>Available (date)</p>
-              <h1 class="cardHeader">Dublin View Apartments</h1>
-              <p>500 Demo St, City, OH, 43123</p>
-              <p class="cardDetails">
-                Lorem it enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              <ul>
-                <li>$(rent amount goes here) </li>
-                <li>(#) Bedroom<span>s</span></li>
-                <li>(#) Bathroom<span>s</span></li>
-                <li>(Phone Number)</li>
-              </ul>
-            </div>
-          </div>  
-        </div>
-      </div>
-      <div class="grid">
-        <div class="gridItem">
-          <div class="card">
-            <img class="cardImg" src="@/assets/PoolApartment.jpg" alt="Property Picture" />
-            <div class="titleAndDetails">
-              <p>Available (date)</p>
-              <h1 class="cardHeader">Idaho Homes</h1>
-              <p>500 Demo St, City, OH, 43123</p>
-              <p class="cardDetails">
-                Lorem ut dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              <ul>
-                <li>$(rent amount goes here) </li>
-                <li>(#) Bedroom<span>s</span></li>
-                <li>(#) Bathroom<span>s</span></li>
-                <li>(Phone Number)</li>
-              </ul>
-            </div>
-          </div>  
-        </div>
-      </div> -->
       <div class="grid">
         <div class="gridItem">
           <div class="card">
@@ -121,16 +59,6 @@ export default {
   align-items: center;
   height: 19rem;
 }
-
-/*.gridHolder {
-  font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
-  font-size: .9rem;
-  display: flex;
-  color: #808080;
-  flex-direction: column;
-  padding: 0rem;
-  min-height: 100vh;
-}*/
 
 .gridItem {
   background-color: #fff;
