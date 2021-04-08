@@ -1,39 +1,14 @@
 <template>
   <div id="login" class="text-center">
-    <form class="form-signin" @submit.prevent="login">
-      <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
-      <div
-        class="alert alert-danger"
-        role="alert"
-        v-if="invalidCredentials"
-      >Invalid username and password!</div>
-      <div
-        class="alert alert-success"
-        role="alert"
-        v-if="this.$route.query.registration"
-      >Thank you for registering, please sign in.</div>
-      <label for="username" class="sr-only">Username</label>
-      <input
-        type="text"
-        id="username"
-        class="form-control"
-        placeholder="Username"
-        v-model="user.username"
-        required
-        autofocus
-      />
-      <label for="password" class="sr-only">Password</label>
-      <input
-        type="password"
-        id="password"
-        class="form-control"
-        placeholder="Password"
-        v-model="user.password"
-        required
-      />
-      <router-link :to="{ name: 'register' }">Need an account?</router-link>
-      <button type="submit">Sign in</button>
-    </form>
+    <body>
+      <form class="loginBox form-signin" @submit.prevent="login">
+        <h1>Sign In</h1>
+        <input type="text" name="" placeholder="Username" class="form-control" v-model="user.username" required autofocus>
+        <input type="password" id="password" name="" placeholder="Password" class="form-control" v-model="user.password" required autofocus>
+        <input type="submit" class="submit" name="" value="Login">
+        <router-link :to="{ name: 'register' }" class="registerText">Need an account?</router-link>
+      </form>
+    </body>
   </div>
 </template>
 
@@ -74,3 +49,74 @@ export default {
   }
 };
 </script>
+<style scoped>
+
+#login{
+  background-image: url('../assets/PoolApartment.jpg');
+  background-attachment: fixed;
+  background-size: cover; 
+  margin: -.5rem;
+  padding: 0;
+  font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
+  height: 100vh;
+}
+
+.loginBox{
+  width: 300px;
+  padding: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(219, 230, 247);
+  text-align: center;
+  border-radius: 24px;
+  border: 2px solid rgb(124, 151, 196);
+}
+
+.loginBox h1{
+  color: #050e9c;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.loginBox input[type = "text"], .loginBox input[type = "password"]{
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #050e9c;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: #5f5f5f;
+  border-radius: 15px;
+  transition: 1s;
+}
+
+.loginBox input[type = "text"]:focus, .loginBox input[type = "password"]:focus{
+  width: 280px;
+  border-color:#9598c0;
+}
+
+.loginBox input[type="submit"]{
+  border: 0;
+  background: none;
+  display: block;
+  margin: 10px auto;
+  text-align: center;
+  border: 2px solid #050e9c;
+  padding: 10px 20px;
+  outline: none;
+  color: #5f5f5f;
+  border-radius: 15px;
+  transition: 1s;
+  cursor: pointer;
+}
+
+.registerText{
+  text-decoration: none;
+}
+
+</style>
