@@ -121,4 +121,17 @@ export default {
   text-decoration: none;
 }
 
+@media only screen and (max-width: 60em){
+.loginBox{
+  width: 16em;
+  padding: 30px;
+  top: 50%;
+  left: 50%;
+}
+
+.loginBox input[type = "text"]:focus, .loginBox input[type = "password"]:focus{
+  width: 230px;
+  border-color:#9598c0;
+}
+}
 </style>

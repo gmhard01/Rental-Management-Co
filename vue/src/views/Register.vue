@@ -4,46 +4,46 @@
     <form class="registerBox form-register" @submit.prevent="register">
       <h1>Create Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">{{ registrationErrorMsg }}</div>
-      <div class="entries">
-      <div class="leftSideEntries">
-      <input
-        type="text"
-        id="username"
-        class="form-control"
-        placeholder="Username"
-        v-model="user.username"
-        required
-        autofocus
-      />
-      <input
-        type="password"
-        id="password"
-        class="form-control"
-        placeholder="Password"
-        v-model="user.password"
-        required
-      />
-      <input
-        type="password"
-        id="confirmPassword"
-        class="form-control"
-        placeholder="Confirm Password"
-        v-model="user.confirmPassword"
-        required
-      />
-      </div>
-      <div class="rightSideEntries">
-      <!--Need To Connect-->
-      <input type="tel" id="phoneNumber" class="form-control" placeholder="Phone Number" v-model="user.phoneNumber" required />
-      <!--Need To Connect-->
-      <input type="email" id="email" class="form-control" placeholder="Email" v-model="user.email" required />
-      <select name="role" class="dropDownMenu" v-model="user.role" required>
-        <option selected="selected" value="user">User</option>
-        <option value="landlord">Landlord</option>
-        <option value="maintenance">Maintenance</option>
-      </select>
-      </div>
-      </div>
+        <div class="entries">
+          <div class="leftSideEntries">
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              placeholder="Username"
+              v-model="user.username"
+              required
+              autofocus
+            />
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              placeholder="Password"
+              v-model="user.password"
+              required
+            />
+            <input
+              type="password"
+              id="confirmPassword"
+              class="form-control"
+              placeholder="Confirm Password"
+              v-model="user.confirmPassword"
+              required
+            />
+          </div>
+        <div class="rightSideEntries">
+          <!--Need To Connect-->
+          <input type="tel" id="phoneNumber" class="form-control" placeholder="Phone Number" v-model="user.phoneNumber" required />
+          <!--Need To Connect-->
+          <input type="email" id="email" class="form-control" placeholder="Email" v-model="user.email" required />
+          <select name="role" class="dropDownMenu" v-model="user.role" required>
+            <option selected="selected" value="user">User</option>
+            <option value="landlord">Landlord</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+        </div>
+        </div>
       <input type="submit" class="submit" value="Submit" Create Account />
       <router-link class="loginText" :to="{ name: 'login' }">Have an account?</router-link>
     </form>
@@ -190,6 +190,43 @@ export default {
 }
 
 @media only screen and (max-width: 60em){
-  
+.entries{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.dropDownMenu{
+  width: 224px;
+  display: block;
+  margin: 0 auto;
+}
+.leftSideEntries, .rightSideEntries{
+  margin: 0;
+  padding: 0;
+}
+
+.rightSideEntries{
+  margin-top: -20px;
+}
+
+#register{
+  background-size: cover;
+}
+
+.registerBox{
+  width: 16em;
+  padding: 30px;
+  top: 50%;
+  left: 50%;
+}
+
+h1{
+  margin-bottom: 0;
+}
+
+.registerBox input[type="submit"]{
+  margin-top: 20px;
+}
 }
 </style>
