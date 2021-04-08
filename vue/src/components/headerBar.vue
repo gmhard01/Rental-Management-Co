@@ -14,15 +14,16 @@
         <ul class="navList">
           <li><router-link :to="{ name: 'home' }">Home</router-link></li>
           <li>|</li>
-          <li><a href="#">My Apartments</a></li>
+          <li><a href="#">My Apartment</a></li>
           <li>|</li>
-          <li><a href="#">Maintanance Requests</a></li>
+          <li><a href="#">Maintenance Requests</a></li>
         </ul>
         <div class="signIn">
           <router-link :to="{ name: 'login' }" class="myAccount"
             ><img src="@/assets/user-circle-solid.png"
           /></router-link>
-          <router-link :to="{ name: 'login' }" class="signInText">Sign In</router-link>
+          <router-link v-if="!this.$store.state.isLoggedIn" :to="{ name: 'login' }" class="signInText">Sign In</router-link>
+          <router-link v-else :to="{ name: 'logout' }" class="signInText">Log Out</router-link>
         </div>
       </div>
     </header>
