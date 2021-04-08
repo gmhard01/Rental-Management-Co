@@ -1,9 +1,9 @@
 <template>
   <div id="register" class="text-center">
     <body>
-    <form class="registerBox form-register" @submit.prevent="register">
-      <h1>Create Account</h1>
-      <div class="alert alert-danger" role="alert" v-if="registrationErrors">{{ registrationErrorMsg }}</div>
+      <form class="registerBox form-register" @submit.prevent="register">
+        <h1>Create Account</h1>
+        <div class="alert alert-danger" role="alert" v-if="registrationErrors">{{ registrationErrorMsg }}</div>
         <div class="entries">
           <div class="leftSideEntries">
             <input
@@ -31,22 +31,36 @@
               v-model="user.confirmPassword"
               required
             />
+            <input
+              type="text"
+              id="firstName"
+              class="form-control"
+              placeholder="First Name"
+              v-model="user.firstName"
+              required
+            />
           </div>
-        <div class="rightSideEntries">
-          <!--Need To Connect-->
-          <input type="tel" id="phoneNumber" class="form-control" placeholder="Phone Number" v-model="user.phoneNumber" required />
-          <!--Need To Connect-->
-          <input type="email" id="email" class="form-control" placeholder="Email" v-model="user.email" required />
-          <select name="role" class="dropDownMenu" v-model="user.role" required>
-            <option selected="selected" value="user">User</option>
-            <option value="landlord">Landlord</option>
-            <option value="maintenance">Maintenance</option>
-          </select>
+          <div class="rightSideEntries">
+            <input type="tel" id="phoneNumber" class="form-control" placeholder="Phone Number" v-model="user.phoneNumber" required />
+            <input type="email" id="email" class="form-control" placeholder="Email" v-model="user.email" required />
+            <select name="role" class="dropDownMenu" v-model="user.role" required>
+              <option selected="selected" value="user">User</option>
+              <option value="landlord">Landlord</option>
+              <option value="maintenance">Maintenance</option>
+            </select>
+            <input
+              type="text"
+              id="lastName"
+              class="form-control"
+              placeholder="Last Name"
+              v-model="user.lastName"
+              required
+            />
+          </div>
         </div>
-        </div>
-      <input type="submit" class="submit" value="Submit" Create Account />
-      <router-link class="loginText" :to="{ name: 'login' }">Have an account?</router-link>
-    </form>
+        <input type="submit" class="submit" value="Submit" Create Account />
+        <router-link class="loginText" :to="{ name: 'login' }">Have an account?</router-link>
+      </form>
     </body>
   </div>
 </template>
