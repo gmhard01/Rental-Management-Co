@@ -6,7 +6,7 @@
       </header>
     <div class=gridHolder>
       <main id="propertyTileId">
-      <div v-for="property in slicedArray" v-bind:key="property.propertyId">
+      <div v-for="property in slicedArray" v-bind:key="property.propertyId" v-on:click="goToProperty(property)">
         <propertyTile v-bind:property="property" />
       </div>
       </main>
@@ -77,7 +77,10 @@ export default {
       PropService.getPropertyList(page).then ((response) => {
         this.propertylist = response.data;
       })
-    }
+    },
+    goToProperty(currentProperty){
+      this.$router.push({name: "rental-property", params: {propertyId: currentProperty.propertyId}});      
+    },
   }};
 </script>
 <style scoped>
