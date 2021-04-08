@@ -38,7 +38,7 @@ namespace Capstone.DAO
                             ApplicationId = Convert.ToInt32(reader["application_id"]),
                             ApplicantId = Convert.ToInt32(reader["applicant_id"]),
                             PropertyId = Convert.ToInt32(reader["property_id"]),
-                            ApprovalStatus = Convert.ToInt32(reader["approval_status"]),
+                            ApprovalStatus = Convert.ToString(reader["approval_status"]),
                             ApplicantName = Convert.ToString(reader["applicant_name"]),
                             ApplicantPhone = Convert.ToString(reader["applicant_phone"])
                         };
@@ -53,6 +53,57 @@ namespace Capstone.DAO
             }
 
             return returnApplications;
+        }
+
+        public bool CreateNewApplication(int propertyId, string applicantName, string applicantPhone)
+        {
+            
+            int rowsAffected;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "INSERT INTO applications (property_id, approval_status, applicant_name, applicant_phone) VALUES (@propertyId, 'Pending', @applicantName, @applicantPhone);";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@propertyId", propertyId);
+                    cmd.Parameters.AddWithValue("@applicantName", applicantName);
+                    cmd.Parameters.AddWithValue("@applicantPhone", applicantPhone);
+                    rowsAffected = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return (rowsAffected>0);
+        }
+
+        public bool UpdateApplicationStatus(int applicationId, string approvalStatus)
+        {
+            int rowsAffected;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "UPDATE applications SET approval_status = @approvalStatus WHERE application_id = @applicationId; ";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@applicationId", applicationId);
+                    cmd.Parameters.AddWithValue("@approvalStatus", approvalStatus);
+                    rowsAffected = cmd.ExecuteNonQuery();   
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            return (rowsAffected > 0);
         }
     }
 }
