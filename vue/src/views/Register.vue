@@ -63,6 +63,8 @@ export default {
         password: '',
         confirmPassword: '',
         role: 'user',
+        phoneNumber: '',
+        email: '',
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
