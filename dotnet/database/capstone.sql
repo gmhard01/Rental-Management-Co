@@ -119,10 +119,11 @@ ALTER TABLE applications ADD CONSTRAINT FK_application_applicant FOREIGN KEY (ap
 ALTER TABLE applications ADD CONSTRAINT FK_application_property FOREIGN KEY (property_id) REFERENCES properties(property_id);
 
 --create some starting data
+/*
 INSERT INTO users (username, password_hash, salt, user_role, phone, email)
 VALUES ('rob', 'awzu8FzAwNmohJQ/+4NN/EonuYI=', 'etTD0ZEyYfA=', 'landlord', '1231006789', 'rob@gmail.com'),
 	   ('eli', 'atwatjrvNvyzY07Gbn7gW7JQ+VU=', '3PeFjitagfk=', 'tenant', NULL, NULL);
-
+*/
 INSERT INTO addresses (street_number, unit_number, street_name, state_abbreviation, city, county, zip_code)
 VALUES (6505, '2', 'Hasler Ln', 'OH', 'Cincinnati', NULL, '45216'),
 	   (72, NULL, 'Stacy Ln', 'KY', 'Ft. Thomas', NULL, '41075'),
@@ -154,11 +155,11 @@ VALUES (6505, '2', 'Hasler Ln', 'OH', 'Cincinnati', NULL, '45216'),
 	   (64, Null, 'Old Stephenson Mill Rd', 'KY', 'Walton', Null, '41094');
 
 INSERT INTO properties (title, address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed)
-VALUES ('Hasler Ln Apartment', 1, 900.00, 3, 2, 1, NULL, 1, NULL, 'sweet apartment in cincy', NULL, NULL, NULL),
-	   ('House on Stavey Lane!', 2, 1200.00, 2, 1.5, 1, NULL, 1, NULL, 'it is a house', 1200, 'House', 1),
+VALUES ('Hasler Ln Apartment', 1, 900.00, 3, 2, 1, 'https://photos.zillowstatic.com/fp/233b05767ed080fa39329edec4c448be-cc_ft_768.jpg', 1, NULL, 'sweet apartment in cincy', NULL, NULL, NULL),
+	   ('House on Stacy Lane!', 2, 1200.00, 2, 1.5, 1, 'https://photos.zillowstatic.com/fp/76d64793c3a9724e8e732c2d3c2429d7-cc_ft_768.jpg', 1, NULL, 'it is a house', 1200, 'House', 1),
 	   ('Auten Ave Apartment', 3, 1100.50, 4, 2.5, 1, NULL, 0, '2021-05-01', 'a swanky apartment for all your apartment needs', 1050, 'Apartment', 0),
-	   ('House on Amherst', 4, 950.00, 2, 1, 1, NULL, 0, '2021-06-01', 'the nicest house in Terrace Park', 1300, 'House', 0),
-	   ('Super nice house in Cincy!', 5, 1400, 4, 3, 1, NULL, 1, NULL, 'house on martin st in cincinnati', 1120, 'House', 1),
+	   ('House on Amherst', 4, 950.00, 2, 1, 1, NULL, 1, '2021-06-01', 'the nicest house in Terrace Park', 1300, 'House', 0),
+	   ('Super nice house in Cincy!', 5, 1400, 4, 3, 1, 'https://photos.zillowstatic.com/fp/b1cc827420d7b1fc94d5d2d2b04ad6b0-cc_ft_768.jpg', 1, NULL, 'house on martin st in cincinnati', 1120, 'House', 1),
 	   ('Cozy Townhome Near Green Hills Mall!', 6, 1500, 2, 2.5, 1, 'https://i0.wp.com/movingtips.wpengine.com/wp-content/uploads/2020/08/new-townhouse.jpg?fit=1024%2C684&ssl=1', 1, '2021-05-15', 'Great 2 bedroom, 2.5 bathroom townhome! This unit is located just minutes from Green Hills Mall, The YMCA, and tons of restaurants. Inside features a corner fireplace, decorative columns, spacious living room and dining room, and a laundry area!', 1220, 'Townhome', 1),
 	   ('Townhome in Madison!', 7, 1180, 2, 2.5, 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkO51xqEzdC0FzdlyZ6Zw4E2LwIehmtSBQOw&usqp=CAU', 1, NULL, 'Two Bedroom, 21/2 bath townhouse available immediately. In-suite bathrooms in both bedrooms, laminate flooring throughout, stainless steel appliances and granite counter tops. Washer/Dryer included! Soaker bath tub. Pets are possible with approval and a non-refundable pet fee.', 1100, 'Townhome', 1),
 	   ('Rental Home Near UC!', 8, 2300, 4, 2, 1, 'https://ap.rdcpix.com/897802730/e14b9040603c1d53177d42faec9881b1l-m0xd-w1020_h770_q80.jpg', 1, NULL, 'Large 4 bedroom 2 bath. Recently renovated with new kitchen and baths, windows, flooring (hardwood throughout). Large bed rooms, Central air, laundry in the basement. Off Street Parking.', 2000, 'House', 1),
@@ -167,7 +168,7 @@ VALUES ('Hasler Ln Apartment', 1, 900.00, 3, 2, 1, NULL, 1, NULL, 'sweet apartme
        ('McHenry Estates', 11, 545, 1, 1, 1, 'https://photos.zillowstatic.com/fp/6e5531911bdfcff44d7f4818889e78dd-cc_ft_1152.jpg', 1, '2021-04-15', 'This 2400 square foot single family home has 1 bedrooms and 1.0 bathrooms. This home is located at 3600 Mchenry Ave, Cincinnati, OH 45225.', 2400, 'House', 1),
        ('Townhouse in the heart of old Mariemont', 12, 1700, 2, 1, 1, 'https://photos.zillowstatic.com/fp/bd5bd614294cc2624c7371f8cfbd8343-cc_ft_1152.jpg', 1, '2021-06-01', 'Completely renovated townhouse in the heart of old Mariemont square.', 1000, 'Townhome', 0),
        ('2 bedroom apartment in a 2 apartment building.', 13, 985, 2, 1, 1, 'https://photos.zillowstatic.com/fp/18048a0739756f318ee587be9cd2a082-uncropped_scaled_within_1536_1152.webp', 1, NULL, 'This is a 2 bedroom apartment in a 2 apartment building. The apartment is fully carpeted with an enclosed porch and laundry facilities in the basement. Near public transportation and shopping. The apartment is in a fast growing area of Avondale, near Childrens hospital, UC medical center, Cincinnati Zoo and the VA hospital. Pets allowed with owners permission. Call now for an appointment at 832-2493 and ask for Karen', 1300, 'Apartment', 1),
-       ('Charming 4 Bed 1 bath w/ garage', 14, 1300, 4, 1, 1, 'https://photos.zillowstatic.com/fp/cc2606791b8f7857746647a01eb1e686-cc_ft_768.jpg', 1, NULL, 'Charming 4 Bed, 1 bath with garage in a great location more info and bookings on yolocinci.com Beautiful 4 bedroom1 bath unit in a duplex Water, sewage and trash included in the Rent $1300, Deposit $1300 -Stove and fridge included, spacious living area.', 2100, 'House', 1),
+       ('Charming 4 Bed 1 bath w/ garage', 14, 1300, 4, 1, 1, 'https://photos.zillowstatic.com/fp/a4476e1014b688cd701bec1c1cb9b1a8-cc_ft_768.jpg', 1, NULL, 'Charming 4 Bed, 1 bath with garage in a great location more info and bookings on yolocinci.com Beautiful 4 bedroom1 bath unit in a duplex Water, sewage and trash included in the Rent $1300, Deposit $1300 -Stove and fridge included, spacious living area.', 2100, 'House', 1),
        ('Great home with a spacious kitchen', 15, 1680, 3, 1, 1, 'https://photos.zillowstatic.com/fp/17733bbedd990cb3d519bf3d5b202c7e-cc_ft_1152.jpg', 0, '2021-07-01', 'This great home has 3 carpeted bedrooms, a spacious kitchen with stainless steel appliances, granite countertops, and crisp white cabinets. New wood plank and carpet flooring throughout! You will enjoy the front-covered porch and walkup. Extensive storage space with extra closets and an unfinished basement. Great backyard space with patio ready for entertaining.', 1700, 'House', 1),
        ('Mears Ave Suites', 16, 575, 1, 1, 1, 'https://photos.zillowstatic.com/fp/f8dd9998198e63d48b3576576f1a9fef-cc_ft_1152.jpg', 0, '2021-05-15', 'Awesome quiet building on quite street. Stained concrete flooring, open floor plan, ceramic bath, off-street parking. No pets, no smoking building.', 1400, 'Apartment', 0),
        ('Cute Family Home', 17, 1600, 3, 1.5, 1, 'https://photos.zillowstatic.com/fp/9ef655f2f6299b5495f49fadb0bba4eb-uncropped_scaled_within_1536_1152.webp', 1, NULL, 'Freshly painted with new carpeting. Washer, dryer included. Dishwasher, microwave. Deck with wooded view. Johnson elementary, highlands school district. Wet bar and pool table in finished basement.', 1500, 'House', 1),
@@ -180,7 +181,7 @@ VALUES ('Hasler Ln Apartment', 1, 900.00, 3, 2, 1, NULL, 1, NULL, 'sweet apartme
        ('1 bedroom, 1.0 bathroom, multi family home.', 24, 795, 1, 1, 1, 'https://photos.zillowstatic.com/fp/b69361b63e8ed1c57746c414ecf552fd-cc_ft_1152.jpg', 1, NULL, 'This is a 1 bedroom, 1.0 bathroom, multi family home. This home is located at 205 S High St, Mount Orab, OH 45154.', 880, 'Apartment', 0),
        ('Renovated Student Living!', 25, 2200, 8, 2, 1, 'https://photos.zillowstatic.com/fp/b69361b63e8ed1c57746c414ecf552fd-cc_ft_1152.jpg', 1, '2021-08-15', 'Over $15,000 in improvements since last year including new flooring on both levels and a new stackable washer and dryer on top floor. Ideally this home would be shared amongst a group of 4 with two separate levels each with 4 bedrooms and 1 bathroom with a huge backyard. 10 minute walk to campus and close to Millet Hall as well as mccullough hyde hospital for any athletes, rotc or nursing students. Semester pricing may vary depending on the # of students.', 2400, 'Apartment', 0),
        ('3 bedroom home in historical Germantown!', 26, 1300, 3, 1, 1, 'https://maps.googleapis.com/maps/api/streetview?location=50+Peffley+St%2C+Germantown%2C+OH+45327&size=1152x864&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&source=outdoor&&signature=IGyjnNz6N0aAYH4-sySvcfYQSzg=', 0, '2021-05-15', 'Welcome home! This 2-story, 3 bedroom home is located in historical Germantown, OH, has a newly remodeled bathroom, large fenced yard, and is in the Valley View School District. Call 937/694-0095 for viewing appointment.', 1600, 'House', 1),
-       ('Duplex in a quiet Subdivision.', 27, 1250, 3, 2, 1, 'https://photos.zillowstatic.com/fp/898fe9a4e3e3e1c623ecbf65f571c93f-cc_ft_1152.jpg', 1, '2021-05-15', 'This property is a duplex on a cul-de-sac located in a quiet subdivision. Local shopping is within two miles, and schools are a short commute. The duplex has a large master bedroom with full bath. The unit has an additional two bedrooms and a second full bath. The living area is an open floor plan that adjoins a kitchen fully equipped with all major appliances, a countertop breakfast bar, and tile flooring. Bedrooms and Living Area has one-year-old carpet.', 1900, 'Condo', 1),
+       ('Duplex in a quiet Subdivision.', 27, 1250, 3, 2, 4, 'https://photos.zillowstatic.com/fp/898fe9a4e3e3e1c623ecbf65f571c93f-cc_ft_1152.jpg', 1, '2021-05-15', 'This property is a duplex on a cul-de-sac located in a quiet subdivision. Local shopping is within two miles, and schools are a short commute. The duplex has a large master bedroom with full bath. The unit has an additional two bedrooms and a second full bath. The living area is an open floor plan that adjoins a kitchen fully equipped with all major appliances, a countertop breakfast bar, and tile flooring. Bedrooms and Living Area has one-year-old carpet.', 1900, 'Condo', 1),
        ('What a townhouse!', 28, 995, 3, 1.5, 1, 'https://photos.zillowstatic.com/fp/d7c00225b58741540cdb544ba19c8317-cc_ft_576.jpg', 1, '2021-04-15', 'The 3 bedrooms are spacious. The guest bath and master bath are connected by the toilet and tub area, each has their own sink. The first floor features the living room, 1/2 bath and eat in kitchen.The entire unit has just been painted and has carpet installed on the steps and upstairs and tile flooring throughout the main floor.', 1500, 'Townhome', 1);
 
 INSERT INTO lease_agreements (property_id, landlord_id, renter_id, monthly_rent, lease_start_date, lease_end_date)
@@ -188,13 +189,11 @@ VALUES (102, 1, 2, 1100.50, '2020-01-01', '2021-12-31');
 
 --create application
 INSERT INTO applications (applicant_id, property_id, approval_status, applicant_name, applicant_phone)
-VALUES (2, 127, 0, 'Elijah Jackson', '5551238888');
+VALUES (2, 127, 0, 'Graham Hardaway', '5551238888'),
+       (3, 126, 0, 'Elijah Jackson', '1235558080');
 
 --select pending applications for a specific landlord
-SELECT application_id, applicant_id, applications.property_id, approval_status, applicant_name, applicant_phone
-FROM applications
-JOIN properties ON applications.property_id = properties.property_id
-WHERE landlord_id = 1 AND approval_status = 0;
+SELECT application_id, applicant_id, properties.property_id, approval_status, applicant_name, applicant_phone FROM applications JOIN properties ON applications.property_id = properties.property_id WHERE landlord_id = 1 AND approval_status = 0;
 
 /*
 ALTER TABLE properties NOCHECK CONSTRAINT FK_property_address;
@@ -211,7 +210,7 @@ select * from addresses;
 select * from properties;
 select * from lease_agreements;
 select * from applications;
-update users SET user_role = 'maintenance' where user_id = 3;
+update users SET user_role = 'renter' where user_id = 2 OR user_id = 3;
 SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email FROM properties  JOIN addresses ON properties.address_id = addresses.address_id JOIN users ON properties.landlord_id = users.user_id WHERE available = 1;
 */
 
