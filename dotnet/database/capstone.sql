@@ -230,5 +230,3 @@ INSERT INTO maintenance_requests (property_id, requester_id, request_status, det
 VALUES (@PropertyId, @RequesterId, @RequestStatus, @Details, @DateReceived); 
 */
 
-
-
