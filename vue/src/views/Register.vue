@@ -1,11 +1,11 @@
 <template>
   <div id="register" class="text-center">
-    <form class="form-register" @submit.prevent="register">
-      <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
-      <div class="alert alert-danger" role="alert" v-if="registrationErrors">
-        {{ registrationErrorMsg }}
-      </div>
-      <label for="username" class="sr-only">Username</label>
+    <body>
+    <form class="registerBox form-register" @submit.prevent="register">
+      <h1>Create Account</h1>
+      <div class="alert alert-danger" role="alert" v-if="registrationErrors">{{ registrationErrorMsg }}</div>
+      <div class="entries">
+      <div class="leftSideEntries">
       <input
         type="text"
         id="username"
@@ -15,7 +15,6 @@
         required
         autofocus
       />
-      <label for="password" class="sr-only">Password</label>
       <input
         type="password"
         id="password"
@@ -32,11 +31,23 @@
         v-model="user.confirmPassword"
         required
       />
-      <router-link :to="{ name: 'login' }">Have an account?</router-link>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
-        Create Account
-      </button>
+      </div>
+      <div class="rightSideEntries">
+      <!--Need To Connect-->
+      <input type="tel" id="phoneNumber" class="form-control" placeholder="Phone Number" v-model="user.phoneNumber" required />
+      <!--Need To Connect-->
+      <input type="email" id="email" class="form-control" placeholder="Email" v-model="user.email" required />
+      <select name="role" class="dropDownMenu" v-model="user.role" required>
+        <option selected="selected" value="user">User</option>
+        <option value="landlord">Landlord</option>
+        <option value="maintenance">Maintenance</option>
+      </select>
+      </div>
+      </div>
+      <input type="submit" class="submit" value="Submit" Create Account />
+      <router-link class="loginText" :to="{ name: 'login' }">Have an account?</router-link>
     </form>
+    </body>
   </div>
 </template>
 
@@ -89,5 +100,96 @@ export default {
   },
 };
 </script>
+<style>
+#register{
+  background-image: url('../assets/PoolApartment.jpg');
+  background-attachment: fixed;
+  background-size: cover; 
+  margin: -.5rem;
+  padding: 0;
+  font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
+  height: 100vh;
+}
 
-<style></style>
+.registerBox{
+  width: 500px;
+  padding: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(219, 230, 247);
+  text-align: center;
+  border-radius: 24px;
+  border: 2px solid rgb(124, 151, 196);
+}
+
+.registerBox h1{
+  color: #050e9c;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.registerBox input[type = "text"], .registerBox input[type = "password"], .registerBox input[type = "tel"], .registerBox input[type = "email"], .dropDownMenu{
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #050e9c;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: #5f5f5f;
+  border-radius: 15px;
+  transition: 1s;
+  text-align-last:center; 
+}
+
+.registerBox input[type = "text"]:focus, .registerBox input[type = "password"]:focus, .registerBox input[type = "tel"]:focus, .registerBox input[type = "email"]:focus{
+  width: 220px;
+  border-color:#9598c0;
+}
+
+.dropDownMenu:focus{
+  width: 240px;
+  border-color:#9598c0;
+}
+
+.registerBox input[type="submit"]{
+  border: 0;
+  background-color: #5359b1;
+  display: block;
+  margin: 10px auto;
+  text-align: center;
+  border: 2px solid #050e9c;
+  padding: 10px 20px;
+  outline: none;
+  color: #ffffff;
+  border-radius: 15px;
+  transition: 1s;
+  cursor: pointer;
+}
+
+.loginText{
+  text-decoration: none;
+}
+
+.leftSideEntries, .rightSideEntries{
+  margin: 5px;
+}
+.entries{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.dropDownMenu{
+  margin: 0;
+  width: 224px;
+}
+
+@media only screen and (max-width: 60em){
+  
+}
+</style>

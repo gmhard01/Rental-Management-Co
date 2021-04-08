@@ -3,6 +3,8 @@
     <body>
       <form class="loginBox form-signin" @submit.prevent="login">
         <h1>Sign In</h1>
+        <div class="alert alert-danger" role="alert" v-if="invalidCredentials">Invalid username and password!</div>
+        <div class="alert alert-success" role="alert" v-if="this.$route.query.registration">Thank you for registering, please sign in.</div>
         <input type="text" name="" placeholder="Username" class="form-control" v-model="user.username" required autofocus>
         <input type="password" id="password" name="" placeholder="Password" class="form-control" v-model="user.password" required autofocus>
         <input type="submit" class="submit" name="" value="Login">
@@ -102,14 +104,14 @@ export default {
 
 .loginBox input[type="submit"]{
   border: 0;
-  background: none;
+  background-color: #5359b1;
   display: block;
   margin: 10px auto;
   text-align: center;
   border: 2px solid #050e9c;
   padding: 10px 20px;
   outline: none;
-  color: #5f5f5f;
+  color: #ffffff;
   border-radius: 15px;
   transition: 1s;
   cursor: pointer;
