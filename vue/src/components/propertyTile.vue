@@ -98,7 +98,6 @@ export default {
   padding-left: 0px;
   list-style-type: none;
   height: 5rem;
-  width: 35rem;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;

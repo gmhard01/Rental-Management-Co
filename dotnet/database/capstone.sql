@@ -94,6 +94,17 @@ CREATE TABLE maintenance_requests (
 	CONSTRAINT PK_maintenance PRIMARY KEY(request_id)
 );
 
+CREATE TABLE applications (
+	application_id int IDENTITY(1,1) NOT NULL,
+	applicant_id int NOT NULL,
+	property_id int NOT NULL,
+	approval_status int NOT NULL, -- 0 = pending, 1 = approved, 2 = rejected
+	applicant_name varchar(100) NOT NULL,
+	applicant_phone char(10) NOT NULL
+
+	CONSTRAINT PK_applications PRIMARY KEY (application_id)
+);
+
 ALTER TABLE properties ADD CONSTRAINT FK_property_address FOREIGN KEY (address_id) REFERENCES addresses(address_id);
 ALTER TABLE properties ADD CONSTRAINT FK_property_landlord FOREIGN KEY (landlord_id) REFERENCES users(user_id);
 ALTER TABLE payments ADD CONSTRAINT FK_payment_property FOREIGN KEY (property_id) REFERENCES properties(property_id);
@@ -104,6 +115,8 @@ ALTER TABLE lease_agreements ADD CONSTRAINT FK_lease_renter FOREIGN KEY (renter_
 ALTER TABLE maintenance_requests ADD CONSTRAINT FK_maintenance_property FOREIGN KEY (property_id) REFERENCES properties(property_id);
 ALTER TABLE maintenance_requests ADD CONSTRAINT FK_maintenance_requester FOREIGN KEY (requester_id) REFERENCES users(user_id);
 ALTER TABLE maintenance_requests ADD CONSTRAINT FK_maintenance_worker FOREIGN KEY (maintenance_worker_id) REFERENCES users(user_id);
+ALTER TABLE applications ADD CONSTRAINT FK_application_applicant FOREIGN KEY (applicant_id) REFERENCES users(user_id);
+ALTER TABLE applications ADD CONSTRAINT FK_application_property FOREIGN KEY (property_id) REFERENCES properties(property_id);
 
 --create some starting data
 INSERT INTO users (username, password_hash, salt, user_role, phone, email)
@@ -173,6 +186,16 @@ VALUES ('Hasler Ln Apartment', 1, 900.00, 3, 2, 1, NULL, 1, NULL, 'sweet apartme
 INSERT INTO lease_agreements (property_id, landlord_id, renter_id, monthly_rent, lease_start_date, lease_end_date)
 VALUES (102, 1, 2, 1100.50, '2020-01-01', '2021-12-31');
 
+--create application
+INSERT INTO applications (applicant_id, property_id, approval_status, applicant_name, applicant_phone)
+VALUES (2, 127, 0, 'Elijah Jackson', '5551238888');
+
+--select pending applications for a specific landlord
+SELECT application_id, applicant_id, applications.property_id, approval_status, applicant_name, applicant_phone
+FROM applications
+JOIN properties ON applications.property_id = properties.property_id
+WHERE landlord_id = 1 AND approval_status = 0;
+
 /*
 ALTER TABLE properties NOCHECK CONSTRAINT FK_property_address;
 ALTER TABLE lease_agreements NOCHECK CONSTRAINT FK_lease_property;
@@ -187,6 +210,24 @@ select * from users;
 select * from addresses;
 select * from properties;
 select * from lease_agreements;
+select * from applications;
 update users SET user_role = 'maintenance' where user_id = 3;
 SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email FROM properties  JOIN addresses ON properties.address_id = addresses.address_id JOIN users ON properties.landlord_id = users.user_id WHERE available = 1;
 */
+
+/*
+SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email 
+FROM properties
+JOIN addresses ON properties.address_id = addresses.address_id 
+JOIN users ON properties.landlord_id = users.user_id
+WHERE available = 1
+ORDER BY property_id ASC
+OFFSET 5 * 3 ROWS --5 is @PageSize (number of records per page), 1 is @PageNumber (index zero, i.e. 0 = page 1)
+FETCH NEXT 5 ROWS ONLY; --5 is @PageSize
+*/
+
+/*
+INSERT INTO maintenance_requests (property_id, requester_id, request_status, details, date_received)
+VALUES (@PropertyId, @RequesterId, @RequestStatus, @Details, @DateReceived); 
+*/
+

@@ -11,7 +11,7 @@
       </div>
       </main>
     </div>
-    <img src="@/assets/DownArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next()" />
+    <img src="@/assets/DownArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next(getCurrentIndex)" />
     </body>
   </div>
 </template>
@@ -22,11 +22,12 @@ import propertyTile from '@/components/propertyTile.vue';
 import PropService from '@/services/PropService';
 
 export default {
-  name: "home",
+  name: "availableProperties",
   data() {
     return {
       startingTileIndex: 0,
       TileIncrementNum: 7,
+      currentIndex: this.getCurrentIndex,
     }
   },
   components: {
@@ -43,9 +44,12 @@ export default {
     propertylist(){
       return this.$store.state.properties;
     },
+    getCurrentIndex(){
+      return parseInt(this.$route.params.page);
+    },
     slicedArray(){
-      let previousIndex = 0;
-      let newIndex = 7;
+      let previousIndex = this.getCurrentIndex * 7;
+      let newIndex = (this.getCurrentIndex + 1) * 7;
       
       if (this.propertylist.length <= newIndex){
         newIndex = this.propertylist.length;
@@ -57,13 +61,13 @@ export default {
       }
 
       return this.propertylist.slice(previousIndex, newIndex);
-    },
+    }
   },
   methods: {
     next(indexNum = 0){
       let startingTileIndex = indexNum + 1;
       this.$router.push({name: "available-properties", params: {page: startingTileIndex}});
-      window.scrollTo(0, 0);      
+      window.scrollTo(0, 0);
     },
     previous(){
       this.startingTileIndex -=15;
@@ -81,7 +85,7 @@ export default {
   left: 0rem;
 }
 #propertyTileId {
-  margin-top: 8rem; 
+  margin-top: 8.5rem; 
 }
 .gridHolder {
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
@@ -100,12 +104,5 @@ export default {
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
-}
-
-@media only screen and (max-width: 60em){
- .ArrowBtn {
-   width: 3rem;
-   padding-top: .5rem;
- } 
 }
 </style>
