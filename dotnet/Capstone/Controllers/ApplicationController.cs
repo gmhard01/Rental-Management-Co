@@ -28,5 +28,14 @@ namespace Capstone.Controllers
             List<Application> applications = applicationDAO.GetPendingApplicationsForLandlord(userId);
             return Ok(applications);
         }
+
+        [HttpPost("/newapplication/{propertyId}/{applicantName}/{applicantPhone}")]
+        [Authorize(Roles = "renter")]
+        public ActionResult<Application> CreateApplication(int propertyId, string applicantName, string applicantPhone)
+        {
+            int userId = Convert.ToInt32(User.FindFirst("sub").Value);
+            Application applicationCreated = applicationDAO.CreateNewApplication(userId, propertyId, applicantName, applicantPhone);
+            return Created($"Application Id #{applicationCreated.ApplicationId} was successfully submitted.", applicationCreated);
+        }
     }
 }

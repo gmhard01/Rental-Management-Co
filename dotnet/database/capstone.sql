@@ -94,15 +94,24 @@ CREATE TABLE maintenance_requests (
 	CONSTRAINT PK_maintenance PRIMARY KEY(request_id)
 );
 
+
 CREATE TABLE applications (
 	application_id int IDENTITY(1,1) NOT NULL,
 	applicant_id int NOT NULL,
 	property_id int NOT NULL,
-	approval_status int NOT NULL, -- 0 = pending, 1 = approved, 2 = rejected
+	approval_status varchar(30) NOT NULL,
 	applicant_name varchar(100) NOT NULL,
 	applicant_phone char(10) NOT NULL
 
 	CONSTRAINT PK_applications PRIMARY KEY (application_id)
+);
+
+CREATE TABLE property_photos (
+	photo_id int IDENTITY(1000,1) NOT NULL,
+	property_id int NOT NULL,
+	primary_photo bit NOT NULL
+
+	CONSTRAINT PK_photos PRIMARY KEY (photo_id)
 );
 
 ALTER TABLE properties ADD CONSTRAINT FK_property_address FOREIGN KEY (address_id) REFERENCES addresses(address_id);
@@ -117,6 +126,7 @@ ALTER TABLE maintenance_requests ADD CONSTRAINT FK_maintenance_requester FOREIGN
 ALTER TABLE maintenance_requests ADD CONSTRAINT FK_maintenance_worker FOREIGN KEY (maintenance_worker_id) REFERENCES users(user_id);
 ALTER TABLE applications ADD CONSTRAINT FK_application_applicant FOREIGN KEY (applicant_id) REFERENCES users(user_id);
 ALTER TABLE applications ADD CONSTRAINT FK_application_property FOREIGN KEY (property_id) REFERENCES properties(property_id);
+ALTER TABLE property_photos ADD CONSTRAINT FK_property_photos FOREIGN KEY (property_id) REFERENCES properties(property_id);
 
 --create some starting data
 /*
@@ -181,16 +191,16 @@ VALUES ('Hasler Ln Apartment', 1, 900.00, 3, 2, 1, 'https://photos.zillowstatic.
        ('1 bedroom, 1.0 bathroom, multi family home.', 24, 795, 1, 1, 1, 'https://photos.zillowstatic.com/fp/b69361b63e8ed1c57746c414ecf552fd-cc_ft_1152.jpg', 1, NULL, 'This is a 1 bedroom, 1.0 bathroom, multi family home. This home is located at 205 S High St, Mount Orab, OH 45154.', 880, 'Apartment', 0),
        ('Renovated Student Living!', 25, 2200, 8, 2, 1, 'https://photos.zillowstatic.com/fp/b69361b63e8ed1c57746c414ecf552fd-cc_ft_1152.jpg', 1, '2021-08-15', 'Over $15,000 in improvements since last year including new flooring on both levels and a new stackable washer and dryer on top floor. Ideally this home would be shared amongst a group of 4 with two separate levels each with 4 bedrooms and 1 bathroom with a huge backyard. 10 minute walk to campus and close to Millet Hall as well as mccullough hyde hospital for any athletes, rotc or nursing students. Semester pricing may vary depending on the # of students.', 2400, 'Apartment', 0),
        ('3 bedroom home in historical Germantown!', 26, 1300, 3, 1, 1, 'https://maps.googleapis.com/maps/api/streetview?location=50+Peffley+St%2C+Germantown%2C+OH+45327&size=1152x864&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&source=outdoor&&signature=IGyjnNz6N0aAYH4-sySvcfYQSzg=', 0, '2021-05-15', 'Welcome home! This 2-story, 3 bedroom home is located in historical Germantown, OH, has a newly remodeled bathroom, large fenced yard, and is in the Valley View School District. Call 937/694-0095 for viewing appointment.', 1600, 'House', 1),
-       ('Duplex in a quiet Subdivision.', 27, 1250, 3, 2, 4, 'https://photos.zillowstatic.com/fp/898fe9a4e3e3e1c623ecbf65f571c93f-cc_ft_1152.jpg', 1, '2021-05-15', 'This property is a duplex on a cul-de-sac located in a quiet subdivision. Local shopping is within two miles, and schools are a short commute. The duplex has a large master bedroom with full bath. The unit has an additional two bedrooms and a second full bath. The living area is an open floor plan that adjoins a kitchen fully equipped with all major appliances, a countertop breakfast bar, and tile flooring. Bedrooms and Living Area has one-year-old carpet.', 1900, 'Condo', 1),
-       ('What a townhouse!', 28, 995, 3, 1.5, 1, 'https://photos.zillowstatic.com/fp/d7c00225b58741540cdb544ba19c8317-cc_ft_576.jpg', 1, '2021-04-15', 'The 3 bedrooms are spacious. The guest bath and master bath are connected by the toilet and tub area, each has their own sink. The first floor features the living room, 1/2 bath and eat in kitchen.The entire unit has just been painted and has carpet installed on the steps and upstairs and tile flooring throughout the main floor.', 1500, 'Townhome', 1);
+       ('Duplex in a quiet Subdivision.', 27, 1250, 3, 2, 2, 'https://photos.zillowstatic.com/fp/898fe9a4e3e3e1c623ecbf65f571c93f-cc_ft_1152.jpg', 1, '2021-05-15', 'This property is a duplex on a cul-de-sac located in a quiet subdivision. Local shopping is within two miles, and schools are a short commute. The duplex has a large master bedroom with full bath. The unit has an additional two bedrooms and a second full bath. The living area is an open floor plan that adjoins a kitchen fully equipped with all major appliances, a countertop breakfast bar, and tile flooring. Bedrooms and Living Area has one-year-old carpet.', 1900, 'Condo', 1),
+       ('What a townhouse!', 28, 995, 3, 1.5, 2, 'https://photos.zillowstatic.com/fp/d7c00225b58741540cdb544ba19c8317-cc_ft_576.jpg', 1, '2021-04-15', 'The 3 bedrooms are spacious. The guest bath and master bath are connected by the toilet and tub area, each has their own sink. The first floor features the living room, 1/2 bath and eat in kitchen.The entire unit has just been painted and has carpet installed on the steps and upstairs and tile flooring throughout the main floor.', 1500, 'Townhome', 1);
 
 INSERT INTO lease_agreements (property_id, landlord_id, renter_id, monthly_rent, lease_start_date, lease_end_date)
 VALUES (102, 1, 2, 1100.50, '2020-01-01', '2021-12-31');
 
 --create application
 INSERT INTO applications (applicant_id, property_id, approval_status, applicant_name, applicant_phone)
-VALUES (2, 127, 0, 'Graham Hardaway', '5551238888'),
-       (3, 126, 0, 'Elijah Jackson', '1235558080');
+VALUES (1, 127, 0, 'Graham Hardaway', '5551238888'),
+       (1, 126, 0, 'Elijah Jackson', '1235558080');
 
 --select pending applications for a specific landlord
 SELECT application_id, applicant_id, properties.property_id, approval_status, applicant_name, applicant_phone FROM applications JOIN properties ON applications.property_id = properties.property_id WHERE landlord_id = 1 AND approval_status = 0;
@@ -210,7 +220,7 @@ select * from addresses;
 select * from properties;
 select * from lease_agreements;
 select * from applications;
-update users SET user_role = 'renter' where user_id = 2 OR user_id = 3;
+update users SET user_role = 'renter' where user_id = 1 OR user_id = 3;
 SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email FROM properties  JOIN addresses ON properties.address_id = addresses.address_id JOIN users ON properties.landlord_id = users.user_id WHERE available = 1;
 */
 

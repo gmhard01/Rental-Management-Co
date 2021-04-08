@@ -55,10 +55,11 @@ namespace Capstone.DAO
             return returnApplications;
         }
 
-        public bool CreateNewApplication(int propertyId, string applicantName, string applicantPhone)
+        public Application CreateNewApplication(int applicantId, int propertyId, string applicantName, string applicantPhone)
         {
+            Application returnApplication = new Application();
+            int applicationId;
             
-            int rowsAffected;
 
             try
             {
@@ -66,12 +67,15 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "INSERT INTO applications (property_id, approval_status, applicant_name, applicant_phone) VALUES (@propertyId, 'Pending', @applicantName, @applicantPhone);";
+                    string sqlString = "INSERT INTO applications (applicant_id, property_id, approval_status, applicant_name, applicant_phone) VALUES (@applicantId, @propertyId, 'Pending', @applicantName, @applicantPhone); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@applicantId", applicantId);
                     cmd.Parameters.AddWithValue("@propertyId", propertyId);
                     cmd.Parameters.AddWithValue("@applicantName", applicantName);
                     cmd.Parameters.AddWithValue("@applicantPhone", applicantPhone);
-                    rowsAffected = cmd.ExecuteNonQuery();
+                    applicationId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    returnApplication = GetApplicationById(applicationId);
                 }
             }
             catch (SqlException)
@@ -79,7 +83,7 @@ namespace Capstone.DAO
                 throw;
             }
 
-            return (rowsAffected>0);
+            return (returnApplication);
         }
 
         public bool UpdateApplicationStatus(int applicationId, string approvalStatus)
@@ -104,6 +108,43 @@ namespace Capstone.DAO
                 throw;
             }
             return (rowsAffected > 0);
+        }
+
+        private Application GetApplicationById(int applicationId)
+        {
+            Application returnApp = new Application();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT application_id, applicant_id, property_id, approval_status, applicant_name, applicant_phone FROM applications WHERE application_id = @applicationId;";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@applicationId", applicationId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+
+                        returnApp.ApplicationId = Convert.ToInt32(reader["application_id"]);
+                        returnApp.ApplicantId = Convert.ToInt32(reader["applicant_id"]);
+                        returnApp.PropertyId = Convert.ToInt32(reader["property_id"]);
+                        returnApp.ApprovalStatus = Convert.ToString(reader["approval_status"]);
+                        returnApp.ApplicantName = Convert.ToString(reader["applicant_name"]);
+                        returnApp.ApplicantPhone = Convert.ToString(reader["applicant_phone"]);
+
+                        
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnApp;
         }
     }
 }
