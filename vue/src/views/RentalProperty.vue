@@ -4,11 +4,11 @@
     <header>
       <headerBar id="headerBarId" />
     </header>
-    <div>
+    <!-- <div>
       <propertyTile />
-    </div>
+    </div> -->
     <div>
-    <form class="applicationBox" @submit.prevent="apply">
+    <form class="applicationBox" @submit.prevent="apply()">
       <h1>Application Form</h1>
       <input type="text" name="" placeholder="First Name" required v-model="applicationForm.firstName" autofocus>
       <input type="text" name="" placeholder="Last Name" required v-model="applicationForm.lastName" autofocus>
@@ -23,7 +23,7 @@
 <script>
 
 import headerBar from '@/components/headerBar.vue';
-import propertyTile from '@/components/propertyTile.vue';
+// import propertyTile from '@/components/propertyTile.vue';
 import PropService from '@/services/PropService';
 
 export default {
@@ -31,6 +31,8 @@ name: "rentalProperty",
 data() {
   return {
     hasApplied: "false",
+    formNotExcepted: "false",
+    errorResponse: "",
     applicationForm: {
       applicantId: this.$store.state.user.userId,
       propertyId: this.$route.params.propertyId,
@@ -43,7 +45,26 @@ data() {
 },
 methods: {
   apply() {    
-    this.hasApplied = PropService.submitApplication(this.applicationForm); 
+    this.errorResponse = "you have hit submit";
+    PropService.submitApplication(this.applicationForm).then(response => {
+      if(response.error === null){
+        this.hasApplied = true;
+      }
+      else {
+        this.formNotExcepted = true;
+      }
+    })
+    .catch((error) => {
+          // const response = error.response;
+              this.formNotExcepted = true;
+              this.errorResponse = error;
+          // if (error.response.status >= 400) {
+          //   this.formNotExcepted = true;
+          // }
+          // else{
+          //   this.formNotExcepted = true;
+          // }
+        });
     this.applicationForm.firstName = "";
     this.applicationForm.lastName = "";
     this.applicationForm.phone = "";   
@@ -51,7 +72,7 @@ methods: {
 },
 components: {
     headerBar,
-    propertyTile
+    // propertyTile
   },
 }
 </script>
