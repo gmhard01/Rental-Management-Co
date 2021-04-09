@@ -10,8 +10,9 @@
     <div>
     <form class="applicationBox">
       <h1>Application Form</h1>
-      <input type="text" name="" placeholder="Full Name" required autofocus>
-      <input type="tel" id="phoneNumber" name="" placeholder="Phone Number" required autofocus>
+      <input type="text" name="" placeholder="First Name" required v-model="applicationForm.firstName" autofocus>
+      <input type="text" name="" placeholder="Last Name" required v-model="applicationForm.lastName" autofocus>
+      <input type="tel" id="phoneNumber" name="" placeholder="Phone Number" required v-model="applicationForm.phoneNumber" autofocus>
       <input type="submit" class="submit" name="" value="Submit">
     </form>
     </div>
@@ -26,6 +27,18 @@ import propertyTile from '@/components/propertyTile.vue';
 
 export default {
 name: "rentalProperty",
+data() {
+  return {
+    applicationForm: {
+      applicantId: this.$store.state.user.,
+      propertyId: this.$route.params.propertyId,
+      approvalStatus: "pending",
+      firstName: "",
+      lastName: "",
+      phoneNumber: ""
+    }
+  }
+},
 
 components: {
     headerBar,
