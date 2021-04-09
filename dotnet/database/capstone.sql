@@ -102,7 +102,8 @@ CREATE TABLE applications (
 	applicant_id int NOT NULL,
 	property_id int NOT NULL,
 	approval_status varchar(30) NOT NULL,
-	applicant_name varchar(100) NOT NULL,
+	applicant_first_name varchar(100) NOT NULL,
+	applicant_last_name varchar(100) NOT NULL,
 	applicant_phone char(10) NOT NULL
 
 	CONSTRAINT PK_applications PRIMARY KEY (application_id)
@@ -202,9 +203,9 @@ INSERT INTO lease_agreements (property_id, landlord_id, renter_id, monthly_rent,
 VALUES (102, 1, 2, 1100.50, '2020-01-01', '2021-12-31');
 
 --create application
-INSERT INTO applications (applicant_id, property_id, approval_status, applicant_name, applicant_phone)
-VALUES (3, 127, 'Pending', 'Nathan Groehl', '5551238888'),
-       (2, 126, 'Pending', 'Elijah Jackson', '1235558080');
+INSERT INTO applications (applicant_id, property_id, approval_status, applicant_first_name, applicant_last_name, applicant_phone)
+VALUES (3, 127, 'Pending', 'Nathan', 'Groehl', '5551238888'),
+       (2, 126, 'Pending', 'Elijah', 'Jackson', '1235558080');
 
 --select pending applications for a specific landlord
 --SELECT application_id, applicant_id, properties.property_id, approval_status, applicant_name, applicant_phone FROM applications JOIN properties ON applications.property_id = properties.property_id WHERE landlord_id = 1 AND approval_status = 0;

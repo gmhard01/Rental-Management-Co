@@ -11,7 +11,8 @@ namespace Capstone.Models
         public int ApplicantId { get; set; }
         public int PropertyId { get; set; }
         public string ApprovalStatus { get; set; }
-        public string ApplicantName { get; set; }
+        public string ApplicantFirstName { get; set; }
+        public string ApplicantLastName { get; set; }
         public string ApplicantPhone { get; set; }
     }
 }

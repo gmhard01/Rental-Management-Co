@@ -26,7 +26,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT application_id, applicant_id, applications.property_id, approval_status, applicant_name, applicant_phone FROM applications JOIN properties ON applications.property_id = properties.property_id WHERE landlord_id = @landlordId AND approval_status = 0;";
+                    string sqlString = "SELECT application_id, applicant_id, applications.property_id, approval_status, applicant_first_name,  applicant_last_name, applicant_phone FROM applications JOIN properties ON applications.property_id = properties.property_id WHERE landlord_id = @landlordId AND approval_status = 0;";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     cmd.Parameters.AddWithValue("@landlordId", landlordId);
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -39,7 +39,8 @@ namespace Capstone.DAO
                             ApplicantId = Convert.ToInt32(reader["applicant_id"]),
                             PropertyId = Convert.ToInt32(reader["property_id"]),
                             ApprovalStatus = Convert.ToString(reader["approval_status"]),
-                            ApplicantName = Convert.ToString(reader["applicant_name"]),
+                            ApplicantFirstName = Convert.ToString(reader["applicant_first_name"]),
+                            ApplicantLastName = Convert.ToString(reader["applicant_last_name"]),
                             ApplicantPhone = Convert.ToString(reader["applicant_phone"])
                         };
 
@@ -55,7 +56,7 @@ namespace Capstone.DAO
             return returnApplications;
         }
 
-        public Application CreateNewApplication(int applicantId, int propertyId, string applicantName, string applicantPhone)
+        public Application CreateNewApplication(int applicantId, int propertyId, string applicantFirstName, string applicantLastName, string applicantPhone)
         {
             Application returnApplication = new Application();
             int applicationId;
@@ -67,12 +68,13 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "INSERT INTO applications (applicant_id, property_id, approval_status, applicant_name, applicant_phone) VALUES (@applicantId, @propertyId, 'Pending', @applicantName, @applicantPhone); SELECT SCOPE_IDENTITY()";
+                    string sqlString = "INSERT INTO applications (applicant_id, property_id, approval_status, applicant_first_name, applicant_last_name, applicant_phone) VALUES (@applicantId, @propertyId, 'Pending', @applicant_first_name, @applicant_last_name, @applicant_phone); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     cmd.Parameters.AddWithValue("@applicantId", applicantId);
                     cmd.Parameters.AddWithValue("@propertyId", propertyId);
-                    cmd.Parameters.AddWithValue("@applicantName", applicantName);
-                    cmd.Parameters.AddWithValue("@applicantPhone", applicantPhone);
+                    cmd.Parameters.AddWithValue("@applicant_first_name", applicantFirstName);
+                    cmd.Parameters.AddWithValue("@applicant_last_name", applicantLastName);
+                    cmd.Parameters.AddWithValue("@applicant_phone", applicantPhone);
                     applicationId = Convert.ToInt32(cmd.ExecuteScalar());
 
                     returnApplication = GetApplicationById(applicationId);
@@ -120,7 +122,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT application_id, applicant_id, property_id, approval_status, applicant_name, applicant_phone FROM applications WHERE application_id = @applicationId;";
+                    string sqlString = "SELECT application_id, applicant_id, property_id, approval_status, applicant_first_name, applicant_last_name, applicant_phone FROM applications WHERE application_id = @applicationId;";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     cmd.Parameters.AddWithValue("@applicationId", applicationId);
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -132,7 +134,8 @@ namespace Capstone.DAO
                         returnApp.ApplicantId = Convert.ToInt32(reader["applicant_id"]);
                         returnApp.PropertyId = Convert.ToInt32(reader["property_id"]);
                         returnApp.ApprovalStatus = Convert.ToString(reader["approval_status"]);
-                        returnApp.ApplicantName = Convert.ToString(reader["applicant_name"]);
+                        returnApp.ApplicantFirstName = Convert.ToString(reader["applicant_first_name"]);
+                        returnApp.ApplicantLastName = Convert.ToString(reader["applicant_last_name"]);
                         returnApp.ApplicantPhone = Convert.ToString(reader["applicant_phone"]);
 
                         

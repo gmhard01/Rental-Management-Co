@@ -29,12 +29,11 @@ namespace Capstone.Controllers
             return Ok(applications);
         }
 
-        [HttpPost("/newapplication/{propertyId}/{applicantName}/{applicantPhone}")]
-        [Authorize(Roles = "renter")]
-        public ActionResult<Application> CreateApplication(int propertyId, string applicantName, string applicantPhone)
-        {
-            int userId = Convert.ToInt32(User.FindFirst("sub").Value);
-            Application applicationCreated = applicationDAO.CreateNewApplication(userId, propertyId, applicantName, applicantPhone);
+        [HttpPost("/newapplication")]
+        //[Authorize(Roles = "renter")]
+        public ActionResult<Application> CreateApplication(Application newApp)
+        {            
+            Application applicationCreated = applicationDAO.CreateNewApplication(newApp.ApplicantId, newApp.PropertyId, newApp.ApplicantFirstName, newApp.ApplicantLastName, newApp.ApplicantPhone);
             return Created($"Application Id #{applicationCreated.ApplicationId} was successfully submitted.", applicationCreated);
         }
     }
