@@ -8,5 +8,8 @@ export default {
 
   getPropertyList() {
     return https.get('/properties')  //needs updated to match c#
+  },
+  submitApplication(applicationForm){
+    return axios.post('/rental-property/:propertyId', applicationForm);
   }
 }
