@@ -49,19 +49,21 @@ data() {
     errorResponse: "",
     applicationForm: {
       applicantId: this.$store.state.user.userId,
-      propertyId: this.$route.params.propertyId,
+      propertyId: parseInt(this.$route.params.propertyId),
       approvalStatus: "pending",
       applicantFirstName: "",
       applicantLastName: "",
       applicantPhone: ""
-    }    
+    },
+    responseData: {},    
   }
 },
 methods: {
   apply() {    
     this.errorResponse = "you have hit submit";
     PropService.submitApplication(this.applicationForm).then(response => {
-      if(response.error === null){
+      this.responseData = response;
+      if(response.data.applicationId != null){
         this.hasApplied = true;
       }
       else {
