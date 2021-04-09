@@ -20,7 +20,7 @@
           <li v-if="this.$store.state.user.role=='maintenance'">|</li>
           <li><router-link v-if="this.$store.state.user.role=='maintenance'" :to="{ name: 'home'}">Maintenance To-Dos</router-link></li>
         </ul>
-        <div class="signIn">
+        <div class="signIn" v-on:click="saveCurrentRoute()">
           <router-link :to="{ name: 'login' }" class="myAccount"
             ><img src="@/assets/user-circle-solid.png"
           /></router-link>
@@ -35,6 +35,17 @@
 <script>
 export default {
   name: "headerBar",
+  currentPath: "",
+  methods: {
+    saveCurrentRoute(){
+      /*this.$store.commit("SAVE_CURRENT_ROUTE", {fullPath: })*/
+    }
+  },
+  computed: {
+    //getPath(){
+      /*this.$route.*/
+    //},
+  }
 };
 </script>
 
