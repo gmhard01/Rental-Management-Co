@@ -45,6 +45,43 @@ namespace Capstone.DAO
             return propertyList;
         }
 
+        public List<Property> GetAvailablePropertiesPage(int numberOfProperties, int pageIndex)
+        {
+            List<Property> propertyList = new List<Property>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email " + 
+                                       "FROM properties JOIN addresses ON properties.address_id = addresses.address_id " +
+                                       "JOIN users ON properties.landlord_id = users.user_id " +
+                                       "WHERE available = 1 " +
+                                       "ORDER BY property_id ASC " +
+                                       "OFFSET @PageSize *@PageIndex ROWS " +
+                                       "FETCH NEXT @PageSize ROWS ONLY;";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@PageSize", numberOfProperties);
+                    cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Property p = GetPropertyFromReader(reader);
+                        propertyList.Add(p);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return propertyList;
+        }
+
         public Property GetPropertyByID(int id)
         {
             Property returnProperty = new Property();
