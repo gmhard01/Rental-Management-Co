@@ -35,6 +35,21 @@ namespace Capstone.Controllers
             }
         }
 
+        [HttpGet("/properties/page/{numberOfProperties}/{pageIndex}")]
+        public ActionResult<List<Property>> GetPropertiesPage(int numberOfProperties, int pageIndex)
+        {
+            List<Property> properties = propertyDAO.GetAvailablePropertiesPage(numberOfProperties, pageIndex);
+
+            if (properties.Count > 0)
+            {
+                return Ok(properties);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpGet("/properties/{id}")]
         public ActionResult<Property> GetProperty(int id)
         {
