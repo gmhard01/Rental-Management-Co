@@ -44,7 +44,7 @@
             <input type="tel" id="phoneNumber" class="form-control" placeholder="Phone Number" v-model="user.phone" required />
             <input type="email" id="email" class="form-control" placeholder="Email" v-model="user.email" required />
             <select name="role" class="dropDownMenu" v-model="user.role" required>
-              <option selected="selected" value="user">User</option>
+              <option selected="selected" value="renter">Renter</option>
               <option value="landlord">Landlord</option>
               <option value="maintenance">Maintenance</option>
             </select>
