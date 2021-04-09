@@ -56,7 +56,7 @@ namespace Capstone.Controllers
                 return Conflict(new { message = "Username already taken. Please choose a different username." });
             }
 
-            User user = userDAO.AddUser(userParam.Username, userParam.Password, userParam.Role);
+            User user = userDAO.AddUser(userParam.Username, userParam.Password, userParam.Role, userParam.Email, userParam.Phone, userParam.FirstName, userParam.LastName);
             if (user != null)
             {
                 result = Created(user.Username, null); //values aren't read on client
