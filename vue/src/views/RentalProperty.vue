@@ -26,7 +26,6 @@ export default {
 name: "rentalProperty",
 data() {
   return {
-    picIndex: 0,
     hasApplied: "false",
     formNotExcepted: "false",
     errorResponse: "",
