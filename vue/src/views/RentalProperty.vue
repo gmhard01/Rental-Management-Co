@@ -10,9 +10,9 @@
     <div>
     <form class="applicationBox" @submit.prevent="apply()">
       <h1>Application Form</h1>
-      <input type="text" name="" placeholder="First Name" required v-model="applicationForm.firstName" autofocus>
-      <input type="text" name="" placeholder="Last Name" required v-model="applicationForm.lastName" autofocus>
-      <input type="tel" id="phoneNumber" name="" placeholder="Phone Number" required v-model="applicationForm.phone" autofocus>
+      <input type="text" name="" placeholder="Legal First Name" required v-model="applicationForm.applicantFirstName" autofocus>
+      <input type="text" name="" placeholder="Legal Last Name" required v-model="applicationForm.applicantLastName" autofocus>
+      <input type="tel" id="phoneNumber" name="" placeholder="Phone Number" required v-model="applicationForm.applicantPhone" autofocus>
       <input type="submit" class="submit" name="" value="Submit">
     </form>
     </div>
@@ -37,9 +37,9 @@ data() {
       applicantId: this.$store.state.user.userId,
       propertyId: this.$route.params.propertyId,
       approvalStatus: "pending",
-      firstName: "",
-      lastName: "",
-      phone: ""
+      applicantFirstName: "",
+      applicantLastName: "",
+      applicantPhone: ""
     }    
   }
 },
