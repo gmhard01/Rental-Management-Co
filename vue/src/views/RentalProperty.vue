@@ -42,11 +42,11 @@ data() {
   }
 },
 methods: {
-  apply() {
+  apply() {    
+    this.hasApplied = PropService.submitApplication(this.applicationForm); 
     this.applicationForm.firstName = "";
     this.applicationForm.lastName = "";
-    this.applicationForm.phone = "";
-    this.hasApplied = PropService.submitApplication(this.applicationForm);    
+    this.applicationForm.phone = "";   
   }
 },
 components: {
