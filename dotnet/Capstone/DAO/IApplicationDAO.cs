@@ -5,7 +5,8 @@ namespace Capstone.DAO
 {
     public interface IApplicationDAO
     {
-        List<Application> GetPendingApplicationsForLandlord(int landlordId);
+        public List<Application> GetPendingApplicationsForLandlord(int landlordId);
+        public List<Application> GetPendingApplicationsForApplicant(int applicantId);
         public Application CreateNewApplication(int userId, int propertyId, string applicantFirstName, string applicantLastName, string applicantPhone);
         public bool UpdateApplicationStatus(int applicationId, string approvalStatus);
     }

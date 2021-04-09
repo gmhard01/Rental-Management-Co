@@ -23,11 +23,26 @@ namespace Capstone.Controllers
         [HttpGet]
         public ActionResult<List<Property>> GetProperties()
         {
-            List<Property> properties = propertyDAO.GetAllProperties();
+            List<Property> properties = propertyDAO.GetAvailableProperties();
 
             if (properties.Count > 0)
             {
                 return Ok(properties);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("/properties/{id}")]
+        public ActionResult<Property> GetProperty(int id)
+        {
+            Property property = propertyDAO.GetPropertyByID(id);
+
+            if (property.PropertyId != 0)
+            {
+                return Ok(property);
             }
             else
             {

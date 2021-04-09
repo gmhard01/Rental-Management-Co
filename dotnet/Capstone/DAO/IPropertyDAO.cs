@@ -5,6 +5,8 @@ namespace Capstone.DAO
 {
     public interface IPropertyDAO
     {
-        List<Property> GetAllProperties();
+        List<Property> GetAvailableProperties();
+
+        Property GetPropertyByID(int id);
     }
 }

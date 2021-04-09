@@ -10,6 +10,6 @@ export default {
     return https.get('/properties')  //needs updated to match c#
   },
   submitApplication(applicationForm){
-    return axios.post('/rental-property', applicationForm);
+    return axios.post('/newapplication', applicationForm);
   }
 }

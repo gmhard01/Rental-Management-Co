@@ -21,16 +21,27 @@ namespace Capstone.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "landlord")]
+        [Authorize(Roles = "landlord, renter")]
         public ActionResult<List<Application>> GetApplications()
         {
+            List<Application> applications = new List<Application>();
+
             int userId = Convert.ToInt32(User.FindFirst("sub").Value);
-            List<Application> applications = applicationDAO.GetPendingApplicationsForLandlord(userId);
+            string userRole = Convert.ToString(User.FindFirst("http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value);
+
+            if (userRole == "landlord")
+            {
+                applications = applicationDAO.GetPendingApplicationsForLandlord(userId);
+            }
+            else if (userRole == "renter")
+            {
+                applications = applicationDAO.GetPendingApplicationsForApplicant(userId);
+            }
             return Ok(applications);
         }
 
         [HttpPost("/newapplication")]
-        //[Authorize(Roles = "renter")]
+        [Authorize(Roles = "renter")]
         public ActionResult<Application> CreateApplication(Application newApp)
         {            
             Application applicationCreated = applicationDAO.CreateNewApplication(newApp.ApplicantId, newApp.PropertyId, newApp.ApplicantFirstName, newApp.ApplicantLastName, newApp.ApplicantPhone);
