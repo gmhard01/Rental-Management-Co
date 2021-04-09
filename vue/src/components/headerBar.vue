@@ -13,8 +13,8 @@
       <div class="rightSide">
         <ul class="navList">
           <li><router-link :to="{ name: 'home' }">Home</router-link></li>
-          <li v-if="this.$store.state.user.role=='user'">|</li>
-          <li><router-link v-if="this.$store.state.user.role=='user'" :to="{ name: 'home'}">My Rental</router-link></li>
+          <li v-if="this.$store.state.user.role=='renter'">|</li>
+          <li><router-link v-if="this.$store.state.user.role=='renter'" :to="{ name: 'home'}">My Rental</router-link></li>
           <li v-if="this.$store.state.user.role=='landlord'">|</li>
           <li><router-link v-if="this.$store.state.user.role=='landlor  d'" :to="{ name: 'home'}">My Rentals</router-link></li>
           <li v-if="this.$store.state.user.role=='maintenance'">|</li>
