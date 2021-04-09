@@ -26,24 +26,44 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT application_id, applicant_id, applications.property_id, approval_status, applicant_first_name,  applicant_last_name, applicant_phone FROM applications JOIN properties ON applications.property_id = properties.property_id WHERE landlord_id = @landlordId AND approval_status = 0;";
+                    string sqlString = "SELECT application_id, applicant_id, applications.property_id, approval_status, applicant_first_name, applicant_last_name, applicant_phone FROM applications JOIN properties ON applications.property_id = properties.property_id WHERE landlord_id = @landlordId AND approval_status = 'Pending';";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     cmd.Parameters.AddWithValue("@landlordId", landlordId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        Application a = new Application()
-                        {
-                            ApplicationId = Convert.ToInt32(reader["application_id"]),
-                            ApplicantId = Convert.ToInt32(reader["applicant_id"]),
-                            PropertyId = Convert.ToInt32(reader["property_id"]),
-                            ApprovalStatus = Convert.ToString(reader["approval_status"]),
-                            ApplicantFirstName = Convert.ToString(reader["applicant_first_name"]),
-                            ApplicantLastName = Convert.ToString(reader["applicant_last_name"]),
-                            ApplicantPhone = Convert.ToString(reader["applicant_phone"])
-                        };
+                        Application a = GetApplicationFromReader(reader);
+                        returnApplications.Add(a);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
 
+            return returnApplications;
+        }
+
+        public List<Application> GetPendingApplicationsForApplicant(int applicantId)
+        {
+            List<Application> returnApplications = new List<Application>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT application_id, applicant_id, applications.property_id, approval_status, applicant_first_name, applicant_last_name, applicant_phone FROM applications JOIN properties ON applications.property_id = properties.property_id WHERE applicant_id = @applicantId AND approval_status = 'Pending';";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@applicantId", applicantId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Application a = GetApplicationFromReader(reader);
                         returnApplications.Add(a);
                     }
                 }
@@ -129,16 +149,7 @@ namespace Capstone.DAO
 
                     while (reader.Read())
                     {
-
-                        returnApp.ApplicationId = Convert.ToInt32(reader["application_id"]);
-                        returnApp.ApplicantId = Convert.ToInt32(reader["applicant_id"]);
-                        returnApp.PropertyId = Convert.ToInt32(reader["property_id"]);
-                        returnApp.ApprovalStatus = Convert.ToString(reader["approval_status"]);
-                        returnApp.ApplicantFirstName = Convert.ToString(reader["applicant_first_name"]);
-                        returnApp.ApplicantLastName = Convert.ToString(reader["applicant_last_name"]);
-                        returnApp.ApplicantPhone = Convert.ToString(reader["applicant_phone"]);
-
-                        
+                        returnApp = GetApplicationFromReader(reader);
                     }
                 }
             }
@@ -148,6 +159,22 @@ namespace Capstone.DAO
             }
 
             return returnApp;
+        }
+
+        private Application GetApplicationFromReader(SqlDataReader reader)
+        {
+            Application a = new Application()
+            {
+                ApplicationId = Convert.ToInt32(reader["application_id"]),
+                ApplicantId = Convert.ToInt32(reader["applicant_id"]),
+                PropertyId = Convert.ToInt32(reader["property_id"]),
+                ApprovalStatus = Convert.ToString(reader["approval_status"]),
+                ApplicantFirstName = Convert.ToString(reader["applicant_first_name"]),
+                ApplicantLastName = Convert.ToString(reader["applicant_last_name"]),
+                ApplicantPhone = Convert.ToString(reader["applicant_phone"])
+            };
+
+            return a;
         }
     }
 }
