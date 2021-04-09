@@ -41,7 +41,7 @@
             />
           </div>
           <div class="rightSideEntries">
-            <input type="tel" id="phoneNumber" class="form-control" placeholder="Phone Number" v-model="user.phoneNumber" required />
+            <input type="tel" id="phoneNumber" class="form-control" placeholder="Phone Number" v-model="user.phone" required />
             <input type="email" id="email" class="form-control" placeholder="Email" v-model="user.email" required />
             <select name="role" class="dropDownMenu" v-model="user.role" required>
               <option selected="selected" value="user">User</option>
@@ -76,9 +76,11 @@ export default {
         username: '',
         password: '',
         confirmPassword: '',
-        role: 'user',
-        phoneNumber: '',
+        role: '',
+        phone: '',
         email: '',
+        firstName: '',
+        lastName: ''
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
