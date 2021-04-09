@@ -79,9 +79,9 @@ methods: {
           //   this.formNotExcepted = true;
           // }
         });
-    this.applicationForm.firstName = "";
-    this.applicationForm.lastName = "";
-    this.applicationForm.phone = "";   
+    this.applicationForm.applicantFirstName = "";
+    this.applicationForm.applicantLastName = "";
+    this.applicationForm.applicantPhone = "";   
   }
 },
 components: {
