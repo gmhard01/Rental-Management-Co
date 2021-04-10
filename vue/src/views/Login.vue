@@ -38,7 +38,7 @@ export default {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
             this.$router.push("/");
-            this.$router.previous();
+            // this.$router.previous();
           }
         })
         .catch(error => {

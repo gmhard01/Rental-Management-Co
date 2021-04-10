@@ -5,12 +5,13 @@ const https = axios.create({
 });
 
 export default {
+  
 
   getPropertyList() {
     return https.get('/properties')  //needs updated to match c#
   },
   submitApplication(applicationForm){
-    return https.post('/newapplication', applicationForm);
+    return axios.post('/newapplication', applicationForm);
   },
   getPropertyById(propertyId){
     return https.get(`/properties/${propertyId}`);

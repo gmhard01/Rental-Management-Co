@@ -15,7 +15,7 @@
         <input type="tel" id="phoneNumber" name="" placeholder="Phone Number" required v-model="applicationForm.applicantPhone" autofocus>
         <input type="submit" class="submit" name="" value="Submit">
       </form>
-      {{responseData}}
+      <p v-if="hasApplied">you have applied</p>
     </div>
   </body>
 </div>
@@ -41,24 +41,23 @@ data() {
       applicantFirstName: "",
       applicantLastName: "",
       applicantPhone: ""
-    },
-    responseData: {},   
+    }, 
   }
 },
 methods: {
   apply() {    
     this.errorResponse = "you have hit submit";
     PropService.submitApplication(this.applicationForm).then(response => {
-      this.responseData = response;
-      if(response.applicationId != null){
+      if(response.data.applicationId != null){
         this.hasApplied = true;
       }
       else {
         this.formNotExcepted = true;
       }
     })
-    .catch(() => {
+    .catch((error) => {
               this.formNotExcepted = true;
+              console.log(error);
     });
     this.applicationForm.applicantFirstName = "";
     this.applicationForm.applicantLastName = "";
