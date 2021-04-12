@@ -62,7 +62,10 @@ methods: {
     this.applicationForm.applicantFirstName = "";
     this.applicationForm.applicantLastName = "";
     this.applicationForm.applicantPhone = "";   
-  }
+  },
+  saveCurrentRoute() {
+      this.$store.commit("SAVE_CURRENT_ROUTE", this.getCurrentRoute);
+    },
 },
 computed: {
   getPropertyObject() {
@@ -70,7 +73,11 @@ computed: {
   },
   getCurrentPropertyId() {
     return this.$route.params.propertyId;
-  }
+  },
+  getCurrentRoute() {
+    return this.$route.path;
+  },
+  
 },
 components: {
     headerBar,
@@ -80,7 +87,15 @@ components: {
     PropService.getPropertyById(this.getCurrentPropertyId).then ((response) => {
         this.$store.commit("SET_PROPERTY", response.data);        
       })
-  }
+    
+    this.saveCurrentRoute();
+  },
+  // mounted() {
+  //   document.addEventListener("backbutton", this.removePathFromStore, false);
+  // },
+  // beforeDestroy() {
+  //   document.removeEventListener("backbutton", this.removePathFromStore);
+  // },
 }
 </script>
 

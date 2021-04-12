@@ -37,8 +37,7 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/");
-            // this.$router.previous();
+            this.$router.push(this.checkForPropertyPath());
           }
         })
         .catch(error => {
@@ -48,8 +47,50 @@ export default {
             this.invalidCredentials = true;
           }
         });
-    }
-  }
+    },
+    checkForPropertyPath() {
+      let output = "/";
+
+      if (this.$store.state.currentPropertyPath != "") {        
+        output = this.$store.state.currentPropertyPath;        
+      }
+      else if(this.$store.state.properties != []) {
+          output = this.$store.state.currentSearchIndex;
+      }
+
+      return output;
+    },
+    // redirectUser() {
+    //   let loginPath = "/login";
+
+    //   this.$router.push("/");
+    //   this.$router.go(this.numOfPagesToGoBack);
+
+    //   if (this.$route.path == loginPath) {
+    //     this.$router.push("/");
+    //   }
+    // }
+  },
+  computed: {
+    numOfPagesToGoBack() {
+      let output = -2;
+
+      if (this.checkIfPathContainsRegistered) {
+        output = -6;
+      }
+
+      return output;
+    },
+    checkIfPathContainsRegistered() {
+      let checkPathForRegistration = false;
+
+      if (this.$route.query.registration) {
+        checkPathForRegistration = true;
+      }
+
+      return checkPathForRegistration;
+    },    
+  },
 };
 </script>
 <style scoped>

@@ -39,6 +39,7 @@ export default {
     PropService.getPropertyList().then ((response) => {
         this.$store.commit("SET_PROPERTIES", response.data);        
       })
+      this.removePathFromStore();
       },
   computed: {
     propertylist(){
@@ -61,12 +62,16 @@ export default {
       }
 
       return this.propertylist.slice(previousIndex, newIndex);
-    }
+    },
+    getCurrentRoute() {
+      return this.$route.path;
+    },
   },
   methods: {
     next(indexNum = 0){
       let startingTileIndex = indexNum + 1;
       this.$router.push({name: "available-properties", params: {page: startingTileIndex}});
+      this.saveCurrentSearchIndex();
       window.scrollTo(0, 0);
     },
     previous(){
@@ -80,6 +85,12 @@ export default {
     },
     goToProperty(currentProperty){
       this.$router.push({name: "rental-property", params: {propertyId: currentProperty.propertyId}});      
+    },
+    saveCurrentSearchIndex(){
+      this.$store.commit("SAVE_CURRENT_SEARCH_INDEX", this.getCurrentRoute);
+    },
+    removePathFromStore() {
+      this.$store.commit("REMOVE_CURRENT_ROUTE");
     },
   }};
 </script>
