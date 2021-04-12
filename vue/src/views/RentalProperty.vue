@@ -5,14 +5,17 @@
       <headerBar id="headerBarId" />
     </header>
     <div>
-      <form class="applicationBox" @submit.prevent="apply()">
+      <propertyTile v-bind:property="getPropertyObject" />
+    </div>
+    <div>
+      <form class="applicationBox" @submit.prevent="apply">
         <h1>Application Form</h1>
         <input type="text" name="" placeholder="Legal First Name" required v-model="applicationForm.applicantFirstName" autofocus>
         <input type="text" name="" placeholder="Legal Last Name" required v-model="applicationForm.applicantLastName" autofocus>
         <input type="tel" id="phoneNumber" name="" placeholder="Phone Number" required v-model="applicationForm.applicantPhone" autofocus>
         <input type="submit" class="submit" name="" value="Submit">
       </form>
-      {{responseData}}
+      <p v-if="hasApplied">you have applied</p>
     </div>
   </body>
 </div>
@@ -22,13 +25,14 @@
 
 import headerBar from '@/components/headerBar.vue';
 import PropService from '@/services/PropService';
+import propertyTile from '@/components/propertyTile.vue';
 
 export default {
 name: "rentalProperty",
 data() {
   return {
-    hasApplied: "false",
-    formNotExcepted: "false",
+    hasApplied: false,
+    formNotExcepted: false,
     errorResponse: "",
     applicationForm: {
       applicantId: this.$store.state.user.userId,
@@ -37,15 +41,13 @@ data() {
       applicantFirstName: "",
       applicantLastName: "",
       applicantPhone: ""
-    },
-    responseData: {},    
+    }, 
   }
 },
 methods: {
   apply() {    
     this.errorResponse = "you have hit submit";
     PropService.submitApplication(this.applicationForm).then(response => {
-      this.responseData = response;
       if(response.data.applicationId != null){
         this.hasApplied = true;
       }
@@ -54,27 +56,35 @@ methods: {
       }
     })
     .catch((error) => {
-          // const response = error.response;
               this.formNotExcepted = true;
-              this.errorResponse = error;
-          // if (error.response.status >= 400) {
-          //   this.formNotExcepted = true;
-          // }
-          // else{
-          //   this.formNotExcepted = true;
-          // }
-        });
+              console.log(error);
+    });
     this.applicationForm.applicantFirstName = "";
     this.applicationForm.applicantLastName = "";
     this.applicationForm.applicantPhone = "";   
   }
 },
+computed: {
+  getPropertyObject() {
+    return this.$store.state.currentProperty;
+  },
+  getCurrentPropertyId() {
+    return this.$route.params.propertyId;
+  }
+},
 components: {
     headerBar,
+    propertyTile,
   },
+  created() {
+    PropService.getPropertyById(this.getCurrentPropertyId).then ((response) => {
+        this.$store.commit("SET_PROPERTY", response.data);        
+      })
+  }
 }
 </script>
 
+PropertyTile
 <style>
 #headerBarId {
   left: 0rem;

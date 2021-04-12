@@ -25,6 +25,7 @@ export default new Vuex.Store({
     currentIndex: 0,
     properties: [],
     currentRoute: {},
+    currentProperty: {},
   },
   mutations: {
     SET_PROPERTIES(state, propertyArray){
@@ -33,8 +34,8 @@ export default new Vuex.Store({
     GET_PROPERTIES(state){
       return state.properties;
     },
-    GET_PROPERTY(state, propId){
-      return state.properties.find(element => element.propertyId == propId);
+    SET_PROPERTY(state, property){
+      state.currentProperty = property;
     },
     GET_NEXT_PROPERTY_LIST(state, startingIndex = state.currentIndex, amountToRetreive){
       let start = startingIndex;

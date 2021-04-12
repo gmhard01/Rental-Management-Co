@@ -24,7 +24,7 @@
           <router-link :to="{ name: 'login' }" class="myAccount"
             ><img src="@/assets/user-circle-solid.png"
           /></router-link>
-          <router-link v-if="!this.$store.state.isLoggedIn" :to="{ name: 'login' }" class="signInText">Sign In</router-link>
+          <router-link v-if="!isLoggedIn" :to="{ name: 'login' }" class="signInText">Sign In</router-link>
           <router-link v-else :to="{ name: 'logout' }" class="signInText">Log Out</router-link>
         </div>
       </div>
@@ -45,6 +45,15 @@ export default {
     //getPath(){
       /*this.$route.*/
     //},
+
+    isLoggedIn() {
+      if(this.$store.state.user.username != null){
+        return true;
+      }
+      else{
+        return false;
+      }
+    },
   }
 };
 </script>
