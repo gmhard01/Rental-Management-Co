@@ -12,6 +12,7 @@
         <input type="tel" id="phoneNumber" name="" placeholder="Phone Number" required v-model="applicationForm.applicantPhone" autofocus>
         <input type="submit" class="submit" name="" value="Submit">
       </form>
+      {{responseData}}
     </div>
   </body>
 </div>

@@ -109,7 +109,6 @@ li{
 
 .cardDetails {
   max-height: 4.3rem;
-  overflow: hidden;
   text-overflow: ellipsis;
   overflow: auto;
 }
