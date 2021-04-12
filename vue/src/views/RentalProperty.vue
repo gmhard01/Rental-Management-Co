@@ -19,10 +19,11 @@
       </form>
       <p class="needToSignIn" v-if="hasApplied">You have successfully applied</p>
       <div class="needToSignIn" v-if="!isLoggedIn">
-        You must be signed in to apply 
+        You must be signed in to apply
       <router-link :to="{ name: 'login' }"><button>Login</button></router-link>
       </div>
     </div>
+    <router-link :to="this.$store.state.currentSearchIndex"><button class= "backToSearch">Back to search results</button></router-link>
   </body>
 </div>
 </template>
@@ -102,18 +103,17 @@ components: {
     
     this.saveCurrentRoute();
   },
-  // mounted() {
-  //   document.addEventListener("backbutton", this.removePathFromStore, false);
-  // },
-  // beforeDestroy() {
-  //   document.removeEventListener("backbutton", this.removePathFromStore);
-  // },
 }
 </script>
 
 <style>
 #headerBarId {
   left: 0rem;
+}
+
+.backToSearch {
+  background-color: rgb(182, 204, 236);
+  border-color: rgba(128, 128, 128, 0.377);
 }
 
 #propertyTileId {
@@ -159,6 +159,7 @@ button{
   margin: .5rem;
   border-radius: .5rem;
   font-size: 20px;
+  border-color: rgba(128, 128, 128, 0.377);
 }
 
 h1{
