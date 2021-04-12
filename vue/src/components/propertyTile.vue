@@ -87,6 +87,7 @@ export default {
 }
 
 .cardHeader{
+  padding-left: 0;
   font-size: 2rem;
   font-weight: bold;
   color: #0d0d0d;
