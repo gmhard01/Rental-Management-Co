@@ -1,6 +1,6 @@
 <template>
     <div class="transactionTile">
-        <div>Payment made on {{transaction.paidDate}}" for ${{transaction.amountPaid}} </div>
+        <div>Payment made on  {{transaction.paidDate.slice(0,9)}} for ${{transaction.amountPaid.toFixed(2)}} </div>
     </div>
 </template>
 
