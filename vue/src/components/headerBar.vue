@@ -8,7 +8,7 @@
           </a>
           <div class="title">Rental Management Co.</div>
         </div>
-        <input type="text" placeholder="Search.." class="searchBar" />
+        <input type="text" placeholder="City, State or Zip" class="searchBar" />
       </div>
       <div class="rightSide">
         <ul class="navList">
