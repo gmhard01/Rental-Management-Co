@@ -34,5 +34,7 @@ export default {
 </script>
 
 <style>
-
+#propertyTileId{
+  margin-top: 8rem; 
+}
 </style>
