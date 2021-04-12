@@ -10,7 +10,8 @@
     <div>
       <transactionTile id="transactionTileId" v-bind:user="getPropertyObject" />
     </div>
-    <div>
+    <router-link><button class= "backToSearch">Make a payment</button></router-link>
+    <div class="maintenanceBox">
       <form class="formHolder">
         <h1>Maintenance Request</h1>
         <textarea class="textBox" name="description"></textarea>
@@ -75,5 +76,9 @@ h1{
   flex-direction: column;
   padding: 1rem;
   padding-right: 1.5rem;
+}
+
+.maintenanceBox{
+  padding-top: .7rem;
 }
 </style>
