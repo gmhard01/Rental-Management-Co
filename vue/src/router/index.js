@@ -82,7 +82,7 @@ const router = new Router({
       }
     },
     {
-      path: '/my-rental/:userId',
+      path: '/my-rental',
       name: 'my-rental',
       component: MyApartment,
       meta: {

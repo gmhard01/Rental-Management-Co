@@ -26,6 +26,7 @@ export default new Vuex.Store({
     currentPropertyPath: '',
     currentSearchIndex: '',
     currentProperty: {},
+    userRentalProperty: {},
   },
   mutations: {
     SET_PROPERTIES(state, propertyArray){
@@ -46,6 +47,9 @@ export default new Vuex.Store({
       let newPropertyArray = state.properties.slice(start, (start + finish));
       state.currentIndex += finish;
       return newPropertyArray;
+    },
+    SET_USER_RENTAL_PROPERTY(state, rentalProperty) {
+      state.userRentalProperty = rentalProperty;
     },
     SAVE_CURRENT_ROUTE(state, currentPropertyPath) {
       state.currentPropertyPath = currentPropertyPath;

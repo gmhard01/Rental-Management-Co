@@ -27,9 +27,15 @@ export default {
     transactionTile,
   },
   created() {
-    UserService.getUserProperty()
-  }
-
+    UserService.getUserProperty(this.$store.state.user.userId).then ((response) => {
+      this.$store.commit("SET_USER_RENTAL_PROPERTY", response.data);
+    })
+},
+computed: {
+  getPropertyObject() {
+    return this.$store.state.userRentalProperty;
+  },
+},
 }
 </script>
 
