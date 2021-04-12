@@ -8,6 +8,7 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import RentalProperty from '../views/RentalProperty.vue'
 import Splash from '../views/Splash.vue'
+import MyApartment from '../views/MyRental.vue'
 
 Vue.use(Router)
 
@@ -76,6 +77,14 @@ const router = new Router({
       path: "/splash",
       name: "splash",
       component: Splash,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/my-rental/:userId',
+      name: 'my-rental',
+      component: MyApartment,
       meta: {
         requiresAuth: false
       }
