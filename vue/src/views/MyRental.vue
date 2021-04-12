@@ -10,7 +10,7 @@
     <div>
       <transactionTile id="transactionTileId" v-bind:user="getPropertyObject" />
     </div>
-    <router-link><button class= "backToSearch">Make a payment</button></router-link>
+    <router-link :to="{ name: 'home' }"><button class= "backToSearch">Make a payment</button></router-link>
     <div class="maintenanceBox">
       <form class="formHolder">
         <h1>Maintenance Request</h1>
