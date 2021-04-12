@@ -64,13 +64,21 @@ CREATE TABLE addresses (
 CREATE TABLE payments (
 	payment_id int IDENTITY(1,1) NOT NULL,
 	payer_id int NOT NULL,
-	due_date date NOT NULL,
 	paid_date date NOT NULL,
-	property_id int NOT NULL,
-	amount decimal(6,2) NOT NULL
+	lease_id int NOT NULL,
+	amount_paid decimal(6,2) NOT NULL
 
 	CONSTRAINT PK_payment PRIMARY KEY (payment_id)
 );
+
+CREATE TABLE payment_schedule (
+	lease_id int NOT NULL,
+	due_date date NOT NULL,
+	amount_due decimal(6,2) NOT NULL
+
+	CONSTRAINT PK_payment_schedule PRIMARY KEY (lease_id, due_date)
+);
+
 
 CREATE TABLE lease_agreements (
 	lease_id int IDENTITY(1,1) NOT NULL,
@@ -119,7 +127,8 @@ CREATE TABLE property_photos (
 
 ALTER TABLE properties ADD CONSTRAINT FK_property_address FOREIGN KEY (address_id) REFERENCES addresses(address_id);
 ALTER TABLE properties ADD CONSTRAINT FK_property_landlord FOREIGN KEY (landlord_id) REFERENCES users(user_id);
-ALTER TABLE payments ADD CONSTRAINT FK_payment_property FOREIGN KEY (property_id) REFERENCES properties(property_id);
+ALTER TABLE payments ADD CONSTRAINT FK_payment_lease FOREIGN KEY (lease_id) REFERENCES lease_agreements(lease_id);
+ALTER TABLE payment_schedule ADD CONSTRAINT FK_payment_schedule_lease FOREIGN KEY (lease_id) REFERENCES lease_agreements(lease_id);
 ALTER TABLE payments ADD CONSTRAINT FK_property_payer FOREIGN KEY (payer_id) REFERENCES users(user_id);
 ALTER TABLE lease_agreements ADD CONSTRAINT FK_lease_property FOREIGN KEY (property_id) REFERENCES properties(property_id);
 ALTER TABLE lease_agreements ADD CONSTRAINT FK_lease_landlord FOREIGN KEY (landlord_id) REFERENCES users(user_id);
@@ -202,13 +211,29 @@ VALUES ('Hasler Ln Apartment', 1, 900.00, 3, 2, 1, 'https://photos.zillowstatic.
 INSERT INTO lease_agreements (property_id, landlord_id, renter_id, monthly_rent, lease_start_date, lease_end_date)
 VALUES (102, 1, 2, 1100.50, '2020-01-01', '2021-12-31');
 
-INSERT INTO payments (payer_id, due_date, paid_date, property_id, amount)
-VALUES (2, '04-01-2021', '04-01-2021', 102, 1100.50),
-	   (2, '03-01-2021', '03-01-2021', 102, 1100.50),
-	   (2, '02-01-2021', '02-01-2021', 102, 1100.50),
-	   (2, '01-01-2021', '01-01-2021', 102, 1100.50),
-	   (2, '12-01-2020', '12-01-2020', 102, 1100.50),
-	   (2, '11-01-2020', '11-01-2020', 102, 1100.50);
+INSERT INTO payment_schedule (lease_id, due_date, amount_due)
+VALUES (1, '10-01-2021', 1100.50),
+	   (1, '09-01-2021', 1100.50),
+	   (1, '08-01-2021', 1100.50),
+	   (1, '07-01-2021', 1100.50),
+	   (1, '06-01-2021', 1100.50),
+	   (1, '05-01-2021', 1100.50),
+	   (1, '04-01-2021', 1100.50),
+	   (1, '03-01-2021', 1100.50),
+	   (1, '02-01-2021', 1100.50),
+	   (1, '01-01-2021', 1100.50),
+	   (1, '12-01-2020', 1100.50),
+	   (1, '11-01-2020', 1100.50);
+
+INSERT INTO payments (payer_id, paid_date, lease_id, amount_paid)
+VALUES (2, '04-01-2021', 1, 1100.50),
+	   (2, '03-01-2021', 1, 1100.50),
+	   (2, '02-01-2021', 1, 1100.50),
+	   (2, '01-01-2021', 1, 1100.50),
+	   (2, '12-01-2020', 1, 1100.50),
+	   (2, '11-01-2020', 1, 1100.50);
+
+
 
 --create application
 INSERT INTO applications (applicant_id, property_id, approval_status, applicant_first_name, applicant_last_name, applicant_phone)
