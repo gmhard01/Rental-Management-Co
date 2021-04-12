@@ -15,6 +15,8 @@ export default {
   },
   getPropertyById(propertyId){
     return https.get(`/properties/${propertyId}`);
-  }
+  },
+  getPropertiesByParameters(numberOfProperties, pageIndex){
+    return https.get(`/properties/page/${numberOfProperties}/${pageIndex}`);
+  },
 }
-//https://localhost:44315/properties/page/{numberOfProperties}/{pageIndex}

@@ -6,7 +6,7 @@
       </header>
     <div class=gridHolder>
       <main id="propertyTileId">
-      <div v-for="property in slicedArray" v-bind:key="property.propertyId" v-on:click="goToProperty(property)">
+      <div v-for="property in propertyList" v-bind:key="property.propertyId" v-on:click="goToProperty(property)">
         <propertyTile v-bind:property="property" />
       </div>
       </main>
@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       startingTileIndex: 0,
-      TileIncrementNum: 7,
+      tileIncrementNum: 5,
     }
   },
   components: {
@@ -35,31 +35,31 @@ export default {
   },
   
   created() {
-    PropService.getPropertyList().then ((response) => {
+    PropService.getPropertiesByParameters(this.tileIncrementNum, this.startingTileIndex).then ((response) => {
         this.$store.commit("SET_PROPERTIES", response.data);
         this.saveCurrentSearchIndex();         
         this.removePathFromStore();       
       })
       },
   computed: {
-    propertylist(){
+    propertyList(){
       return this.$store.state.properties;
     },
-    slicedArray(){
-      let previousIndex = 0;
-      let newIndex = 7;
+    // slicedArray(){
+    //   let previousIndex = 0;
+    //   let newIndex = 7;
       
-      if (this.propertylist.length <= newIndex){
-        newIndex = this.propertylist.length;
-      }
+    //   if (this.propertylist.length <= newIndex){
+    //     newIndex = this.propertylist.length;
+    //   }
 
-      if (this.propertylist.length <= previousIndex){
-        previousIndex = 0;
-        newIndex = 1;
-      }
+    //   if (this.propertylist.length <= previousIndex){
+    //     previousIndex = 0;
+    //     newIndex = 1;
+    //   }
 
-      return this.propertylist.slice(previousIndex, newIndex);
-    },
+    //   return this.propertylist.slice(previousIndex, newIndex);
+    // },
     getCurrentRoute() {
       return this.$route.path;
     },

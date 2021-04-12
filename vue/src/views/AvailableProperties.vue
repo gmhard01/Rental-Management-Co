@@ -6,7 +6,7 @@
       </header>
     <div class=gridHolder>
       <main id="propertyTileId">
-      <div v-for="property in slicedArray" v-bind:key="property.propertyId" v-on:click="goToProperty(property)">
+      <div v-for="property in propertylist" v-bind:key="property.propertyId" v-on:click="goToProperty(property)">
         <propertyTile v-bind:property="property" />
       </div>
       </main>
@@ -26,8 +26,7 @@ export default {
   data() {
     return {
       startingTileIndex: 0,
-      TileIncrementNum: 7,
-      currentIndex: this.getCurrentIndex,
+      tileIncrementNum: 5,
     }
   },
   components: {
@@ -36,11 +35,14 @@ export default {
   },
   
   created() {
-    PropService.getPropertyList().then ((response) => {
+    PropService.getPropertiesByParameters(this.tileIncrementNum, this.getCurrentIndex).then ((response) => {
         this.$store.commit("SET_PROPERTIES", response.data);        
       })
       this.removePathFromStore();
       },
+  beforeRouteUpdate(to, from, next) {
+    this.param = to.params.param;
+    next();},
   computed: {
     propertylist(){
       return this.$store.state.properties;
@@ -48,21 +50,21 @@ export default {
     getCurrentIndex(){
       return parseInt(this.$route.params.page);
     },
-    slicedArray(){
-      let previousIndex = this.getCurrentIndex * 7;
-      let newIndex = (this.getCurrentIndex + 1) * 7;
+    // slicedArray(){
+    //   let previousIndex = this.getCurrentIndex * 7;
+    //   let newIndex = (this.getCurrentIndex + 1) * 7;
       
-      if (this.propertylist.length <= newIndex){
-        newIndex = this.propertylist.length;
-      }
+    //   if (this.propertylist.length <= newIndex){
+    //     newIndex = this.propertylist.length;
+    //   }
 
-      if (this.propertylist.length <= previousIndex){
-        previousIndex = 0;
-        newIndex = 1;
-      }
+    //   if (this.propertylist.length <= previousIndex){
+    //     previousIndex = 0;
+    //     newIndex = 1;
+    //   }
 
-      return this.propertylist.slice(previousIndex, newIndex);
-    },
+    //   return this.propertylist.slice(previousIndex, newIndex);
+    // },
     getCurrentRoute() {
       return this.$route.path;
     },
@@ -72,7 +74,13 @@ export default {
       let startingTileIndex = indexNum + 1;
       this.$router.push({name: "available-properties", params: {page: startingTileIndex}});
       this.saveCurrentSearchIndex();
+      this.getNewPropertyList();
       window.scrollTo(0, 0);
+    },
+    getNewPropertyList(){
+      PropService.getPropertiesByParameters(this.tileIncrementNum, this.getCurrentIndex).then ((response) => {
+        this.$store.commit("SET_PROPERTIES", response.data);        
+      })
     },
     previous(){
       this.startingTileIndex -=15;

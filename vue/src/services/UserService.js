@@ -5,8 +5,8 @@ const https = axios.create({
 });
 
 export default {
-  getUserProperty(renterId) {
-    return https.get(`/properties/renter/${renterId}`)
+  getUserProperty() {
+    return https.get('/properties/renter')
   },
   getUserTransaction() {
       return https.get('/');
