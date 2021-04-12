@@ -90,8 +90,6 @@ computed: {
   getCurrentRoute() {
     return this.$route.path;
   }
-  
-},
 },
 components: {
     headerBar,
