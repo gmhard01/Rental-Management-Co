@@ -10,7 +10,7 @@
     <div v-for="transaction in $store.state.userTransactions" v-bind:key="transaction.paymentId">
       <transactionTile id="transactionTileId" v-bind:transaction="transaction" />
     </div>
-    <router-link><button class= "backToSearch">Make a payment</button></router-link>
+    <router-link :to="{ name: 'home' }"><button class= "backToSearch">Make a payment</button></router-link>
     <div class="maintenanceBox">
       <form class="formHolder">
         <h1>Maintenance Request</h1>
