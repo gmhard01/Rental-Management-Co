@@ -245,3 +245,12 @@ INSERT INTO maintenance_requests (property_id, requester_id, request_status, det
 VALUES (@PropertyId, @RequesterId, @RequestStatus, @Details, @DateReceived); 
 */
 
+/*
+SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, properties.landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, users.phone, users.email 
+FROM properties
+JOIN addresses ON properties.address_id = addresses.address_id
+JOIN users ON properties.landlord_id = users.user_id
+JOIN lease_agreements ON properties.property_id = lease_agreements.property_id
+JOIN users u ON lease_agreements.renter_id = u.user_id
+WHERE renter_id = 2;
+*/

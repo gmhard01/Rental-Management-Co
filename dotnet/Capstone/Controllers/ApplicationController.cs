@@ -47,5 +47,21 @@ namespace Capstone.Controllers
             Application applicationCreated = applicationDAO.CreateNewApplication(newApp.ApplicantId, newApp.PropertyId, newApp.ApplicantFirstName, newApp.ApplicantLastName, newApp.ApplicantPhone);
             return Created($"Application Id #{applicationCreated.ApplicationId} was successfully submitted.", applicationCreated);
         }
+
+        [HttpPut("/applications/updatestatus")]
+        [Authorize(Roles = "landlord")]
+        public ActionResult ApproveOrRejectApplication(Application appToUpdate)
+        {
+            bool appUpdatedSuccessfully = applicationDAO.UpdateApplicationStatus(appToUpdate.ApplicationId, appToUpdate.ApprovalStatus);
+            
+            if (appUpdatedSuccessfully)
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(400);
+            }
+        }
     }
 }

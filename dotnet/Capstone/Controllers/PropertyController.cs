@@ -64,5 +64,21 @@ namespace Capstone.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet("/properties/renter/{renterId}")]
+        [Authorize(Roles = "renter")]
+        public ActionResult<Property> GetPropertyForRenter(int renterId)
+        {
+            Property property = propertyDAO.GetPropertyByRenterID(renterId);
+
+            if (property.PropertyId != 0)
+            {
+                return Ok(property);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }

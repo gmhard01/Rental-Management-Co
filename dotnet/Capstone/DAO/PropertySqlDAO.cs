@@ -111,6 +111,41 @@ namespace Capstone.DAO
             return returnProperty;
         }
 
+        public Property GetPropertyByRenterID(int renterId)
+        {
+            Property returnProperty = new Property();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, properties.landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, users.phone, users.email " + 
+                                       "FROM properties " +
+                                       "JOIN addresses ON properties.address_id = addresses.address_id " +
+                                       "JOIN users ON properties.landlord_id = users.user_id " +
+                                       "JOIN lease_agreements ON properties.property_id = lease_agreements.property_id " +
+                                       "JOIN users u ON lease_agreements.renter_id = u.user_id " +
+                                       "WHERE renter_id = @renterId;";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@renterId", renterId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        returnProperty = GetPropertyFromReader(reader);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnProperty;
+        }
+
         private Property GetPropertyFromReader(SqlDataReader reader)
         {
             Property p = new Property()

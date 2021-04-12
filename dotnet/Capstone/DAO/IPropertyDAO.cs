@@ -8,5 +8,6 @@ namespace Capstone.DAO
         List<Property> GetAvailableProperties();
         List<Property> GetAvailablePropertiesPage(int numberOfProperties, int pageIndex);
         Property GetPropertyByID(int id);
+        Property GetPropertyByRenterID(int renterId);
     }
 }
