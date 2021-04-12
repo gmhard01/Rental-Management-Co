@@ -7,8 +7,8 @@
     <div>
       <propertyTile id="propertyTileId" v-bind:property="getPropertyObject" />
     </div>
-    <div>
-      <transactionTile id="transactionTileId" v-bind:user="getPropertyObject" />
+    <div v-for="transaction in $store.state.userTransactions" v-bind:key="transaction.paymentId">
+      <transactionTile id="transactionTileId" v-bind:transaction="transaction" />
     </div>
     <router-link><button class= "backToSearch">Make a payment</button></router-link>
     <div class="maintenanceBox">

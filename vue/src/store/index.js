@@ -39,16 +39,16 @@ export default new Vuex.Store({
     SET_PROPERTY(state, property){
       state.currentProperty = property;
     },
-    GET_NEXT_PROPERTY_LIST(state, startingIndex = state.currentIndex, amountToRetreive){
-      let start = startingIndex;
-      let finish = amountToRetreive;
-      if(start + finish >= state.properties.length){
-        finish = state.properties.length - start;
-      }
-      let newPropertyArray = state.properties.slice(start, (start + finish));
-      state.currentIndex += finish;
-      return newPropertyArray;
-    },
+    // GET_NEXT_PROPERTY_LIST(state, startingIndex = state.currentIndex, amountToRetreive){
+    //   let start = startingIndex;
+    //   let finish = amountToRetreive;
+    //   if(start + finish >= state.properties.length){
+    //     finish = state.properties.length - start;
+    //   }
+    //   let newPropertyArray = state.properties.slice(start, (start + finish));
+    //   state.currentIndex += finish;
+    //   return newPropertyArray;
+    // },
     SET_USER_RENTAL_PROPERTY(state, rentalProperty) {
       state.userRentalProperty = rentalProperty;
     },

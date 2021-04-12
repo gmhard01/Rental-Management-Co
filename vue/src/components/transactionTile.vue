@@ -1,13 +1,13 @@
 <template>
     <div class="transactionTile">
-        <div>Payment made on "transaction.paymentDate.slice(5,10)" for $"transaction.paymentAmount" </div>
+        <div>Payment made on {{transaction.paidDate}}" for ${{transaction.amountPaid}} </div>
     </div>
 </template>
 
 <script>
 export default {
     name: "transactionTile",
-    props: ['property'],
+    props: ['transaction'],
 }
 </script>
 
