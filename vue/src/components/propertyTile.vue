@@ -71,6 +71,7 @@ export default {
   box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.589);
   cursor: pointer;
   margin-bottom: .5rem;
+  font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
 }
 
 .cardImg {

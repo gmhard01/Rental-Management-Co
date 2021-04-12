@@ -5,17 +5,23 @@
       <headerBar id="headerBarId" />
     </header>
     <div>
-      <propertyTile v-bind:property="getPropertyObject" />
+      <propertyTile id="propertyTileId" v-bind:property="getPropertyObject" />
     </div>
     <div>
-      <form class="applicationBox" @submit.prevent="apply">
-        <h1>Application Form</h1>
-        <input type="text" name="" placeholder="Legal First Name" required v-model="applicationForm.applicantFirstName" autofocus>
-        <input type="text" name="" placeholder="Legal Last Name" required v-model="applicationForm.applicantLastName" autofocus>
-        <input type="tel" id="phoneNumber" name="" placeholder="Phone Number" required v-model="applicationForm.applicantPhone" autofocus>
+      <form class="applicationBox" @submit.prevent="apply" v-if="!hasApplied && isLoggedIn">
+        <h1>Apply Here</h1>
+        <div class="rowOne">
+          <input type="text" class="textInputs" name="" placeholder="Legal First Name" required v-model="applicationForm.applicantFirstName" autofocus>
+          <input type="text" class="textInputs" name="" placeholder="Legal Last Name" required v-model="applicationForm.applicantLastName" autofocus>
+          <input type="tel" class="textInputs" id="phoneNumber" name="" placeholder="Phone Number" required v-model="applicationForm.applicantPhone" autofocus>
+        </div>
         <input type="submit" class="submit" name="" value="Submit">
       </form>
-      <p v-if="hasApplied">you have applied</p>
+      <p class="needToSignIn" v-if="hasApplied">You have successfully applied</p>
+      <div class="needToSignIn" v-if="!isLoggedIn">
+        You must be signed in to apply 
+      <router-link :to="{ name: 'login' }"><button>Login</button></router-link>
+      </div>
     </div>
   </body>
 </div>
@@ -70,7 +76,15 @@ computed: {
   },
   getCurrentPropertyId() {
     return this.$route.params.propertyId;
+  },
+  isLoggedIn() {
+  if(this.$store.state.user.username != null){
+    return true;
   }
+  else{
+    return false;
+  }
+},
 },
 components: {
     headerBar,
@@ -84,17 +98,58 @@ components: {
 }
 </script>
 
-PropertyTile
 <style>
 #headerBarId {
   left: 0rem;
 }
 
+#propertyTileId {
+  margin-top: 8rem; 
+}
+
 body{
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
-.applicationBox {
-  margin-top: 10rem;
+.applicationBox, .needToSignIn{
+  margin-top: .2rem;
+  background-color: #fff;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.589);
+  margin-bottom: .5rem;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
+}
+
+.needToSignIn{
+display: flex;
+align-content: center;
+justify-content: center;
+}
+
+.textInputs, .submit {
+  font-size: 20px;
+  height: 20%;
+  margin: .5rem;
+  width: 13rem;
+  border-radius: .5rem;
+  border-color:rgba(128, 128, 128, 0.377);
+}
+
+button{
+  margin: .5rem;
+  border-radius: .5rem;
+  font-size: 20px;
+}
+
+h1{
+  font-size: 25px;  
+  padding-left: .7rem;
 }
 </style>
