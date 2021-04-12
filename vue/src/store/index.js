@@ -24,7 +24,8 @@ export default new Vuex.Store({
     filter: 0,
     currentIndex: 0,
     properties: [],
-    currentRoute: {},
+    currentPropertyPath: '',
+    currentSearchIndex: '',
     currentProperty: {},
   },
   mutations: {
@@ -47,8 +48,14 @@ export default new Vuex.Store({
       state.currentIndex += finish;
       return newPropertyArray;
     },
-    SAVE_CURRENT_ROUTE(state, currentRouteObject) {
-      state.currentRoute = currentRouteObject;
+    SAVE_CURRENT_ROUTE(state, currentPropertyPath) {
+      state.currentPropertyPath = currentPropertyPath;
+    },
+    REMOVE_CURRENT_ROUTE(state) {
+      state.currentPropertyPath = '';
+    },
+    SAVE_CURRENT_SEARCH_INDEX(state, currentSearchIndex){
+      state.currentSearchIndex = currentSearchIndex;
     },
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
