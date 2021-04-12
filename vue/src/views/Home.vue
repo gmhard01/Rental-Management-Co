@@ -36,7 +36,8 @@ export default {
   
   created() {
     PropService.getPropertyList().then ((response) => {
-        this.$store.commit("SET_PROPERTIES", response.data);         
+        this.$store.commit("SET_PROPERTIES", response.data);
+        this.saveCurrentSearchIndex();         
         this.removePathFromStore();       
       })
       },
