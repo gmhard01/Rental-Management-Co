@@ -202,6 +202,14 @@ VALUES ('Hasler Ln Apartment', 1, 900.00, 3, 2, 1, 'https://photos.zillowstatic.
 INSERT INTO lease_agreements (property_id, landlord_id, renter_id, monthly_rent, lease_start_date, lease_end_date)
 VALUES (102, 1, 2, 1100.50, '2020-01-01', '2021-12-31');
 
+INSERT INTO payments (payer_id, due_date, paid_date, property_id, amount)
+VALUES (2, '04-01-2021', '04-01-2021', 102, 1100.50),
+	   (2, '03-01-2021', '03-01-2021', 102, 1100.50),
+	   (2, '02-01-2021', '02-01-2021', 102, 1100.50),
+	   (2, '01-01-2021', '01-01-2021', 102, 1100.50),
+	   (2, '12-01-2020', '12-01-2020', 102, 1100.50),
+	   (2, '11-01-2020', '11-01-2020', 102, 1100.50);
+
 --create application
 INSERT INTO applications (applicant_id, property_id, approval_status, applicant_first_name, applicant_last_name, applicant_phone)
 VALUES (3, 127, 'Pending', 'Nathan', 'Groehl', '5551238888'),
@@ -253,4 +261,10 @@ JOIN users ON properties.landlord_id = users.user_id
 JOIN lease_agreements ON properties.property_id = lease_agreements.property_id
 JOIN users u ON lease_agreements.renter_id = u.user_id
 WHERE renter_id = 2;
+*/
+
+/*
+SELECT payment_id, payer_id, due_date, paid_date, property_id, amount
+FROM payments
+WHERE payer_id = 2;
 */
