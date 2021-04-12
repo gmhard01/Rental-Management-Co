@@ -38,6 +38,9 @@ export default {
     UserService.getUserProperty().then ((response) => {
       this.$store.commit("SET_USER_RENTAL_PROPERTY", response.data);
     })
+    UserService.getUserTransaction().then((response) => {
+      this.$store.commit("SET_USER_TRANSACTIONS", response.data);
+    })
 },
 computed: {
   getPropertyObject() {

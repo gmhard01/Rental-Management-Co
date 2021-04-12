@@ -27,6 +27,7 @@ export default new Vuex.Store({
     currentSearchIndex: '',
     currentProperty: {},
     userRentalProperty: {},
+    userTransactions: {},
   },
   mutations: {
     SET_PROPERTIES(state, propertyArray){
@@ -50,6 +51,9 @@ export default new Vuex.Store({
     },
     SET_USER_RENTAL_PROPERTY(state, rentalProperty) {
       state.userRentalProperty = rentalProperty;
+    },
+    SET_USER_TRANSACTIONS(state, transactionList) {
+      state.userTransactions = transactionList;
     },
     SAVE_CURRENT_ROUTE(state, currentPropertyPath) {
       state.currentPropertyPath = currentPropertyPath;
@@ -75,6 +79,7 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
+      state.userRentalProperty = {};
     }
   }
 })

@@ -9,6 +9,6 @@ export default {
     return https.get('/properties/renter')
   },
   getUserTransaction() {
-      return https.get('/');
+      return https.get("/payments");
   }
 }
