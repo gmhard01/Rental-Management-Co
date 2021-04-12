@@ -65,11 +65,12 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpGet("/properties/renter/{renterId}")]
+        [HttpGet("/properties/renter")]
         [Authorize(Roles = "renter")]
-        public ActionResult<Property> GetPropertyForRenter(int renterId)
+        public ActionResult<Property> GetPropertyForRenter()
         {
-            Property property = propertyDAO.GetPropertyByRenterID(renterId);
+            int userId = Convert.ToInt32(User.FindFirst("sub").Value);
+            Property property = propertyDAO.GetPropertyByRenterID(userId);
 
             if (property.PropertyId != 0)
             {

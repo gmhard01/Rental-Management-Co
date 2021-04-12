@@ -289,7 +289,11 @@ WHERE renter_id = 2;
 */
 
 /*
-SELECT payment_id, payer_id, due_date, paid_date, property_id, amount
+SELECT payment_id, payer_id, paid_date, lease_id, amount_paid
 FROM payments
 WHERE payer_id = 2;
 */
+
+SELECT lease_id, due_date, amount_due
+FROM payment_schedule
+WHERE due_date >= GETDATE() AND lease_id = 1;

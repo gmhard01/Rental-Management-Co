@@ -79,8 +79,7 @@ namespace Capstone.DAO
         public Application CreateNewApplication(int applicantId, int propertyId, string applicantFirstName, string applicantLastName, string applicantPhone)
         {
             Application returnApplication = new Application();
-            int applicationId;
-            
+            int applicationId;  
 
             try
             {
