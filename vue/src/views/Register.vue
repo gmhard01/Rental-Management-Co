@@ -41,7 +41,7 @@
             />
           </div>
           <div class="rightSideEntries">
-            <input type="tel" id="phoneNumber" class="form-control" placeholder="Phone Number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" v-model="user.phone" required />
+            <input type="tel" id="phoneNumber" class="form-control" placeholder="Phone Number" pattern="[0-9]{10}" v-model="user.phone" required />
             <input type="email" id="email" class="form-control" placeholder="Email" v-model="user.email" required />
             <select name="role" class="dropDownMenu" v-model="user.role" required>
               <option selected="selected" value="renter">Renter</option>
