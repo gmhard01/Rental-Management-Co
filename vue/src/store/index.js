@@ -20,7 +20,6 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    isLoggedIn: false,
     filter: 0,
     currentIndex: 0,
     properties: [],
@@ -64,8 +63,7 @@ export default new Vuex.Store({
     },
     SET_USER(state, user) {
       state.user = user;
-      localStorage.setItem('user',JSON.stringify(user));
-      state.isLoggedIn = true; 
+      localStorage.setItem('user',JSON.stringify(user)); 
     },
     LOGOUT(state) {
       localStorage.removeItem('token');
@@ -73,7 +71,6 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
-      state.isLoggedIn = false;
     }
   }
 })
