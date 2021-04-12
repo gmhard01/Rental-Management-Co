@@ -115,6 +115,11 @@ li{
   overflow: auto;
 }
 
+.cardDetails::-webkit-scrollbar {
+  border-radius: 1rem;
+  background: rgba(182, 203, 236, 0.493);
+}
+
 @media only screen and (max-width: 60em){
 .cardImg {
   width: 10rem;
