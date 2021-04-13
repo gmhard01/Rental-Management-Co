@@ -72,9 +72,10 @@ CREATE TABLE payments (
 );
 
 CREATE TABLE payment_schedule (
+	installment_number int NOT NULL,
 	lease_id int NOT NULL,
 	due_date date NOT NULL,
-	amount_due decimal(6,2) NOT NULL
+	amount_due decimal(6,2) NOT NULL,
 
 	CONSTRAINT PK_payment_schedule PRIMARY KEY (lease_id, due_date)
 );
@@ -87,7 +88,7 @@ CREATE TABLE lease_agreements (
 	renter_id int NOT NULL,
 	monthly_rent decimal(6,2) NOT NULL,
 	lease_start_date date NOT NULL,
-	lease_end_date date NOT NULL
+	lease_term int NOT NULL
 
 	CONSTRAINT PK_lease PRIMARY KEY (lease_id)
 );
@@ -120,7 +121,8 @@ CREATE TABLE applications (
 CREATE TABLE property_photos (
 	photo_id int IDENTITY(1000,1) NOT NULL,
 	property_id int NOT NULL,
-	primary_photo bit NOT NULL
+	primary_photo bit NOT NULL,
+	photo_description varchar(100),
 
 	CONSTRAINT PK_photos PRIMARY KEY (photo_id)
 );
@@ -208,22 +210,35 @@ VALUES ('Hasler Ln Apartment', 1, 900.00, 3, 2, 1, 'https://photos.zillowstatic.
        ('Duplex in a quiet Subdivision.', 27, 1250, 3, 2, 1, 'https://photos.zillowstatic.com/fp/898fe9a4e3e3e1c623ecbf65f571c93f-cc_ft_1152.jpg', 1, '2021-05-15', 'This property is a duplex on a cul-de-sac located in a quiet subdivision. Local shopping is within two miles, and schools are a short commute. The duplex has a large master bedroom with full bath. The unit has an additional two bedrooms and a second full bath. The living area is an open floor plan that adjoins a kitchen fully equipped with all major appliances, a countertop breakfast bar, and tile flooring. Bedrooms and Living Area has one-year-old carpet.', 1900, 'Condo', 1),
        ('What a townhouse!', 28, 995, 3, 1.5, 4, 'https://photos.zillowstatic.com/fp/d7c00225b58741540cdb544ba19c8317-cc_ft_576.jpg', 1, '2021-04-15', 'The 3 bedrooms are spacious. The guest bath and master bath are connected by the toilet and tub area, each has their own sink. The first floor features the living room, 1/2 bath and eat in kitchen.The entire unit has just been painted and has carpet installed on the steps and upstairs and tile flooring throughout the main floor.', 1500, 'Townhome', 1);
 
-INSERT INTO lease_agreements (property_id, landlord_id, renter_id, monthly_rent, lease_start_date, lease_end_date)
-VALUES (102, 1, 2, 1100.50, '2020-01-01', '2021-12-31');
+INSERT INTO lease_agreements (property_id, landlord_id, renter_id, monthly_rent, lease_start_date, lease_term)
+VALUES (102, 1, 2, 1100.50, '2020-10-01', 12),
+	   (101, 1, 3, 1400, '2021-01-01', 12);
 
-INSERT INTO payment_schedule (lease_id, due_date, amount_due)
-VALUES (1, '10-01-2021', 1100.50),
-	   (1, '09-01-2021', 1100.50),
-	   (1, '08-01-2021', 1100.50),
-	   (1, '07-01-2021', 1100.50),
-	   (1, '06-01-2021', 1100.50),
-	   (1, '05-01-2021', 1100.50),
-	   (1, '04-01-2021', 1100.50),
-	   (1, '03-01-2021', 1100.50),
-	   (1, '02-01-2021', 1100.50),
-	   (1, '01-01-2021', 1100.50),
-	   (1, '12-01-2020', 1100.50),
-	   (1, '11-01-2020', 1100.50);
+INSERT INTO payment_schedule (installment_number, lease_id, due_date, amount_due)
+VALUES (1, 1, '2020-10-01', 1100.50),
+	   (2, 1, '2020-11-01', 1100.50),
+	   (3, 1, '2020-12-01', 1100.50),
+	   (4, 1, '2021-01-01', 1100.50),
+	   (5, 1, '2021-02-01', 1100.50),
+	   (6, 1, '2021-03-01', 1100.50),
+	   (7, 1, '2021-04-01', 1100.50),
+	   (8, 1, '2021-05-01', 1100.50),
+	   (9, 1, '2021-06-01', 1100.50),
+	   (10, 1, '2021-07-01', 1100.50),
+	   (11, 1, '2021-08-01', 1100.50),
+	   (12, 1, '2021-09-01', 1100.50),
+	   (1, 2, '2021-01-01', 1400),
+	   (2, 2, '2021-02-01', 1400),
+	   (3, 2, '2021-03-01', 1400),
+	   (4, 2, '2021-04-01', 1400),
+	   (5, 2, '2021-05-01', 1400),
+	   (6, 2, '2021-06-01', 1400),
+	   (7, 2, '2021-07-01', 1400),
+	   (8, 2, '2021-08-01', 1400),
+	   (9, 2, '2021-09-01', 1400),
+	   (10, 2, '2021-10-01', 1400),
+	   (11, 2, '2021-11-01', 1400),
+	   (12, 2, '2021-12-01', 1400);
 
 INSERT INTO payments (payer_id, paid_date, lease_id, amount_paid)
 VALUES (2, '04-01-2021', 1, 1100.50),
@@ -231,8 +246,12 @@ VALUES (2, '04-01-2021', 1, 1100.50),
 	   (2, '02-01-2021', 1, 1100.50),
 	   (2, '01-01-2021', 1, 1100.50),
 	   (2, '12-01-2020', 1, 1100.50),
-	   (2, '11-01-2020', 1, 1100.50);
-
+	   (2, '11-01-2020', 1, 1100.50),
+	   (2, '10-01-2020', 1, 1100.50),
+	   (3, '04-01-2021', 1, 1400),
+	   (3, '03-01-2021', 1, 1400),
+	   (3, '02-01-2021', 1, 1400),
+	   (3, '01-01-2021', 1, 1400);
 
 
 --create application
@@ -294,7 +313,28 @@ FROM payments
 WHERE payer_id = 2;
 */
 
---get future payments by lease id
+/*SELECT installment_number, lease_id, due_date, amount_due, sum(amount_due) OVER (order by due_date rows unbounded preceding) AS lease_aggregate_amount_due*/
+
+SELECT installment_number, lease_id, due_date, amount_due, (installment_number * amount_due) AS lease_aggregate_amount_due
+FROM payment_schedule
+WHERE due_date <= GETDATE() AND lease_id = 1
+ORDER BY due_date;
+
+
+SELECT due_date, (installment_number * amount_due) AS lease_aggregate_amount_due
+FROM payment_schedule
+WHERE lease_id = 1 AND (due_date = (SELECT MAX(due_date) FROM payment_schedule WHERE due_date <= GETDATE()));
+
+
+SELECT ps.installment_number, ps.lease_id, ps.due_date, ps.amount_due, (ps.installment_number * ps.amount_due) AS lease_aggregate_amount_due, sum(p.amount_paid) AS total_amount_paid 
+FROM payment_schedule ps
+JOIN payments p ON p.lease_id = ps.lease_id
+WHERE due_date <= GETDATE() AND ps.lease_id = 1
+GROUP BY ps.installment_number
+ORDER BY due_date;
+
+
+/*--get future payments by lease id
 SELECT lease_id, due_date, amount_due
 FROM payment_schedule
 WHERE due_date >= GETDATE() AND lease_id = 1;
@@ -309,4 +349,4 @@ WHERE state_abbreviation LIKE '%TN%' OR city LIKE '%Cincinnati' OR zip_code LIKE
 --update property available to 0 (not available) when lease is created
 DECLARE @property_id int;
 SET @property_id = 113
-UPDATE properties SET available = 0 WHERE property_id = @property_id;
+UPDATE properties SET available = 0 WHERE property_id = @property_id;*/
