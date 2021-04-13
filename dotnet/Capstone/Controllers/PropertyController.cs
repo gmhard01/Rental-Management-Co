@@ -82,6 +82,23 @@ namespace Capstone.Controllers
             }
         }
 
+        [HttpGet("/properties/landlord")]
+        [Authorize(Roles = "landlord")]
+        public ActionResult<List<Property>> GetProperiesForLandlord()
+        {
+            int userId = Convert.ToInt32(User.FindFirst("sub").Value);
+            List<Property> properties = propertyDAO.GetPropertiesByLandlordID(userId);
+
+            if (properties.Count > 0)
+            {
+                return Ok(properties);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpPut("/property/unavailable")]
         //[Authorize]
         public ActionResult<bool> MakePropertyUnavailable(Property propertyToUpdate)
@@ -106,6 +123,7 @@ namespace Capstone.Controllers
             bool newProperty = propertyDAO.AddNewProperty(propertyToAdd, landlordId);
             return Created($"Property was successfully submitted.", newProperty);
         }
+<<<<<<< HEAD
 
 
         [HttpPut("/property-update")]
@@ -124,5 +142,7 @@ namespace Capstone.Controllers
                 return StatusCode(400);
             }
         }
+=======
+>>>>>>> 536410ae4255b80fa0a3471f5fd6a4f7ffdde90d
     }
 }

@@ -146,6 +146,40 @@ namespace Capstone.DAO
             return returnProperty;
         }
 
+        public List<Property> GetPropertiesByLandlordID(int landlordId)
+        {
+            List<Property> returnProperties = new List<Property>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, properties.landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, users.phone, users.email " +
+                                       "FROM properties " +
+                                       "JOIN addresses ON properties.address_id = addresses.address_id " +
+                                       "JOIN users ON properties.landlord_id = users.user_id " +
+                                       "WHERE properties.landlord_id = @landlordId;";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@landlordId", landlordId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Property p = GetPropertyFromReader(reader);
+                        returnProperties.Add(p);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnProperties;
+        }
+
         public bool SetPropertyToUnavailable(int propertyId)
         {
             int rowsAffected;
@@ -180,6 +214,7 @@ namespace Capstone.DAO
                     conn.Open();
 
                     string sqlStringAddress = "INSERT INTO addresses (street_number, unit_number, street_name, state_abbreviation, city, county, zip_code) VALUES (@street_number, @unit_number, @street_name, @state_abbreviation, @city, @county, @zip_code); SELECT SCOPE_IDENTITY()";
+<<<<<<< HEAD
                     
                     using (SqlCommand cmd = new SqlCommand(sqlStringAddress, conn))
                     {
@@ -191,6 +226,19 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@county", propertyToAdd.County);
                     cmd.Parameters.AddWithValue("@zip_code", propertyToAdd.ZipCode);
                     addressId = Convert.ToInt32(cmd.ExecuteScalar());
+=======
+
+                    using (SqlCommand cmd = new SqlCommand(sqlStringAddress, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@street_number", propertyToAdd.StreetNumber);
+                        cmd.Parameters.AddWithValue("@unit_number", propertyToAdd.UnitNumber);
+                        cmd.Parameters.AddWithValue("@street_name", propertyToAdd.StreetName);
+                        cmd.Parameters.AddWithValue("@state_abbreviation", propertyToAdd.State);
+                        cmd.Parameters.AddWithValue("@city", propertyToAdd.City);
+                        cmd.Parameters.AddWithValue("@county", propertyToAdd.County);
+                        cmd.Parameters.AddWithValue("@zip_code", propertyToAdd.ZipCode);
+                        addressId = Convert.ToInt32(cmd.ExecuteScalar());
+>>>>>>> 536410ae4255b80fa0a3471f5fd6a4f7ffdde90d
                     }
                     string sqlStringProperty = "INSERT INTO properties (title, address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed) VALUES (@title, @address_id, @rent_amount, @number_beds, @number_baths, @landlord_id, @picture, @available, @available_date, @property_description, @square_footage, @property_type, @pets_allowed)";
 
@@ -210,6 +258,7 @@ namespace Capstone.DAO
                         command.Parameters.AddWithValue("@property_type", propertyToAdd.PropertyType);
                         command.Parameters.AddWithValue("@pets_allowed", propertyToAdd.PetsAllowed);
                         rowsAffected = command.ExecuteNonQuery();
+<<<<<<< HEAD
                     }    
                 }
             }
@@ -264,6 +313,8 @@ namespace Capstone.DAO
                         command.Parameters.AddWithValue("@pets_allowed", propertyToUpdate.PetsAllowed);
                         command.Parameters.AddWithValue("@property_id", propertyToUpdate.PropertyId);
                         rowsAffectedProperty = command.ExecuteNonQuery();
+=======
+>>>>>>> 536410ae4255b80fa0a3471f5fd6a4f7ffdde90d
                     }
                 }
             }
@@ -271,7 +322,11 @@ namespace Capstone.DAO
             {
                 throw;
             }
+<<<<<<< HEAD
             return (rowsAffectedProperty > 0);
+=======
+            return (rowsAffected > 0);
+>>>>>>> 536410ae4255b80fa0a3471f5fd6a4f7ffdde90d
         }
 
         private Property GetPropertyFromReader(SqlDataReader reader)
