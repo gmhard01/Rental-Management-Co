@@ -114,5 +114,14 @@ namespace Capstone.Controllers
                 return StatusCode(400);
             }
         }
+
+        [HttpPost("/addproperty")]
+        [Authorize(Roles = "landlord, admin")]
+        public ActionResult<Property> CreateNewProperty(Property propertyToAdd)
+        {
+            int landlordId = Convert.ToInt32(User.FindFirst("sub").Value);
+            bool newProperty = propertyDAO.AddNewProperty(propertyToAdd, landlordId);
+            return Created($"Property was successfully submitted.", newProperty);
+        }
     }
 }
