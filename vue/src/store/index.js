@@ -29,7 +29,8 @@ export default new Vuex.Store({
     userRentalProperty: {},
     userTransactions: {},
     userUpcomingPayments: {},
-    propertyMaintenanceRequest: {}
+    propertyMaintenanceRequest: {},
+    landlordPropertiesList: {},
   },
   mutations: {
     SET_PROPERTIES(state, propertyArray){
@@ -40,6 +41,21 @@ export default new Vuex.Store({
     },
     SET_PROPERTY(state, property){
       state.currentProperty = property;
+    },
+    SET_LANDLORD_PROPERTIES(state, propertyList) {
+      state.landlordPropertiesList = propertyList;
+    },
+    UPDATE_LANDLORD_PROPERTY_MAINTENANCE(state, requestList, propertyId) {
+      let findProperty = ((response) => {
+        return response.properyId == propertyId;
+      });
+      state.landlordPropertiesList.find(findProperty).maintenanceRequest = requestList;
+    },
+    UPDATE_LANDLORD_PROPERTY_TRANSACTIONS(state, transactionList, propertyId) {
+      let findProperty = ((response) => {
+        return response.properyId == propertyId;
+      });
+      state.landlordPropertiesList.find(findProperty).transactions = transactionList;
     },
     // GET_NEXT_PROPERTY_LIST(state, startingIndex = state.currentIndex, amountToRetreive){
     //   let start = startingIndex;
