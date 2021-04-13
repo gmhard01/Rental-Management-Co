@@ -11,7 +11,10 @@
       </div>
       </main>
     </div>
-    <img src="@/assets/DownArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next(getCurrentIndex)" />
+    <div class="arrowBar">
+      <img src="@/assets/LeftArrow.png" alt="Prev Arrow" class="ArrowBtn" />
+      <img src="@/assets/RightArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next(getCurrentIndex)" />
+    </div>
     </body>
   </div>
 </template>
@@ -126,5 +129,16 @@ export default {
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
+  opacity: 0.3;
+}
+
+.arrowBar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.ArrowBtn:hover {
+  opacity: 1.0;
+  transition: 1s;
 }
 </style>

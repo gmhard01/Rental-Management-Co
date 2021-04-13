@@ -11,7 +11,9 @@
       </div>
       </main>
     </div>
-    <img src="@/assets/DownArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next()" />
+    <div class="arrowBar">
+    <img src="@/assets/RightArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next()" />
+    </div>
     </body>
   </div>
 </template>
@@ -115,6 +117,12 @@ export default {
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
+  opacity: 0.3;
+}
+
+.ArrowBtn:hover {
+  opacity: 1.0;
+  transition: 1s;
 }
 
 @media only screen and (max-width: 60em){
