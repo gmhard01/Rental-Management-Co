@@ -42,12 +42,21 @@ export default {
     UserService.getUserTransaction().then((response) => {
       this.$store.commit("SET_USER_TRANSACTIONS", response.data);
     })
+    this.refresh();
 },
 computed: {
   getPropertyObject() {
     return this.$store.state.userRentalProperty;
   },
 },
+methods: {
+  refresh() {
+    if(!window.location.hash) {
+        window.location = window.location + '#loaded';
+        window.location.reload();
+    }
+  }
+}
 }
 </script>
 

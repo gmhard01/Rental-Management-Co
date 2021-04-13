@@ -294,6 +294,19 @@ FROM payments
 WHERE payer_id = 2;
 */
 
+--get future payments by lease id
 SELECT lease_id, due_date, amount_due
 FROM payment_schedule
 WHERE due_date >= GETDATE() AND lease_id = 1;
+
+--search bar function, get properties based on state abbr, city, or zip code
+SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, properties.landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, users.phone, users.email 
+FROM properties
+JOIN addresses ON properties.address_id = addresses.address_id
+JOIN users ON properties.landlord_id = users.user_id
+WHERE state_abbreviation LIKE '%TN%' OR city LIKE '%Cincinnati' OR zip_code LIKE '%zip%'
+
+--update property available to 0 (not available) when lease is created
+DECLARE @property_id int;
+SET @property_id = 113
+UPDATE properties SET available = 0 WHERE property_id = @property_id;
