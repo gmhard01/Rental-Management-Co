@@ -36,5 +36,21 @@ namespace Capstone.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPost("/createpayschedule")]
+        //[Authorize]
+        public ActionResult<bool> GeneratePaymentSchedule(LeaseAgreement lease)
+        {
+            bool created = paymentDAO.CreatePaymentSchedule(lease);
+
+            if (created == true)
+            {
+                return StatusCode(201);
+            }
+            else
+            {
+                return StatusCode(400);
+            }
+        }
     }
 }
