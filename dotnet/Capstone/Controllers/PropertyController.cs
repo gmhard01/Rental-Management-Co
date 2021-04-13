@@ -81,5 +81,21 @@ namespace Capstone.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPut("/property/unavailable")]
+        //[Authorize]
+        public ActionResult<bool> MakePropertyUnavailable(Property propertyToUpdate)
+        {
+            bool updated = propertyDAO.SetPropertyToUnavailable(propertyToUpdate.PropertyId);
+
+            if (updated)
+            {
+                return StatusCode(201);
+            }
+            else
+            {
+                return StatusCode(400);
+            }
+        }
     }
 }

@@ -60,7 +60,7 @@ namespace Capstone.Controllers
         {
             bool created = paymentDAO.CreatePaymentSchedule(lease);
 
-            if (created == true)
+            if (created)
             {
                 return StatusCode(201);
             }

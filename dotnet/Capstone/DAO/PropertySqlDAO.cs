@@ -146,6 +146,29 @@ namespace Capstone.DAO
             return returnProperty;
         }
 
+        public bool SetPropertyToUnavailable(int propertyId)
+        {
+            int rowsAffected;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "UPDATE properties SET available = 0 WHERE property_id = @property_id;";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@property_id", propertyId);
+                    rowsAffected = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            return (rowsAffected > 0);
+        }
+
         private Property GetPropertyFromReader(SqlDataReader reader)
         {
             Property p = new Property()
