@@ -1,9 +1,9 @@
 <template>
   <div>
-    <body>
-      <header>
+    <header>
         <headerBar id="headerBarId" />
       </header>
+    <body v-if='$store.state.userRentalProperty.propertyId > 0'>
       <div>
         <propertyTile id="propertyTileId" v-bind:property="getPropertyObject" />
       </div>
@@ -32,6 +32,9 @@
         </form>
       <!-- <router-link class="btnHolder" :to="this.$store.state.currentSearchIndex"><button class= "backToSearch">Maintenance Request</button></router-link> -->
       </div>  
+    </body>
+    <body class='noRentalView' v-else>
+      Your rental could not be found. Apply online or contact your landlord.
     </body>
   </div>
 </template>
@@ -100,7 +103,7 @@ h1{
   margin-top: 0;  
 }
 
-.formHolder, .paymentPopup{
+.formHolder, .paymentPopup, .noRentalView{
   background-color: #fff;
   border-radius: 1.5rem;
   overflow: hidden;
@@ -125,7 +128,10 @@ h1{
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.219);
 }
+.noRentalView{
+  margin-top: 9rem;
 
+}
 .confirmBtn{
   margin-top: 1rem;
 }
@@ -134,7 +140,7 @@ h1{
   padding: .3rem;
 }
 
-.paymentPopup{
+.paymentPopup , .noRentalView{
   background-color: white;
   padding: 2rem;
   display: flex;
