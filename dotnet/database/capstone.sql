@@ -326,12 +326,12 @@ FROM payment_schedule
 WHERE lease_id = 1 AND (due_date = (SELECT MAX(due_date) FROM payment_schedule WHERE due_date <= GETDATE()));
 
 
-SELECT ps.installment_number, ps.lease_id, ps.due_date, ps.amount_due, (ps.installment_number * ps.amount_due) AS lease_aggregate_amount_due, sum(p.amount_paid) AS total_amount_paid 
+/*SELECT ps.installment_number, ps.lease_id, ps.due_date, ps.amount_due, (ps.installment_number * ps.amount_due) AS lease_aggregate_amount_due, sum(p.amount_paid) AS total_amount_paid 
 FROM payment_schedule ps
 JOIN payments p ON p.lease_id = ps.lease_id
 WHERE due_date <= GETDATE() AND ps.lease_id = 1
 GROUP BY ps.installment_number
-ORDER BY due_date;
+ORDER BY due_date;*/
 
 
 /*--get future payments by lease id
