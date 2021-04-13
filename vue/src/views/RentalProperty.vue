@@ -134,7 +134,7 @@ body{
   margin-bottom: .5rem;
   padding: 20px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
@@ -160,6 +160,11 @@ button{
   border-radius: .5rem;
   font-size: 20px;
   border-color: rgba(128, 128, 128, 0.377);
+}
+
+.rowOne{
+  display: flex;
+  flex-direction: column;
 }
 
 h1{
