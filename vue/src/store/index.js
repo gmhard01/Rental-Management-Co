@@ -28,6 +28,7 @@ export default new Vuex.Store({
     currentProperty: {},
     userRentalProperty: {},
     userTransactions: {},
+    propertyMaintenanceRequest: {}
   },
   mutations: {
     SET_PROPERTIES(state, propertyArray){
@@ -58,6 +59,9 @@ export default new Vuex.Store({
     SAVE_CURRENT_ROUTE(state, currentPropertyPath) {
       state.currentPropertyPath = currentPropertyPath;
     },
+    SET_MAINTENANCE_PROPERTIES(state, property) {
+      state.propertyMaintenanceRequest = property;
+    },
     REMOVE_CURRENT_ROUTE(state) {
       state.currentPropertyPath = '';
     },
@@ -80,6 +84,8 @@ export default new Vuex.Store({
       state.user = {};
       axios.defaults.headers.common = {};
       state.userRentalProperty = {};
-    }
+      state.userTransactions = {};
+      state.propertyMaintenanceRequest = {};
+    },
   }
 })

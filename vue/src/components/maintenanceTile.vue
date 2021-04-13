@@ -20,6 +20,8 @@
 
 <script>
 export default {
+    name: "maintenanceTile",
+    props: ['requests'],
 
 }
 </script>
