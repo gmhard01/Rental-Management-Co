@@ -146,6 +146,40 @@ namespace Capstone.DAO
             return returnProperty;
         }
 
+        public List<Property> GetPropertiesByLandlordID(int landlordId)
+        {
+            List<Property> returnProperties = new List<Property>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, properties.landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, users.phone, users.email " +
+                                       "FROM properties " +
+                                       "JOIN addresses ON properties.address_id = addresses.address_id " +
+                                       "JOIN users ON properties.landlord_id = users.user_id " +
+                                       "WHERE properties.landlord_id = @landlordId;";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@landlordId", landlordId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Property p = GetPropertyFromReader(reader);
+                        returnProperties.Add(p);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnProperties;
+        }
+
         public bool SetPropertyToUnavailable(int propertyId)
         {
             int rowsAffected;

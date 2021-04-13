@@ -9,6 +9,7 @@ namespace Capstone.DAO
         List<Property> GetAvailablePropertiesPage(int numberOfProperties, int pageIndex);
         Property GetPropertyByID(int id);
         Property GetPropertyByRenterID(int renterId);
+        List<Property> GetPropertiesByLandlordID(int landlordId);
         bool SetPropertyToUnavailable(int propertyId);
     }
 }
