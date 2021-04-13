@@ -42,7 +42,10 @@ export default {
         this.$store.commit("SET_PROPERTIES", response.data);        
       })
       this.removePathFromStore();
-      },
+      window.onpopstate = function () {
+        location.reload()
+      };
+  },
   beforeRouteUpdate(to, from, next) {
     this.param = to.params.param;
     next();},
