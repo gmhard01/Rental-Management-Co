@@ -242,16 +242,17 @@ VALUES (1, 1, '2020-10-01', 1100.50),
 
 INSERT INTO payments (payer_id, paid_date, lease_id, amount_paid)
 VALUES (2, '04-01-2021', 1, 1100.50),
-	   (2, '03-01-2021', 1, 1100.50),
+	   (2, '03-01-2021', 1, 600.50),
+	   (2, '03-07-2021', 1, 500),
 	   (2, '02-01-2021', 1, 1100.50),
 	   (2, '01-01-2021', 1, 1100.50),
 	   (2, '12-01-2020', 1, 1100.50),
 	   (2, '11-01-2020', 1, 1100.50),
 	   (2, '10-01-2020', 1, 1100.50),
-	   (3, '04-01-2021', 1, 1400),
-	   (3, '03-01-2021', 1, 1400),
-	   (3, '02-01-2021', 1, 1400),
-	   (3, '01-01-2021', 1, 1400);
+	   (3, '04-01-2021', 2, 1400),
+	   (3, '03-01-2021', 2, 1400),
+	   (3, '02-01-2021', 2, 1400),
+	   (3, '01-01-2021', 2, 1400);
 
 
 --create application
@@ -315,23 +316,30 @@ WHERE payer_id = 2;
 
 /*SELECT installment_number, lease_id, due_date, amount_due, sum(amount_due) OVER (order by due_date rows unbounded preceding) AS lease_aggregate_amount_due*/
 
-SELECT installment_number, lease_id, due_date, amount_due, (installment_number * amount_due) AS lease_aggregate_amount_due
-FROM payment_schedule
-WHERE due_date <= GETDATE() AND lease_id = 1
-ORDER BY due_date;
 
 
-SELECT due_date, (installment_number * amount_due) AS lease_aggregate_amount_due
-FROM payment_schedule
-WHERE lease_id = 1 AND (due_date = (SELECT MAX(due_date) FROM payment_schedule WHERE due_date <= GETDATE()));
 
 
-/*SELECT ps.installment_number, ps.lease_id, ps.due_date, ps.amount_due, (ps.installment_number * ps.amount_due) AS lease_aggregate_amount_due, sum(p.amount_paid) AS total_amount_paid 
+/*
+--get payment history with current balance due on last row
+SELECT ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date, (ps.installment_number * ps.amount_due) AS lease_aggregate_amount_due, sum(p.amount_paid) AS total_paid_to_date, (ps.installment_number * ps.amount_due) - sum(p.amount_paid) AS balance_due
 FROM payment_schedule ps
 JOIN payments p ON p.lease_id = ps.lease_id
-WHERE due_date <= GETDATE() AND ps.lease_id = 1
-GROUP BY ps.installment_number
-ORDER BY due_date;*/
+WHERE ps.due_date <= GETDATE() AND ps.lease_id = 1
+GROUP BY  ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date
+ORDER BY lease_id, ps.due_date;
+*/
+
+
+/*
+--OVER BY on aggregate amount due ONLY
+SELECT ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date, sum(ps.amount_due) OVER (order by due_date rows unbounded preceding) AS lease_aggregate_amount_due, sum(p.amount_paid) AS total_paid_to_date, (ps.installment_number * ps.amount_due) - sum(p.amount_paid) AS balance_due
+FROM payment_schedule ps
+JOIN payments p ON p.lease_id = ps.lease_id
+WHERE ps.due_date <= GETDATE() AND ps.lease_id = 1
+GROUP BY  ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date
+ORDER BY lease_id, ps.due_date;
+*/
 
 
 /*--get future payments by lease id
