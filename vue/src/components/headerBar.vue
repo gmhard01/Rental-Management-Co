@@ -16,9 +16,9 @@
           <li v-if="this.$store.state.user.role=='renter'">|</li>
           <li><router-link v-if="this.$store.state.user.role=='renter'" :to="{ name: 'my-rental'}">My Rental</router-link></li>
           <li v-if="this.$store.state.user.role=='landlord'">|</li>
-          <li><router-link v-if="this.$store.state.user.role=='landlord'" :to="{ name: 'home'}">My Rentals</router-link></li>
+          <li><router-link v-if="this.$store.state.user.role=='landlord'" :to="{ name: 'my-rentals'}">My Rentals</router-link></li>
           <li v-if="this.$store.state.user.role=='maintenance'">|</li>
-          <li><router-link v-if="this.$store.state.user.role=='maintenance'" :to="{ name: 'home'}">Maintenance To-Dos</router-link></li>
+          <li><router-link v-if="this.$store.state.user.role=='maintenance'" :to="{ name: 'maintenance'}">Maintenance To-Dos</router-link></li>
         </ul>
         <div class="signIn">
           <router-link :to="{ name: 'login' }" class="myAccount"

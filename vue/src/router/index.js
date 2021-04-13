@@ -9,6 +9,8 @@ import store from '../store/index'
 import RentalProperty from '../views/RentalProperty.vue'
 import Splash from '../views/Splash.vue'
 import MyApartment from '../views/MyRental.vue'
+import Landlord from '../views/Landlord.vue'
+import Maintenance from '../views/Maintenance.vue'
 
 Vue.use(Router)
 
@@ -89,6 +91,22 @@ const router = new Router({
         requiresAuth: false
       }
     },
+    {
+      path: '/my-rentals',
+      name: 'my-rentals',
+      component: Landlord,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/maintenance',
+      name: 'maintenance',
+      component: Maintenance,
+      meta: {
+        requiresAuth: false
+      }
+    }
   ]
 })
 
