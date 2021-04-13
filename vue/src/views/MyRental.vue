@@ -1,30 +1,41 @@
 <template>
   <div>
-      <body>
     <header>
-      <headerBar id="headerBarId" />
-    </header>
-    <div>
-      <propertyTile id="propertyTileId" v-bind:property="getPropertyObject" />
-    </div>
-    <button class="showPayments" v-on:click='showPaymentHistory === false ? showPaymentHistory = true : showPaymentHistory = false'>Show/Hide Payment History</button>
-    <div v-for="transaction in $store.state.userTransactions" v-bind:key="transaction.paymentId">
-      <transactionTile id="transactionTileId" v-show="showPaymentHistory" v-bind:transaction="transaction" />
-    </div>
-    <button class="showPayments" v-on:click='showUpcomingPayments === false ? showUpcomingPayments = true : showUpcomingPayments = false'>Show/Hide Upcoming Payments</button>
-    <div v-for="payment in $store.state.userUpcomingPayments" v-bind:key="payment.installmentNumber">
-      <upcomingPaymentTile id="upcomingPaymentTileId" v-show="showUpcomingPayments" v-bind:payment="payment" />
-    </div>
-    <router-link :to="{ name: 'home' }"><button class= "makePayment">Make a payment</button></router-link>
-    <div class="maintenanceBox">
-      <form class="formHolder">
-        <h1>Maintenance Request</h1>
-        <textarea class="textBox" name="description"></textarea>
-        <input type="submit" class="submit" name="" value="Submit">
-      </form>
-    <!-- <router-link class="btnHolder" :to="this.$store.state.currentSearchIndex"><button class= "backToSearch">Maintenance Request</button></router-link> -->
-    </div>  
-  </body>
+        <headerBar id="headerBarId" />
+      </header>
+    <body v-if='$store.state.userRentalProperty.propertyId > 0'>
+      <div>
+        <propertyTile id="propertyTileId" v-bind:property="getPropertyObject" />
+      </div>
+      <button class="showPayments" v-on:click='showPaymentHistory === false ? showPaymentHistory = true : showPaymentHistory = false'>Show/Hide Payment History</button>
+      <div v-for="transaction in $store.state.userTransactions" v-bind:key="transaction.paymentId">
+        <transactionTile id="transactionTileId" v-show="showPaymentHistory" v-bind:transaction="transaction" />
+      </div>
+      <button class="showPayments" v-on:click='showUpcomingPayments === false ? showUpcomingPayments = true : showUpcomingPayments = false'>Show/Hide Upcoming Payments</button>
+      <div v-for="payment in $store.state.userUpcomingPayments" v-bind:key="payment.installmentNumber">
+        <upcomingPaymentTile id="upcomingPaymentTileId" v-show="showUpcomingPayments" v-bind:payment="payment" />
+      </div>
+      <button class= "showPayments" id='paymentBtn' v-on:click='showMakePayment = true'>Make a payment</button>
+      <div class="paymentContainer" v-if='showMakePayment'>
+        <div class="paymentPopup">
+          <h1>Payment Amount</h1>
+          <input type='text' class="paymentInput" placeholder='$0.00'>
+          <button v-on:click='showMakePayment = false' class="confirmBtn">Confirm Payment</button>
+          <button v-on:click='showMakePayment = false'>Close</button>
+        </div>
+      </div>
+      <div class="maintenanceBox">
+        <form class="formHolder">
+          <h1>Maintenance Request</h1>
+          <textarea class="textBox" name="description"></textarea>
+          <input type="submit" class="submit" name="" value="Submit">
+        </form>
+      <!-- <router-link class="btnHolder" :to="this.$store.state.currentSearchIndex"><button class= "backToSearch">Maintenance Request</button></router-link> -->
+      </div>  
+    </body>
+    <body class='noRentalView' v-else>
+      Your rental could not be found. Apply online or contact your landlord.
+    </body>
   </div>
 </template>
 
@@ -45,7 +56,8 @@ export default {
   data() {
     return {
       showPaymentHistory: false,
-      showUpcomingPayments: false
+      showUpcomingPayments: false,
+      showMakePayment: false
     }
   },
   created() {
@@ -91,7 +103,7 @@ h1{
   margin-top: 0;  
 }
 
-.formHolder {
+.formHolder, .paymentPopup, .noRentalView{
   background-color: #fff;
   border-radius: 1.5rem;
   overflow: hidden;
@@ -101,6 +113,40 @@ h1{
   flex-direction: column;
   padding: 1rem;
   padding-right: 1.5rem;
+}
+
+.paymentContainer{
+  box-sizing: border-box;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.219);
+}
+.noRentalView{
+  margin-top: 9rem;
+
+}
+.confirmBtn{
+  margin-top: 1rem;
+}
+
+.paymentInput{
+  padding: .3rem;
+}
+
+.paymentPopup , .noRentalView{
+  background-color: white;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .maintenanceBox{
