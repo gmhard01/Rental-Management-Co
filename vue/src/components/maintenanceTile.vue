@@ -50,5 +50,9 @@ export default {
 
 .submit{
     background-color:rgb(182, 204, 236);
+    border-radius: 1rem;
+    height: 2rem;
+    width: 7rem;
+    font-size: 1rem;
 }
 </style>
