@@ -28,6 +28,7 @@ export default new Vuex.Store({
     currentProperty: {},
     userRentalProperty: {},
     userTransactions: {},
+    userUpcomingPayments: {},
     propertyMaintenanceRequest: {}
   },
   mutations: {
@@ -55,6 +56,9 @@ export default new Vuex.Store({
     },
     SET_USER_TRANSACTIONS(state, transactionList) {
       state.userTransactions = transactionList;
+    },
+    SET_USER_UPCOMING_PAYMENTS(state, upcomingPayments) {
+      state.userUpcomingPayments = upcomingPayments;
     },
     SAVE_CURRENT_ROUTE(state, currentPropertyPath) {
       state.currentPropertyPath = currentPropertyPath;

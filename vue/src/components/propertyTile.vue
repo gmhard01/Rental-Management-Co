@@ -14,7 +14,7 @@
                 {{property.propertyDescription}}
               </p>
               <ul class="detailsList">
-                <li>${{property.rentAmount.toFixed(2)}} </li>
+                <li>${{parseFloat(property.rentAmount).toFixed(2)}} </li>
                 <li>{{property.numberOfBeds}} Bedroom<span v-if="property.numberOfBeds>1">s</span></li>
                 <li>{{property.numberOfBaths}} Bathroom<span v-if="property.numberOfBaths>1">s</span></li>
                 <li v-if="property.petsAllowed">Pets allowed</li>

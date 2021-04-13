@@ -10,5 +10,8 @@ export default {
   },
   getUserTransaction() {
       return https.get("/payments");
+  },
+  getUserUpcomingPayments() {
+    return https.get("/payments/upcoming");
   }
 }
