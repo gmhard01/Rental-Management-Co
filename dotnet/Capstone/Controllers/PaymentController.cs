@@ -22,10 +22,27 @@ namespace Capstone.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult<List<Property>> GetPaymentHistory()
+        public ActionResult<List<Payment>> GetPaymentHistory()
         {
             int userId = Convert.ToInt32(User.FindFirst("sub").Value);
             List<Payment> payments = paymentDAO.GetPaymentHistoryByPayerId(userId);
+
+            if (payments.Count > 0)
+            {
+                return Ok(payments);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("/payments/upcoming")]
+        [Authorize]
+        public ActionResult<List<PaymentSchedule>> GetFuturePayments()
+        {
+            int userId = Convert.ToInt32(User.FindFirst("sub").Value);
+            List<PaymentSchedule> payments = paymentDAO.GetFuturePaymentsByPayerId(userId);
 
             if (payments.Count > 0)
             {
