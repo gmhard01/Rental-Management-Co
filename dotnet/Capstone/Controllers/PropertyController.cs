@@ -97,5 +97,32 @@ namespace Capstone.Controllers
                 return StatusCode(400);
             }
         }
+
+        [HttpPost("/addproperty")]
+        [Authorize(Roles = "landlord, admin")]
+        public ActionResult<Property> CreateNewProperty(Property propertyToAdd)
+        {
+            int landlordId = Convert.ToInt32(User.FindFirst("sub").Value);
+            bool newProperty = propertyDAO.AddNewProperty(propertyToAdd, landlordId);
+            return Created($"Property was successfully submitted.", newProperty);
+        }
+
+
+        [HttpPut("/property-update")]
+        [Authorize(Roles = "landlord, admin")]
+        public ActionResult<Property> UpdateProperty(Property propertyDetailsToUpdate)
+        {
+
+            bool updated = propertyDAO.UpdateExistingProperty(propertyDetailsToUpdate);
+
+            if (updated)
+            {
+                return StatusCode(201);
+            }
+            else
+            {
+                return StatusCode(400);
+            }
+        }
     }
 }
