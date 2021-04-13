@@ -7,8 +7,9 @@ namespace Capstone.Models
 {
     public class PaymentSchedule
     {
+        public int InstallmentNumber { get; set; }
         public int LeaseId { get; set; }
-        public DateTime DueDate { get; set; }
+        public string DueDate { get; set; }
         public decimal AmountDue { get; set; }
     }
 }

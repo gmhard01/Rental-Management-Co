@@ -7,8 +7,13 @@
     <div>
       <propertyTile id="propertyTileId" v-bind:property="getPropertyObject" />
     </div>
+    <button class="showPayments" v-on:click='showPaymentHistory === false ? showPaymentHistory = true : showPaymentHistory = false'>Show/Hide Payment History</button>
     <div v-for="transaction in $store.state.userTransactions" v-bind:key="transaction.paymentId">
-      <transactionTile id="transactionTileId" v-bind:transaction="transaction" />
+      <transactionTile id="transactionTileId" v-show="showPaymentHistory" v-bind:transaction="transaction" />
+    </div>
+    <button class="showPayments" v-on:click='showUpcomingPayments === false ? showUpcomingPayments = true : showUpcomingPayments = false'>Show/Hide Upcoming Payments</button>
+    <div v-for="payment in $store.state.userUpcomingPayments" v-bind:key="payment.installmentNumber">
+      <upcomingPaymentTile id="upcomingPaymentTileId" v-show="showUpcomingPayments" v-bind:payment="payment" />
     </div>
     <router-link :to="{ name: 'home' }"><button class= "makePayment">Make a payment</button></router-link>
     <div class="maintenanceBox">
@@ -27,6 +32,7 @@
 import headerBar from '@/components/headerBar.vue';
 import propertyTile from '@/components/propertyTile.vue';
 import transactionTile from '@/components/transactionTile.vue';
+import upcomingPaymentTile from '@/components/upcomingPaymentTile.vue'
 import UserService from '@/services/UserService';
 
 export default {
@@ -34,6 +40,13 @@ export default {
     headerBar,
     propertyTile,
     transactionTile,
+    upcomingPaymentTile
+  },
+  data() {
+    return {
+      showPaymentHistory: false,
+      showUpcomingPayments: false
+    }
   },
   created() {
     UserService.getUserProperty().then ((response) => {
@@ -41,6 +54,9 @@ export default {
     })
     UserService.getUserTransaction().then((response) => {
       this.$store.commit("SET_USER_TRANSACTIONS", response.data);
+    })
+    UserService.getUserUpcomingPayments().then((response) => {
+      this.$store.commit("SET_USER_UPCOMING_PAYMENTS", response.data);
     })
     this.refresh();
 },
@@ -94,4 +110,9 @@ h1{
 .makePayment{
   background-color:rgb(182, 204, 236);
 }
+
+.showPayments{
+  width: 20rem;
+}
+
 </style>

@@ -1,18 +1,18 @@
 <template>
-    <div class="transactionTile">
-        <div>Payment made on  {{transaction.paidDate.slice(0,9)}} for ${{parseFloat(transaction.amountPaid).toFixed(2)}} </div>
+    <div class="upcomingPaymentTile">
+        <div>Payment due on  {{payment.dueDate.slice(0,9)}} for ${{parseFloat(payment.amountDue).toFixed(2)}} </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: "transactionTile",
-    props: ['transaction'],
+    name: "upcomingPaymentTile",
+    props: ['payment'],
 }
 </script>
 
 <style>
-.transactionTile{
+.upcomingPaymentTile{
   margin-top: .2rem;
   background-color: #fff;
   border-radius: 1.5rem;

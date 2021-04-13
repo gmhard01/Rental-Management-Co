@@ -22,7 +22,7 @@ namespace Capstone.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult<List<Property>> GetPaymentHistory()
+        public ActionResult<List<Payment>> GetPaymentHistory()
         {
             int userId = Convert.ToInt32(User.FindFirst("sub").Value);
             List<Payment> payments = paymentDAO.GetPaymentHistoryByPayerId(userId);
@@ -34,6 +34,39 @@ namespace Capstone.Controllers
             else
             {
                 return NotFound();
+            }
+        }
+
+        [HttpGet("/payments/upcoming")]
+        [Authorize]
+        public ActionResult<List<PaymentSchedule>> GetFuturePayments()
+        {
+            int userId = Convert.ToInt32(User.FindFirst("sub").Value);
+            List<PaymentSchedule> payments = paymentDAO.GetFuturePaymentsByPayerId(userId);
+
+            if (payments.Count > 0)
+            {
+                return Ok(payments);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost("/createpayschedule")]
+        //[Authorize]
+        public ActionResult<bool> GeneratePaymentSchedule(LeaseAgreement lease)
+        {
+            bool created = paymentDAO.CreatePaymentSchedule(lease);
+
+            if (created == true)
+            {
+                return StatusCode(201);
+            }
+            else
+            {
+                return StatusCode(400);
             }
         }
     }
