@@ -123,7 +123,6 @@ namespace Capstone.Controllers
             bool newProperty = propertyDAO.AddNewProperty(propertyToAdd, landlordId);
             return Created($"Property was successfully submitted.", newProperty);
         }
-<<<<<<< HEAD
 
 
         [HttpPut("/property-update")]
@@ -142,7 +141,5 @@ namespace Capstone.Controllers
                 return StatusCode(400);
             }
         }
-=======
->>>>>>> 536410ae4255b80fa0a3471f5fd6a4f7ffdde90d
     }
 }
