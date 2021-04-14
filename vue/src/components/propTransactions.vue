@@ -2,8 +2,8 @@
   <div>
       <body>
           <propertyTile v-bind:property="property"/>
-          <div>
-            <applicationTile />
+          <div v-for="application in getApplicationsForProperty" v-bind:key="application.applicationId">
+            <applicationTile v-bind:application="application" />
           </div>
           <div v-for="request in getMaintenanceRequestList" v-bind:key="request.id">
             <maintenanceTile v-bind:request="request" />
@@ -36,6 +36,9 @@ export default {
      LandlordService.getTransactionsForProperty(this.property.propertyId).then((response) => {
        this.$store.commit("UPDATE_LANDLORD_PROPERTY_TRANSACTIONS", response.data, this.property.propertyId);
      });
+     LandlordService.getApplicationsForProperty(this.property.propertyId).then((response) => {
+       this.$store.commit("UPDATE_LANDLORD_PROPERTY_APPLICATIONS", response.data, this.property.propertyId);
+     });
    },
    computed: {
      getMaintenanceRequestList() {
@@ -47,6 +50,11 @@ export default {
        return this.$store.state.landlordPropertiesList.find((response) => {
          return response.propertyId == this.property.propertyId;
        }).transactions;
+     },
+     getApplicationsList() {
+       return this.$store.state.landlordPropertiesList.find((response) => {
+         return response.propertyId == this.property.propertyId;
+       }).applications;
      },
    },
 }

@@ -57,6 +57,12 @@ export default new Vuex.Store({
       });
       state.landlordPropertiesList.find(findProperty).transactions = transactionList;
     },
+    UPDATE_LANDLORD_PROPERTY_APPLICATIONS(state, applicationsList, propertyId) {
+      let findProperty = ((response) => {
+        return response.properyId == propertyId;
+      });
+      state.landlordPropertiesList.find(findProperty).applications = applicationsList;
+    },
     // GET_NEXT_PROPERTY_LIST(state, startingIndex = state.currentIndex, amountToRetreive){
     //   let start = startingIndex;
     //   let finish = amountToRetreive;

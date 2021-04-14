@@ -1,7 +1,7 @@
 <template>
     <div class="applicationTile">
         <div class="leftApplication">
-            <div>Applicant Name: application.firstName application.lastName</div>
+            <div>Applicant Name: {{application.firstName}} {{application.lastName}}</div>
             <div>Phone: application.phone</div>
         </div>
         <div class="applicationBtns">
@@ -14,6 +14,7 @@
 <script>
 export default {
     name: "applicationTile",
+    props: ["application"],
 }
 </script>
 
