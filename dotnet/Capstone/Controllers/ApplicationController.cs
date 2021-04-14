@@ -25,7 +25,15 @@ namespace Capstone.Controllers
         public ActionResult<List<Application>> GetApplications(int propertyId)
         {
             List<Application> applications = applicationDAO.GetPendingApplicationsForProperty(propertyId);
-            return Ok(applications);
+
+            if(applications.Count > 0)
+            {
+                return Ok(applications);
+            }
+           else
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost("/newapplication")]
