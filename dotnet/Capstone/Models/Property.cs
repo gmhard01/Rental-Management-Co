@@ -14,7 +14,7 @@ namespace Capstone.Models
         public int NumberOfBeds { get; set; }
         public decimal NumberOfBaths { get; set; }
         public int LandlordId { get; set; }
-        public string Picture { get; set; }
+        public string[] Picture { get; set; }
         public bool Available { get; set; }
         public DateTime AvailableDate { get; set; }
         public string PropertyDescription { get; set; }

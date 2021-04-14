@@ -37,7 +37,6 @@ CREATE TABLE properties (
 	number_beds int NOT NULL,
 	number_baths decimal(2,1) NOT NULL,
 	landlord_id int NOT NULL,
-	picture nvarchar (500),
 	available bit NOT NULL,
 	available_date date,
 	property_description varchar(500),
@@ -118,6 +117,7 @@ CREATE TABLE applications (
 	CONSTRAINT PK_applications PRIMARY KEY (application_id)
 );
 
+/*
 CREATE TABLE property_photos (
 	photo_id int IDENTITY(1000,1) NOT NULL,
 	property_id int NOT NULL,
@@ -126,6 +126,22 @@ CREATE TABLE property_photos (
 	photo_description varchar(100)
 
 	CONSTRAINT PK_photos PRIMARY KEY (photo_id)
+);
+*/
+
+CREATE TABLE property_photos (
+	property_id int NOT NULL,
+	primary_photo int NOT NULL,
+	photo_url1 varchar (500) NOT NULL,
+	photo_description1 varchar(100),
+	photo_url2 varchar (500),
+	photo_description2 varchar(100),
+	photo_url3 varchar (500),
+	photo_description3 varchar(100),
+	photo_url4 varchar (500),
+	photo_description4 varchar(100)
+
+	CONSTRAINT PK_photos PRIMARY KEY (property_id)
 );
 
 ALTER TABLE properties ADD CONSTRAINT FK_property_address FOREIGN KEY (address_id) REFERENCES addresses(address_id);
@@ -181,36 +197,46 @@ VALUES (1733, '1', 'Garden Ln', 'OH', 'Cincinnati', NULL, '45237'),
 	   (782, 'A', 'Calderwood Ct', 'OH', 'Lebanon', Null, '45036'),
 	   (64, Null, 'Old Stephenson Mill Rd', 'KY', 'Walton', Null, '41094');
 
-INSERT INTO properties (title, address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed)
-VALUES ('Garden Lane Apartments', 1, 925, 3, 2, 1, 'https://photos.zillowstatic.com/fp/64fff432b44365dc7c6c21fa5f482faa-cc_ft_1152.jpg', 1, '2021-07-01', 'NEWLY REMODELED 2 BDRM APTS IN BONDHILL NEWLY REMODELED 2BDRM UNITS, CENTRALLY LOCATED, ON BUSLINE!!', 900, 'Apartment', 0),
-	   ('House on Stacy Lane!', 2, 1600, 2, 1.5, 1, 'https://photos.zillowstatic.com/fp/9ef655f2f6299b5495f49fadb0bba4eb-cc_ft_576.jpg', 1, '2021-03-01', 'Freshly painted with new carpeting. Washer, dryer included. Dishwasher, microwave. Deck with wooded view. Johnson elementary, highlands school district. Wet bar and pool table in finished basement.', 1550, 'House', 1),
-	   ('Auten Ave Apartment', 3, 795, 1, 1, 1, 'https://photos.zillowstatic.com/fp/d40d1816680b4194989c4a2e2a4fac45-cc_ft_1152.jpg', 1, '2021-05-01', '1 bedroom/1 bathroom apartment on great street in Pleasant Ridge. Hardwood floors, off-street parking, laundry and extra storage in basement.', 750, 'Apartment', 0),
-	   ('House on Brill Rd', 4, 3000, 5, 3, 1, 'https://photos.zillowstatic.com/fp/72ec58ae15e034adc0f9d5795fdc8be8-cc_ft_576.jpg', 1, '2021-06-01', 'Charming Mid-Century Modern home on 6+ acres with a pool. Private backyard with plenty of room to play and woods to explore. Highly desired Central Village location. The home has five bedrooms upstairs, one bedroom/office on first floor and three full baths. New appliances in kitchen being installed. Indian Hill Schools. Immediate occupancy. Tenant is responsible for all utilities and maintenance to the property. Landlord is a licensed real estate agent in the State of Ohio.', 3643, 'House', 0),
-	   ('Super nice house in Cincy!', 5, 1400, 4, 3, 1, 'https://photos.zillowstatic.com/fp/d1152b895baf97f27b1e12b3a6dade26-cc_ft_1152.jpg', 1, '2021-02-01', 'Fantastic value in Winton Woods SD. Single story home, 3BR, with updated kitchen, large yard, washer dryer hook ups. Open living and dining area. Close to the YMCA and Winton Woods.', 1120, 'House', 1),
-	   ('Cozy Townhome Near Green Hills Mall!', 6, 1500, 2, 2.5, 1, 'https://photos.zillowstatic.com/fp/9d8e0d0bc3cc84ecea41e3e5ed4c5c36-cc_ft_1152.jpg', 1, '2021-05-15', 'Great 2 bedroom, 2.5 bathroom townhome! This unit is located just minutes from Green Hills Mall, The YMCA, and tons of restaurants. Inside features a corner fireplace, decorative columns, spacious living room and dining room, and a laundry area!', 1220, 'Townhome', 1),
-	   ('Townhome in Madison!', 7, 1180, 2, 2.5, 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkO51xqEzdC0FzdlyZ6Zw4E2LwIehmtSBQOw&usqp=CAU', 1, '2021-04-01', 'Two Bedroom, 21/2 bath townhouse available immediately. In-suite bathrooms in both bedrooms, laminate flooring throughout, stainless steel appliances and granite counter tops. Washer/Dryer included! Soaker bath tub. Pets are possible with approval and a non-refundable pet fee.', 1100, 'Townhome', 1),
-	   ('Rental Home Near UC!', 8, 2300, 4, 2, 1, 'https://photos.zillowstatic.com/fp/7e77bf044d473a9eed444c54e0beaef5-cc_ft_384.jpg', 1, '2021-05-01', 'Large 4 bedroom 2 bath. Recently renovated with new kitchen and baths, windows, flooring (hardwood throughout). Large bed rooms, Central air, laundry in the basement. Off Street Parking.', 2000, 'House', 1),
-       ('Rental Property in the heart of OTR!', 9, 2000, 2, 1, 1, 'https://ssl.cdn-redfin.com/photo/158/mbpaddedwide/408/genMid.1507408_1_3.jpg', 1, '2021-04-01', 'With the city as your playground, enjoy urban living at its finest in this gorgeous, first floor, industrial style loft! Spacious rooms, soaring ceilings, exposed brick, light filled windows and sleek kitchen & bath all come together to create one amazing place to call home. Tons of storage, ample permit parking, low HOA!', 1050, 'Apartment', 0),
-       ('Downtown living right on Main St!', 10, 2200, 2, 1.5, 1, 'https://ap.rdcpix.com/4245192132/59e168b4cdfa45bab510b4782ce54888l-m0xd-w1020_h770_q80.jpg', 1, '2021-03-15', 'Spacious luxury two bedroom unit with tons of natural light! First time offered prime top unit in the newly formed 9 unit development. 1, 400+SqFt has urban feel with modern amenities! New LVT flooring. All new paint and carpet. Ultra low $125/m HOA fees. 3 years free parking! In the heart of the city, on the streetcar! Better hurry!', 1100, 'Condo', 0),
-       ('McHenry Estates', 11, 545, 1, 1, 1, 'https://photos.zillowstatic.com/fp/dbc20ab41533823739928cc44adf6200-cc_ft_576.jpg', 1, '2021-04-15', 'Paramount Square is a $29.9 million revitalization of 8 buildings in Walnut Hills. The buildings consist of 81 apartments, and retail storefronts. This development is home to many current and future businesses, including Just In, Video Archive, Caffe Vivace, Esoteric Brewery, and The Aperture.', 750, 'Apartment', 1),
-       ('Townhouse in the heart of old Mariemont', 12, 1700, 2, 1, 1, 'https://photos.zillowstatic.com/fp/3f4f6a7cd868400f105c1bd846029427-cc_ft_768.jpg', 1, '2021-06-01', 'Completely renovated townhouse in the heart of old Mariemont square.', 1000, 'Townhome', 0),
-       ('2 bedroom apartment in a 2 apartment building.', 13, 985, 2, 1, 1, 'https://photos.zillowstatic.com/fp/1e4134d4492dd9ad22deb4a7f6bc636a-cc_ft_1152.jpg', 1, '2021-04-01', 'This is a 2 bedroom apartment in a 2 apartment building. The apartment is fully carpeted with an enclosed porch and laundry facilities in the basement. Near public transportation and shopping. The apartment is in a fast growing area of Avondale, near Childrens hospital, UC medical center, Cincinnati Zoo and the VA hospital. Pets allowed with owners permission. Call now for an appointment at 832-2493 and ask for Karen', 1300, 'Apartment', 1),
-       ('Charming 4 Bed 1 bath w/ garage', 14, 1300, 4, 1, 1, 'https://photos.zillowstatic.com/fp/004f7f7160f8f2912cd5a5d7def00f6f-cc_ft_1152.jpg', 1, '2021-01-01', 'Charming 4 Bed, 1 bath with garage in a great location more info and bookings on yolocinci.com Beautiful 4 bedroom1 bath unit in a duplex Water, sewage and trash included in the Rent $1300, Deposit $1300 -Stove and fridge included, spacious living area.', 2100, 'House', 1),
-       ('Great home with a spacious kitchen', 15, 1680, 3, 1, 1, 'https://photos.zillowstatic.com/fp/baca0fc0b14099705accf6286d3ab11a-cc_ft_1152.jpg', 1, '2021-07-01', 'This great home has 3 carpeted bedrooms, a spacious kitchen with stainless steel appliances, granite countertops, and crisp white cabinets. New wood plank and carpet flooring throughout! You will enjoy the front-covered porch and walkup. Extensive storage space with extra closets and an unfinished basement. Great backyard space with patio ready for entertaining.', 1700, 'House', 1),
-       ('Mears Ave Suites', 16, 575, 1, 1, 1, 'https://photos.zillowstatic.com/fp/f8dd9998198e63d48b3576576f1a9fef-cc_ft_1152.jpg', 1, '2021-05-15', 'Awesome quiet building on quite street. Stained concrete flooring, open floor plan, ceramic bath, off-street parking. No pets, no smoking building.', 1400, 'Apartment', 0),
-       ('Cute Family Home', 17, 1600, 3, 1.5, 1, 'https://photos.zillowstatic.com/fp/a5fdbb3666f82aa892083f7b968abe8a-cc_ft_768.jpg', 1, '2021-03-01', 'Freshly painted with new carpeting. Washer, dryer included. Dishwasher, microwave. Deck with wooded view. Johnson elementary, highlands school district. Wet bar and pool table in finished basement.', 1500, 'House', 1),
-       ('Beechwood Apartments', 18, 1000, 2, 1, 1, 'https://photos.zillowstatic.com/fp/17afe77797aa980ee46f6de9298140bd-cc_ft_1152.jpg', 1, '2021-03-15', 'Well maintained apartment in Beechwood School district, convenient to church, shopping and eateries. Hardwood floors throughout. Garage parking and laundry hookups available. Landlord pays water.', 1000, 'Apartment', 0),
-       ('Family Bungalow for Rent', 19, 1000, 3, 2, 1, 'https://photos.zillowstatic.com/fp/3390fda0adf8bbc09e6b63e649aac24c-cc_ft_1152.jpg', 1, '2021-07-01', 'Single family home located in quiet, walkable neighborhood. ', 1500, 'House', 1),
-       ('Renovated home for Rent', 20, 1400, 2, 1, 1, 'https://photos.zillowstatic.com/fp/639355c21fcf379070b86c3a64ac3ea2-cc_ft_1152.jpg', 1, '2021-04-01', 'Single family home located in quiet, walkable Madeira neighborhood and Madeira Schools. 2BR, 1BA, 862 sq ft first floor. Extra finished office/storage room in basement.', 862, 'House', 0),
-       ('1100 Square Foot Apartment Home', 21, 1200, 2, 1, 1, 'https://photos.zillowstatic.com/fp/a22b5f2101fb66f5fc7c945b2fcf6ee4-cc_ft_576.jpg', 1, '2021-04-15', 'This 1100 square foot apartment home has 2 bedrooms and 1.0 bathrooms. This home is located at 4445 Plainville Rd #2, Cincinnati, OH 45227.', 1100, 'Apartment', 1),
-       ('Gorgeous 4 bedroom /2.5 bath home!', 22, 1695, 4, 2.5, 1, 'https://photos.zillowstatic.com/fp/de53a339ba79d39430cb3dc0d517ad36-cc_ft_1152.jpg', 1, '2021-04-01', '403 McEwing 4BR/2.5BA (Lockland) - **Coming Soon** Have you ever dreamed of living in a gorgeous brand new home? We can make your dreams come true!! We have newly constructed, beautifully appointed, traditional home that is almost ready for your move in. Gorgeous 4 bedroom /2.5 bath home! Open floor plan, walk in closets in every bedroom, en-suite master bath, laundry on the second floor, two car attached garage, and has a basement!!', 2100, 'House', 1),
-       ('1273 square foot multi family home!', 23, 1113, 1, 1, 1, 'https://photos.zillowstatic.com/fp/7384d008a3478420709a2bac9321f990-cc_ft_1152.jpg', 1, '2021-08-03', 'This 1273 square foot multi family home has 1 bedrooms and 1.0 bathrooms. This home is located at 100 Bethel Park Dr, Bethel, OH 45106.', 1273, 'Condo', 1),
-       ('1 bedroom, 1.0 bathroom, multi family home.', 24, 795, 1, 1, 1, 'https://photos.zillowstatic.com/fp/b69361b63e8ed1c57746c414ecf552fd-cc_ft_1152.jpg', 1, '2021-04-01', 'This is a 1 bedroom, 1.0 bathroom, multi family home. This home is located at 205 S High St, Mount Orab, OH 45154.', 880, 'Apartment', 0),
-       ('Renovated Student Living!', 25, 2200, 8, 2, 1, 'https://photos.zillowstatic.com/fp/7fc0320b729145f767f0a84019b0146d-cc_ft_1152.jpg', 1, '2021-08-15', 'Over $15,000 in improvements since last year including new flooring on both levels and a new stackable washer and dryer on top floor. Ideally this home would be shared amongst a group of 4 with two separate levels each with 4 bedrooms and 1 bathroom with a huge backyard. 10 minute walk to campus and close to Millet Hall as well as mccullough hyde hospital for any athletes, rotc or nursing students. Semester pricing may vary depending on the # of students.', 2400, 'Apartment', 0),
-       ('3 bedroom home in historical Germantown!', 26, 1300, 3, 1, 1, 'https://photos.zillowstatic.com/fp/3b8857d0767ff188d4077f2060feefbb-cc_ft_1152.jpg', 0, '2021-05-15', 'Welcome home! This 2-story, 3 bedroom home is located in historical Germantown, OH, has a newly remodeled bathroom, large fenced yard, and is in the Valley View School District. Call 937/694-0095 for viewing appointment.', 1600, 'House', 1),
-       ('Duplex in a quiet Subdivision.', 27, 1250, 3, 2, 1, 'https://photos.zillowstatic.com/fp/898fe9a4e3e3e1c623ecbf65f571c93f-cc_ft_1152.jpg', 1, '2021-05-15', 'This property is a duplex on a cul-de-sac located in a quiet subdivision. Local shopping is within two miles, and schools are a short commute. The duplex has a large master bedroom with full bath. The unit has an additional two bedrooms and a second full bath. The living area is an open floor plan that adjoins a kitchen fully equipped with all major appliances, a countertop breakfast bar, and tile flooring. Bedrooms and Living Area has one-year-old carpet.', 1900, 'Condo', 1),
-       ('What a townhouse!', 28, 995, 3, 1.5, 4, 'https://photos.zillowstatic.com/fp/e4788e39650097c4c7f10d03f173ffa6-cc_ft_1152.jpg', 1, '2021-04-15', 'The 3 bedrooms are spacious. The guest bath and master bath are connected by the toilet and tub area, each has their own sink. The first floor features the living room, 1/2 bath and eat in kitchen.The entire unit has just been painted and has carpet installed on the steps and upstairs and tile flooring throughout the main floor.', 1500, 'Townhome', 1);
+INSERT INTO properties (title, address_id, rent_amount, number_beds, number_baths, landlord_id, available, available_date, property_description, square_footage, property_type, pets_allowed)
+VALUES ('Garden Lane Apartments', 1, 925, 3, 2, 1, 1, '2021-07-01', 'NEWLY REMODELED 2 BDRM APTS IN BONDHILL NEWLY REMODELED 2BDRM UNITS, CENTRALLY LOCATED, ON BUSLINE!!', 900, 'Apartment', 0),
+	   ('House on Stacy Lane!', 2, 1600, 2, 1.5, 1, 1, '2021-03-01', 'Freshly painted with new carpeting. Washer, dryer included. Dishwasher, microwave. Deck with wooded view. Johnson elementary, highlands school district. Wet bar and pool table in finished basement.', 1550, 'House', 1),
+	   ('Auten Ave Apartment', 3, 795, 1, 1, 1, 1, '2021-05-01', '1 bedroom/1 bathroom apartment on great street in Pleasant Ridge. Hardwood floors, off-street parking, laundry and extra storage in basement.', 750, 'Apartment', 0),
+	   ('House on Brill Rd', 4, 3000, 5, 3, 1, 1, '2021-06-01', 'Charming Mid-Century Modern home on 6+ acres with a pool. Private backyard with plenty of room to play and woods to explore. Highly desired Central Village location. The home has five bedrooms upstairs, one bedroom/office on first floor and three full baths. New appliances in kitchen being installed. Indian Hill Schools. Immediate occupancy. Tenant is responsible for all utilities and maintenance to the property. Landlord is a licensed real estate agent in the State of Ohio.', 3643, 'House', 0),
+	   ('Super nice house in Cincy!', 5, 1400, 4, 3, 1, 1, '2021-02-01', 'Fantastic value in Winton Woods SD. Single story home, 3BR, with updated kitchen, large yard, washer dryer hook ups. Open living and dining area. Close to the YMCA and Winton Woods.', 1120, 'House', 1),
+	   ('Cozy Townhome Near Green Hills Mall!', 6, 1500, 2, 2.5, 1, 1, '2021-05-15', 'Great 2 bedroom, 2.5 bathroom townhome! This unit is located just minutes from Green Hills Mall, The YMCA, and tons of restaurants. Inside features a corner fireplace, decorative columns, spacious living room and dining room, and a laundry area!', 1220, 'Townhome', 1),
+	   ('Townhome in Madison!', 7, 1180, 2, 2.5, 1, 1, '2021-04-01', 'Two Bedroom, 21/2 bath townhouse available immediately. In-suite bathrooms in both bedrooms, laminate flooring throughout, stainless steel appliances and granite counter tops. Washer/Dryer included! Soaker bath tub. Pets are possible with approval and a non-refundable pet fee.', 1100, 'Townhome', 1),
+	   ('Rental Home Near UC!', 8, 2300, 4, 2, 1, 1, '2021-05-01', 'Large 4 bedroom 2 bath. Recently renovated with new kitchen and baths, windows, flooring (hardwood throughout). Large bed rooms, Central air, laundry in the basement. Off Street Parking.', 2000, 'House', 1),
+       ('Rental Property in the heart of OTR!', 9, 2000, 2, 1, 1, 1, '2021-04-01', 'With the city as your playground, enjoy urban living at its finest in this gorgeous, first floor, industrial style loft! Spacious rooms, soaring ceilings, exposed brick, light filled windows and sleek kitchen & bath all come together to create one amazing place to call home. Tons of storage, ample permit parking, low HOA!', 1050, 'Apartment', 0),
+       ('Downtown living right on Main St!', 10, 2200, 2, 1.5, 1, 1, '2021-03-15', 'Spacious luxury two bedroom unit with tons of natural light! First time offered prime top unit in the newly formed 9 unit development. 1, 400+SqFt has urban feel with modern amenities! New LVT flooring. All new paint and carpet. Ultra low $125/m HOA fees. 3 years free parking! In the heart of the city, on the streetcar! Better hurry!', 1100, 'Condo', 0),
+       ('McHenry Estates', 11, 545, 1, 1, 1, 1, '2021-04-15', 'Paramount Square is a $29.9 million revitalization of 8 buildings in Walnut Hills. The buildings consist of 81 apartments, and retail storefronts. This development is home to many current and future businesses, including Just In, Video Archive, Caffe Vivace, Esoteric Brewery, and The Aperture.', 750, 'Apartment', 1),
+       ('Townhouse in the heart of old Mariemont', 12, 1700, 2, 1, 1, 1, '2021-06-01', 'Completely renovated townhouse in the heart of old Mariemont square.', 1000, 'Townhome', 0),
+       ('2 bedroom apartment in a 2 apartment building.', 13, 985, 2, 1, 1, 1, '2021-04-01', 'This is a 2 bedroom apartment in a 2 apartment building. The apartment is fully carpeted with an enclosed porch and laundry facilities in the basement. Near public transportation and shopping. The apartment is in a fast growing area of Avondale, near Childrens hospital, UC medical center, Cincinnati Zoo and the VA hospital. Pets allowed with owners permission. Call now for an appointment at 832-2493 and ask for Karen', 1300, 'Apartment', 1),
+       ('Charming 4 Bed 1 bath w/ garage', 14, 1300, 4, 1, 1, 1, '2021-01-01', 'Charming 4 Bed, 1 bath with garage in a great location more info and bookings on yolocinci.com Beautiful 4 bedroom1 bath unit in a duplex Water, sewage and trash included in the Rent $1300, Deposit $1300 -Stove and fridge included, spacious living area.', 2100, 'House', 1),
+       ('Great home with a spacious kitchen', 15, 1680, 3, 1, 1, 1, '2021-07-01', 'This great home has 3 carpeted bedrooms, a spacious kitchen with stainless steel appliances, granite countertops, and crisp white cabinets. New wood plank and carpet flooring throughout! You will enjoy the front-covered porch and walkup. Extensive storage space with extra closets and an unfinished basement. Great backyard space with patio ready for entertaining.', 1700, 'House', 1),
+       ('Mears Ave Suites', 16, 575, 1, 1, 1, 1, '2021-05-15', 'Awesome quiet building on quite street. Stained concrete flooring, open floor plan, ceramic bath, off-street parking. No pets, no smoking building.', 1400, 'Apartment', 0),
+       ('Cute Family Home', 17, 1600, 3, 1.5, 1, 1, '2021-03-01', 'Freshly painted with new carpeting. Washer, dryer included. Dishwasher, microwave. Deck with wooded view. Johnson elementary, highlands school district. Wet bar and pool table in finished basement.', 1500, 'House', 1),
+       ('Beechwood Apartments', 18, 1000, 2, 1, 1, 1, '2021-03-15', 'Well maintained apartment in Beechwood School district, convenient to church, shopping and eateries. Hardwood floors throughout. Garage parking and laundry hookups available. Landlord pays water.', 1000, 'Apartment', 0),
+       ('Family Bungalow for Rent', 19, 1000, 3, 2, 1, 1, '2021-07-01', 'Single family home located in quiet, walkable neighborhood. ', 1500, 'House', 1),
+       ('Renovated home for Rent', 20, 1400, 2, 1, 1, 1, '2021-04-01', 'Single family home located in quiet, walkable Madeira neighborhood and Madeira Schools. 2BR, 1BA, 862 sq ft first floor. Extra finished office/storage room in basement.', 862, 'House', 0),
+       ('1100 Square Foot Apartment Home', 21, 1200, 2, 1, 1, 1, '2021-04-15', 'This 1100 square foot apartment home has 2 bedrooms and 1.0 bathrooms. This home is located at 4445 Plainville Rd #2, Cincinnati, OH 45227.', 1100, 'Apartment', 1),
+       ('Gorgeous 4 bedroom /2.5 bath home!', 22, 1695, 4, 2.5, 1, 1, '2021-04-01', '403 McEwing 4BR/2.5BA (Lockland) - **Coming Soon** Have you ever dreamed of living in a gorgeous brand new home? We can make your dreams come true!! We have newly constructed, beautifully appointed, traditional home that is almost ready for your move in. Gorgeous 4 bedroom /2.5 bath home! Open floor plan, walk in closets in every bedroom, en-suite master bath, laundry on the second floor, two car attached garage, and has a basement!!', 2100, 'House', 1),
+       ('1273 square foot multi family home!', 23, 1113, 1, 1, 1, 1, '2021-08-03', 'This 1273 square foot multi family home has 1 bedrooms and 1.0 bathrooms. This home is located at 100 Bethel Park Dr, Bethel, OH 45106.', 1273, 'Condo', 1),
+       ('1 bedroom, 1.0 bathroom, multi family home.', 24, 795, 1, 1, 1, 1, '2021-04-01', 'This is a 1 bedroom, 1.0 bathroom, multi family home. This home is located at 205 S High St, Mount Orab, OH 45154.', 880, 'Apartment', 0),
+       ('Renovated Student Living!', 25, 2200, 8, 2, 1, 1, '2021-08-15', 'Over $15,000 in improvements since last year including new flooring on both levels and a new stackable washer and dryer on top floor. Ideally this home would be shared amongst a group of 4 with two separate levels each with 4 bedrooms and 1 bathroom with a huge backyard. 10 minute walk to campus and close to Millet Hall as well as mccullough hyde hospital for any athletes, rotc or nursing students. Semester pricing may vary depending on the # of students.', 2400, 'Apartment', 0),
+       ('3 bedroom home in historical Germantown!', 26, 1300, 3, 1, 1, 0, '2021-05-15', 'Welcome home! This 2-story, 3 bedroom home is located in historical Germantown, OH, has a newly remodeled bathroom, large fenced yard, and is in the Valley View School District. Call 937/694-0095 for viewing appointment.', 1600, 'House', 1),
+       ('Duplex in a quiet Subdivision.', 27, 1250, 3, 2, 1, 1, '2021-05-15', 'This property is a duplex on a cul-de-sac located in a quiet subdivision. Local shopping is within two miles, and schools are a short commute. The duplex has a large master bedroom with full bath. The unit has an additional two bedrooms and a second full bath. The living area is an open floor plan that adjoins a kitchen fully equipped with all major appliances, a countertop breakfast bar, and tile flooring. Bedrooms and Living Area has one-year-old carpet.', 1900, 'Condo', 1),
+       ('What a townhouse!', 28, 995, 3, 1.5, 4, 1, '2021-04-15', 'The 3 bedrooms are spacious. The guest bath and master bath are connected by the toilet and tub area, each has their own sink. The first floor features the living room, 1/2 bath and eat in kitchen.The entire unit has just been painted and has carpet installed on the steps and upstairs and tile flooring throughout the main floor.', 1500, 'Townhome', 1);
 
+
+
+INSERT INTO property_photos (property_id, primary_photo, photo_url1, photo_description1, photo_url2, photo_description2, photo_url3, photo_description3, photo_url4, photo_description4)
+VALUES (100, 1, 'https://photos.zillowstatic.com/fp/64fff432b44365dc7c6c21fa5f482faa-cc_ft_1152.jpg', 'Signage Photo', 'https://photos.zillowstatic.com/fp/8c7ee40cebe2298270a1ded69a0362a7-cc_ft_576.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/89fd0a11f07d52ed22ac6a5cb6c516b0-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/beaadf7884edca521c81a7e6c29135e6-cc_ft_576.jpg', 'Living Room'),
+	   (101, 1, 'https://photos.zillowstatic.com/fp/9ef655f2f6299b5495f49fadb0bba4eb-cc_ft_576.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/371e6077843202109a59ddd08c4ddc5a-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/8dddfde3807e5ccfaaedf53e9f1c970a-cc_ft_576.jpg', 'Living Room', 'https://photos.zillowstatic.com/fp/ff3e052d250d0c9a7dfbd907c51a6695-cc_ft_576.jpg', 'Bedroom'),
+	   (102, 1,'https://photos.zillowstatic.com/fp/d40d1816680b4194989c4a2e2a4fac45-cc_ft_1152.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/2beaee5cf6b400e3bdcab755467590a7-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/2a71378ccacf906a56f38057855a57bf-cc_ft_576.jpg', 'Bathroom', Null, Null),
+	   (103, 1, 'https://photos.zillowstatic.com/fp/72ec58ae15e034adc0f9d5795fdc8be8-cc_ft_576.jpg', 'Front Photo', Null, Null, Null, Null, Null, Null);
+
+
+/*
 --create photo table
 INSERT INTO property_photos (property_id, primary_photo, photo_url, photo_description)
 VALUES (100, 1, 'https://photos.zillowstatic.com/fp/64fff432b44365dc7c6c21fa5f482faa-cc_ft_1152.jpg', 'Signage Photo'),
@@ -282,6 +308,7 @@ VALUES (100, 1, 'https://photos.zillowstatic.com/fp/64fff432b44365dc7c6c21fa5f48
 	   (125, 1, 'https://photos.zillowstatic.com/fp/3b8857d0767ff188d4077f2060feefbb-cc_ft_1152.jpg', 'Front Photo'),
 	   (126, 1, 'https://photos.zillowstatic.com/fp/898fe9a4e3e3e1c623ecbf65f571c93f-cc_ft_1152.jpg', 'Front Photo'),
 	   (127, 1, 'https://photos.zillowstatic.com/fp/e4788e39650097c4c7f10d03f173ffa6-cc_ft_1152.jpg', 'Front Photo');
+*/
 
 INSERT INTO lease_agreements (property_id, landlord_id, renter_id, monthly_rent, lease_start_date, lease_term)
 VALUES (102, 1, 2, 1100.50, '2020-10-01', 12),
@@ -390,10 +417,6 @@ WHERE payer_id = 2;
 */
 
 /*SELECT installment_number, lease_id, due_date, amount_due, sum(amount_due) OVER (order by due_date rows unbounded preceding) AS lease_aggregate_amount_due*/
-
-
-
-
 
 /*
 --get payment history with current balance due on last row
