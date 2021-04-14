@@ -16,4 +16,10 @@ export default {
   getMaintenanceTransactionsForProperty(propertId) {
       return https.get(`/landlord/transactions/${propertId}`);
   },
+  getApplicationsForProperty(propertyId) {
+    return https.get(`/applications/${propertyId}`);
+  },
+  updateApplicationApproveDecline(application) {
+    return https.put(`/applications/updatestatus`, application);
+  },
 }
