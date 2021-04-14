@@ -17,10 +17,10 @@
       </div>
       <button class= "showPayments" id='paymentBtn' v-on:click='showMakePayment = true'>Make a payment</button>
       <div class="paymentContainer" v-if='showMakePayment'>
-        <div class="paymentPopup">
+        <div id="payForm" class="paymentPopup">
           <h1>Payment Amount</h1>
-          <input type='number' class="paymentInput" placeholder='$0.00'>
-          <button v-on:click='showMakePayment = false' class="confirmBtn">Confirm Payment</button>
+          <input v-model="payment.amountPaid" type='number' class="paymentInput" placeholder='$0.00'>
+          <input v-on:click='submitPayment' type="submit" class="confirmBtn" name="" value="Confirm Payment">
           <button v-on:click='showMakePayment = false'>Close</button>
         </div>
       </div>
@@ -57,7 +57,8 @@ export default {
     return {
       showPaymentHistory: false,
       showUpcomingPayments: false,
-      showMakePayment: false
+      showMakePayment: false,
+      payment: {amountPaid: null}
     }
   },
   created() {
@@ -70,6 +71,10 @@ export default {
     UserService.getUserUpcomingPayments().then((response) => {
       this.$store.commit("SET_USER_UPCOMING_PAYMENTS", response.data);
     })
+
+    const form = document.getElementById('payForm');
+    document.body.appendChild(form);
+
     this.refresh();
 },
 computed: {
@@ -83,7 +88,14 @@ methods: {
         window.location = window.location + '#loaded';
         window.location.reload();
     }
-  }
+  },
+  submitPayment() {
+    this.payment.amountPaid = parseFloat(this.payment.amountPaid);
+    UserService.makePayment(this.payment)
+    .then(() => {
+      this.showMakePayment = false;
+    })
+    }
 }
 }
 </script>
