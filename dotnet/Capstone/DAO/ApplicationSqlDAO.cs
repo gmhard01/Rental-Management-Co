@@ -16,7 +16,7 @@ namespace Capstone.DAO
             connectionString = dbConnectionString;
         }
 
-        public List<Application> GetPendingApplicationsForLandlord(int landlordId)
+        public List<Application> GetPendingApplicationsForProperty(int propertyId)
         {
             List<Application> returnApplications = new List<Application>();
 
@@ -26,9 +26,9 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT application_id, applicant_id, applications.property_id, approval_status, applicant_first_name, applicant_last_name, applicant_phone FROM applications JOIN properties ON applications.property_id = properties.property_id WHERE landlord_id = @landlordId AND approval_status = 'Pending';";
+                    string sqlString = "SELECT application_id, applicant_id, property_id, approval_status, applicant_first_name, applicant_last_name, applicant_phone FROM applications WHERE property_id = @propertyId AND approval_status = 'Pending';";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
-                    cmd.Parameters.AddWithValue("@landlordId", landlordId);
+                    cmd.Parameters.AddWithValue("@propertyId", propertyId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())

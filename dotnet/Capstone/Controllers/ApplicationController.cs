@@ -20,23 +20,11 @@ namespace Capstone.Controllers
             applicationDAO = _applicationDAO;
         }
 
-        [HttpGet]
+        [HttpGet("/applications/{propertyId}")]
         [Authorize(Roles = "landlord, renter")]
-        public ActionResult<List<Application>> GetApplications()
+        public ActionResult<List<Application>> GetApplications(int propertyId)
         {
-            List<Application> applications = new List<Application>();
-
-            int userId = Convert.ToInt32(User.FindFirst("sub").Value);
-            string userRole = Convert.ToString(User.FindFirst("http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value);
-
-            if (userRole == "landlord")
-            {
-                applications = applicationDAO.GetPendingApplicationsForLandlord(userId);
-            }
-            else if (userRole == "renter")
-            {
-                applications = applicationDAO.GetPendingApplicationsForApplicant(userId);
-            }
+            List<Application> applications = applicationDAO.GetPendingApplicationsForProperty(propertyId);
             return Ok(applications);
         }
 
