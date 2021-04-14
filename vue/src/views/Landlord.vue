@@ -2,10 +2,13 @@
     <div>
         <body>
             <header>
-                <headerBar id="headerBarId" />
+              <headerBar id="headerBarId" />
             </header>
             <div>
-                <propMaintenance id="propMaintenance" />
+              <applicationTile />
+            </div>
+            <div>
+              <propMaintenance id="propMaintenance" />
             </div>
         </body>
     </div>
@@ -14,10 +17,12 @@
 <script>
 import headerBar from '@/components/headerBar.vue';
 import propMaintenance from '@/components/propMaintenance.vue';
+import applicationTile from '@/components/applicationTile';
 export default {
   components: {
     headerBar,
-    propMaintenance
+    propMaintenance,
+    applicationTile
   },
 }
 </script>
