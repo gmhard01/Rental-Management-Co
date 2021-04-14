@@ -19,7 +19,7 @@
       <div class="paymentContainer" v-if='showMakePayment'>
         <div class="paymentPopup">
           <h1>Payment Amount</h1>
-          <input type='text' class="paymentInput" placeholder='$0.00'>
+          <input type='number' class="paymentInput" placeholder='$0.00'>
           <button v-on:click='showMakePayment = false' class="confirmBtn">Confirm Payment</button>
           <button v-on:click='showMakePayment = false'>Close</button>
         </div>

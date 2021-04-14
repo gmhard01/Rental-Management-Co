@@ -2,7 +2,7 @@
     <div>
         <body>
             <header>
-                <headerBar id="headerBarId" />
+              <headerBar id="headerBarId" />
             </header>
             <div class=gridHolder>
               <main id="propertyTileId">

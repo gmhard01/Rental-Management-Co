@@ -2,6 +2,9 @@
   <div>
       <body>
           <propertyTile v-bind:property="property"/>
+          <div>
+            <applicationTile />
+          </div>
           <div v-for="request in getMaintenanceRequestList" v-bind:key="request.id">
             <maintenanceTile v-bind:request="request" />
           </div>
