@@ -7,5 +7,6 @@ namespace Capstone.DAO
     {
         List<MaintenanceRequest> GetNewMaintenanceRequestsForProperty(int propertyId);
         bool AssignMaintReqStatus(int requestId, int maintWorkerId);
+        bool SubmitMaintReq(MaintenanceRequest maintReq, int userId);
     }
 }

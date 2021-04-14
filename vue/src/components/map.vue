@@ -26,9 +26,6 @@ export default {
             center: {lat: 39.16, lng: -84.53},
             zoom: 11
         })
-
-        const marker = document.getElementById
-		marker.addEventListener('click', console.log('hi'))
     },
     methods: {
 		getMap(callback) {

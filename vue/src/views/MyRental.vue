@@ -25,9 +25,9 @@
         </div>
       </div>
       <div class="maintenanceBox">
-        <form class="formHolder">
+        <form class="formHolder" v-on:submit.prevent="submitMaintReq">
           <h1>Maintenance Request</h1>
-          <textarea class="textBox" name="description"></textarea>
+          <textarea class="textBox" name="description" v-model="maintReq.details"></textarea>
           <input type="submit" class="submit" name="" value="Submit">
         </form>
       <!-- <router-link class="btnHolder" :to="this.$store.state.currentSearchIndex"><button class= "backToSearch">Maintenance Request</button></router-link> -->
@@ -58,12 +58,18 @@ export default {
       showPaymentHistory: false,
       showUpcomingPayments: false,
       showMakePayment: false,
-      payment: {amountPaid: null}
+      payment: {amountPaid: null},
+      maintReq: {
+        details: "",
+        requesterId: this.$store.state.user.userId,
+        propertyId: null
+      }
     }
   },
   created() {
     UserService.getUserProperty().then ((response) => {
       this.$store.commit("SET_USER_RENTAL_PROPERTY", response.data);
+      this.maintReq.propertyId = response.data.propertyId;
     })
     UserService.getUserTransaction().then((response) => {
       this.$store.commit("SET_USER_TRANSACTIONS", response.data);
@@ -94,6 +100,16 @@ methods: {
     UserService.makePayment(this.payment)
     .then(() => {
       this.showMakePayment = false;
+    })
+    },
+    submitMaintReq() {
+    UserService.postMaintReq(this.maintReq)
+    .then(() => {
+      this.maintReq = {
+        details: "",
+        requesterId: this.$store.state.user.userId,
+        propertyId: null
+      };
     })
     }
 }
@@ -146,6 +162,9 @@ h1{
 }
 .confirmBtn{
   margin-top: 1rem;
+  border-radius: .5rem;
+  font-size: 20px;
+  border-color: rgba(128, 128, 128, 0.377);
 }
 
 .paymentInput{

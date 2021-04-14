@@ -16,5 +16,8 @@ export default {
   },
   makePayment(payment) {
     return axios.post("/submitpayment", payment);
+  },
+  postMaintReq(maintReq) {
+    return axios.post("/submitmaintenancereq", maintReq);
   }
 }

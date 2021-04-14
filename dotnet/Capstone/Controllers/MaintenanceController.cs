@@ -51,5 +51,22 @@ namespace Capstone.Controllers
                 return StatusCode(400);
             }
         }
+
+        [HttpPost("/submitmaintenancereq")]
+        [Authorize(Roles = "renter")]
+        public ActionResult PostMaintReq(MaintenanceRequest maintReq)
+        {
+            int userId = Convert.ToInt32(User.FindFirst("sub").Value);
+            bool submittedSuccessfully = maintenanceDAO.SubmitMaintReq(maintReq, userId);
+
+            if (submittedSuccessfully)
+            {
+                return StatusCode(201);
+            }
+            else
+            {
+                return StatusCode(400);
+            }
+        }
     }
 }

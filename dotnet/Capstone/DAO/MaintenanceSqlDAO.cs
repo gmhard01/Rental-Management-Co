@@ -70,6 +70,67 @@ namespace Capstone.DAO
             return (rowsAffected > 0);
         }
 
+        public bool SubmitMaintReq(MaintenanceRequest maintReq, int userId)
+        {
+            bool submittedSuccessfuly = false;
+            int rowsAffected;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "INSERT INTO maintenance_requests (property_id, requester_id, request_status, details, date_received) VALUES (@propertyId, @userId, 'New', @details, GETDATE());";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@propertyId", maintReq.PropertyId);
+                    cmd.Parameters.AddWithValue("@details", maintReq.Details);
+                    rowsAffected = Convert.ToInt32(cmd.ExecuteNonQuery());
+
+                    if (rowsAffected > 0)
+                    {
+                        submittedSuccessfuly = true;
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return submittedSuccessfuly;
+        }
+
+        private MaintenanceRequest GetMaintReqById(int reqId)
+        {
+            MaintenanceRequest returnReq = new MaintenanceRequest();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT request_id, property_id, requester_id, maintenance_worker_id, request_status, details, date_received, date_completed FROM maintenance_requests WHERE request_id = @request_id;";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@request_id", reqId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        returnReq = GetMaintRequestFromReader(reader);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnReq;
+        }
+
         private MaintenanceRequest GetMaintRequestFromReader(SqlDataReader reader)
         {
             MaintenanceRequest mr = new MaintenanceRequest()
