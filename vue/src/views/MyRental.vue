@@ -31,7 +31,7 @@
           <input type="submit" class="submit" name="" value="Submit">
         </form>
       <!-- <router-link class="btnHolder" :to="this.$store.state.currentSearchIndex"><button class= "backToSearch">Maintenance Request</button></router-link> -->
-      </div>  
+      </div>
     </body>
     <body class='noRentalView' v-else>
       Your rental could not be found. Apply online or contact your landlord.
@@ -43,7 +43,7 @@
 import headerBar from '@/components/headerBar.vue';
 import propertyTile from '@/components/propertyTile.vue';
 import transactionTile from '@/components/transactionTile.vue';
-import upcomingPaymentTile from '@/components/upcomingPaymentTile.vue'
+import upcomingPaymentTile from '@/components/upcomingPaymentTile.vue';
 import UserService from '@/services/UserService';
 
 export default {
@@ -51,7 +51,7 @@ export default {
     headerBar,
     propertyTile,
     transactionTile,
-    upcomingPaymentTile
+    upcomingPaymentTile,
   },
   data() {
     return {
