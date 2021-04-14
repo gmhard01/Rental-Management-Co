@@ -4,12 +4,34 @@
       <div class="grid">
         <div class="gridItem">
           <div class="card">
-            <img class="cardImg" v-bind:src="imageGiven" alt="Property Picture" />
+            <!-- <img class="cardImg" v-bind:src="property.picture[1]" alt="Property Picture" /> -->
+            <div id="pictureAndBtns">
+              <div class="cardImg" v-if="pictureNumb==1">
+                <img class="propImgs" v-bind:src="property.picture[1]">
+                <div class="photoDesc">{{property.picture[2]}}</div>
+              </div>
+              <div class="cardImg" v-if="pictureNumb==2">
+                <img class="propImgs" v-bind:src="property.picture[3]">
+                <div class="photoDesc">Caption Two</div>
+              </div>
+              <div class="cardImg" v-if="pictureNumb==3">
+                <img class="propImgs" v-bind:src="property.picture[5]">
+                <div class="photoDesc">Caption Three</div>
+              </div>
+              <div class="cardImg" v-if="pictureNumb==4">
+                <img class="propImgs" v-bind:src="property.picture[7]">
+                <div class="photoDesc">Caption Three</div>
+              </div>
+              <div class="directionalBtns">
+                <a class="prev" v-on:click="prevImg()">&#10094;</a>
+                <a class="next" v-on:click="nextImg()">&#10095;</a>
+              </div>
+            </div>
             <div class="titleAndDetails">
               <p v-if="Date.now() < Date.parse(property.availableDate)">{{property.propertyType}} available {{property.availableDate.slice(5,10)}}-{{property.availableDate.slice(0,4)}}</p>
               <p v-else>{{property.propertyType}} available now</p>
               <h1 class="cardHeader">{{property.title}}</h1>
-              <p>{{address}} {{property.zipCode}}</p>
+              <p>{{property.streetNumber}} {{property.streetName}} {{property.city}} {{property.state}} {{property.zipCode}}</p>
               <p class="cardDetails">
                 {{property.propertyDescription}}
               </p>
@@ -37,7 +59,7 @@ export default {
     props: ['property'],
     data() {
       return {
-        address: `${this.property.streetNumber} ${this.property.streetName} ${this.property.city} ${this.property.state}`,
+        pictureNumb: 1
       }
       },
     computed: {
@@ -50,6 +72,24 @@ export default {
         }
         else{
           return this.property.picture;
+        }
+      }
+    },
+    method: {
+      nextImg() {
+        if(this.pictureNumb==4){
+          this.pictureNumb=1;
+        }
+        else {
+          this.pictureNumb+=1;
+        }
+      },
+      prevImg() {
+        if(this.pictureNumb==1){
+          this.pictureNumb=4;
+        }
+        else {
+          this.pictureNumb-=1;
         }
       }
     }
@@ -74,14 +114,20 @@ export default {
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
 }
 
-.cardImg {
+.cardImg, .propImgs {
   display: block;
   width: 25rem;
   min-width: 25rem;
   height: 25rem;
   object-fit: cover;
 }
-
+.photoDesc{
+  margin-top: -6rem;
+  margin-left: 5.5rem;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  font-size: 2rem;
+}
 .titleAndDetails {
   padding: 2rem;
 }
@@ -120,6 +166,31 @@ li{
   background: rgba(182, 203, 236, 0.493);
 }
 
+.next {
+  border-radius: 3px 0 0 3px;
+}
+
+.prev, .next {
+  cursor: pointer;
+  width: auto;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+.directionalBtns{
+  display: flex;
+  justify-content: space-between;
+  margin-top: -10rem;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
 @media only screen and (max-width: 60em){
 .cardImg {
   width: 10rem;

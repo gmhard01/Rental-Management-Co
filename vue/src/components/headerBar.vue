@@ -25,7 +25,7 @@
             ><img src="@/assets/user-circle-solid.png"
           /></router-link>
           <router-link v-if="!isLoggedIn" :to="{ name: 'login' }" class="signInText">Sign In</router-link>
-          <router-link v-else :to="{ name: 'logout' }" class="signInText">Log Out</router-link>
+          <router-link v-else :to="{ name: 'logout' }" class="signInText">{{$store.state.user.username}}</router-link>
         </div>
       </div>
     </header>
@@ -152,6 +152,7 @@ a:hover {
 .signInText {
   font-family: "Oswald", "Arial";
   font-size: 15px;
+  text-align: center;
   text-transform: uppercase;
   color: #808080;
   text-transform: none;
@@ -161,7 +162,6 @@ a:hover {
   width: 40px;
   margin-bottom: 5px;
 }
-
 @media only screen and (max-width: 60em){
 .topnav {
   padding-top: 1rem;

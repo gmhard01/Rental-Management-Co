@@ -77,10 +77,6 @@ export default {
     UserService.getUserUpcomingPayments().then((response) => {
       this.$store.commit("SET_USER_UPCOMING_PAYMENTS", response.data);
     })
-
-    const form = document.getElementById('payForm');
-    document.body.appendChild(form);
-
     this.refresh();
 },
 computed: {
