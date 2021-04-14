@@ -8,7 +8,7 @@ export default {
   
 
   getPropertyList() {
-    return https.get('/landlord')
+    return https.get('properties/landlord');
   },
   getMaintenanceRequestForProperty(propertyId) {
       return https.get(`/landlord/maintenancerequest/${propertyId}`);
