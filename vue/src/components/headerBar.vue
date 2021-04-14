@@ -25,7 +25,7 @@
             ><img src="@/assets/user-circle-solid.png"
           /></router-link>
           <router-link v-if="!isLoggedIn" :to="{ name: 'login' }" class="signInText">Sign In</router-link>
-          <router-link v-else :to="{ name: 'logout' }" class="signInText">{{$store.state.user.username}}</router-link>
+          <router-link v-else :to="{ name: 'logout' }" class="signInText">{{$store.state.user.username}}-{{$store.state.user.role}}</router-link>
         </div>
       </div>
     </header>

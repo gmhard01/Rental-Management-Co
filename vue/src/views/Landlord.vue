@@ -37,15 +37,15 @@
             </div>
             <div class="inputPictures">
                 <input type="text" placeholder="Picture Url 1" required>
-                <input type="text" class="photoDesc" placeholder="Photo Description 1">
+                <input type="text" class="photoDescLL" placeholder="Photo Description 1">
                 <input type="text" placeholder="Picture Url 2">
-                <input type="text" class="photoDesc" placeholder="Photo Description 2">
+                <input type="text" class="photoDescLL" placeholder="Photo Description 2">
             </div>
             <div class="inputPictures">
                 <input type="text" placeholder="Picture Url 3">
-                <input type="text" class="photoDesc" placeholder="Photo Description 3">
+                <input type="text" class="photoDescLL" placeholder="Photo Description 3">
                 <input type="text" placeholder="Picture Url 4">
-                <input type="text" class="photoDesc" placeholder="Photo Description 4">
+                <input type="text" class="photoDescLL" placeholder="Photo Description 4">
             </div>
             <input type="date" placeholder="Available Date">
             <textarea class="textBox" name="description" placeholder="Property description"></textarea>
