@@ -203,6 +203,109 @@ namespace Capstone.DAO
             return (rowsAffected > 0);
         }
 
+        public bool AddNewProperty(Property propertyToAdd, int landlordId)
+        {
+            int addressId;
+            int rowsAffected;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlStringAddress = "INSERT INTO addresses (street_number, unit_number, street_name, state_abbreviation, city, county, zip_code) VALUES (@street_number, @unit_number, @street_name, @state_abbreviation, @city, @county, @zip_code); SELECT SCOPE_IDENTITY()";
+                    
+                    using (SqlCommand cmd = new SqlCommand(sqlStringAddress, conn))
+                    {
+                    cmd.Parameters.AddWithValue("@street_number", propertyToAdd.StreetNumber);
+                    cmd.Parameters.AddWithValue("@unit_number", propertyToAdd.UnitNumber);
+                    cmd.Parameters.AddWithValue("@street_name", propertyToAdd.StreetName);
+                    cmd.Parameters.AddWithValue("@state_abbreviation", propertyToAdd.State);
+                    cmd.Parameters.AddWithValue("@city", propertyToAdd.City);
+                    cmd.Parameters.AddWithValue("@county", propertyToAdd.County);
+                    cmd.Parameters.AddWithValue("@zip_code", propertyToAdd.ZipCode);
+                    addressId = Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+                    string sqlStringProperty = "INSERT INTO properties (title, address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed) VALUES (@title, @address_id, @rent_amount, @number_beds, @number_baths, @landlord_id, @picture, @available, @available_date, @property_description, @square_footage, @property_type, @pets_allowed)";
+
+                    using (SqlCommand command = new SqlCommand(sqlStringProperty, conn))
+                    {
+                        command.Parameters.AddWithValue("@title", propertyToAdd.Title);
+                        command.Parameters.AddWithValue("@address_id", addressId);
+                        command.Parameters.AddWithValue("@rent_amount", propertyToAdd.RentAmount);
+                        command.Parameters.AddWithValue("@number_beds", propertyToAdd.NumberOfBeds);
+                        command.Parameters.AddWithValue("@number_baths", propertyToAdd.NumberOfBaths);
+                        command.Parameters.AddWithValue("@landlord_id", landlordId);
+                        command.Parameters.AddWithValue("@picture", propertyToAdd.Picture);
+                        command.Parameters.AddWithValue("@available", propertyToAdd.Available);
+                        command.Parameters.AddWithValue("@available_date", propertyToAdd.AvailableDate);
+                        command.Parameters.AddWithValue("@property_description", propertyToAdd.PropertyDescription);
+                        command.Parameters.AddWithValue("@square_footage", propertyToAdd.SquareFeet);
+                        command.Parameters.AddWithValue("@property_type", propertyToAdd.PropertyType);
+                        command.Parameters.AddWithValue("@pets_allowed", propertyToAdd.PetsAllowed);
+                        rowsAffected = command.ExecuteNonQuery();
+                    }    
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            return (rowsAffected > 0);
+        }
+
+        public bool UpdateExistingProperty(Property propertyToUpdate)
+        {
+            int rowsAffectedAddress;
+            int rowsAffectedProperty;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlStringAddress = "UPDATE addresses SET street_number = @street_number, unit_number = @unit_number, street_name = @street_name, state_abbreviation = @state_abbreviation, city = @city, county = @county, zip_code = @zip_code WHERE address_id = @address_id;";
+
+                    using (SqlCommand cmd = new SqlCommand(sqlStringAddress, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@street_number", propertyToUpdate.StreetNumber);
+                        cmd.Parameters.AddWithValue("@unit_number", propertyToUpdate.UnitNumber);
+                        cmd.Parameters.AddWithValue("@street_name", propertyToUpdate.StreetName);
+                        cmd.Parameters.AddWithValue("@state_abbreviation", propertyToUpdate.State);
+                        cmd.Parameters.AddWithValue("@city", propertyToUpdate.City);
+                        cmd.Parameters.AddWithValue("@county", propertyToUpdate.County);
+                        cmd.Parameters.AddWithValue("@zip_code", propertyToUpdate.ZipCode);
+                        cmd.Parameters.AddWithValue("@address_id", propertyToUpdate.AddressId);
+                        rowsAffectedAddress = Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+                    string sqlStringProperty = "UPDATE properties SET title =  @title, rent_amount = @rent_amount, number_beds = @number_beds, number_baths = @number_baths, landlord_id = @landlord_id, picture = @picture, available = @available, available_date = @available_date, property_description = @property_description, square_footage = @square_footage, property_type = @property_type, pets_allowed = @pets_allowed WHERE property_id = @property_id;";
+
+                    using (SqlCommand command = new SqlCommand(sqlStringProperty, conn))
+                    {
+                        command.Parameters.AddWithValue("@title", propertyToUpdate.Title);
+                        command.Parameters.AddWithValue("@rent_amount", propertyToUpdate.RentAmount);
+                        command.Parameters.AddWithValue("@number_beds", propertyToUpdate.NumberOfBeds);
+                        command.Parameters.AddWithValue("@number_baths", propertyToUpdate.NumberOfBaths);
+                        command.Parameters.AddWithValue("@landlord_id", propertyToUpdate.LandlordId);
+                        command.Parameters.AddWithValue("@picture", propertyToUpdate.Picture);
+                        command.Parameters.AddWithValue("@available", propertyToUpdate.Available);
+                        command.Parameters.AddWithValue("@available_date", propertyToUpdate.AvailableDate);
+                        command.Parameters.AddWithValue("@property_description", propertyToUpdate.PropertyDescription);
+                        command.Parameters.AddWithValue("@square_footage", propertyToUpdate.SquareFeet);
+                        command.Parameters.AddWithValue("@property_type", propertyToUpdate.PropertyType);
+                        command.Parameters.AddWithValue("@pets_allowed", propertyToUpdate.PetsAllowed);
+                        command.Parameters.AddWithValue("@property_id", propertyToUpdate.PropertyId);
+                        rowsAffectedProperty = command.ExecuteNonQuery();
+                   }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            return (rowsAffectedProperty > 0);
+        }
+
         private Property GetPropertyFromReader(SqlDataReader reader)
         {
             Property p = new Property()

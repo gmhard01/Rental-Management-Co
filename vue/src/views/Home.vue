@@ -14,6 +14,8 @@
     <div class="arrowBar">
     <img src="@/assets/RightArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next()" />
     </div>
+    <button id="mapButton" v-on:click="showMap === false ? showMap = true : showMap = false">Show/Hide Map (beta)</button>
+    <googleMap v-show="showMap"/> 
     </body>
   </div>
 </template>
@@ -21,6 +23,7 @@
 <script>
 import headerBar from '@/components/headerBar.vue';
 import propertyTile from '@/components/propertyTile.vue';
+import googleMap from '@/components/map.vue';
 import PropService from '@/services/PropService';
 
 export default {
@@ -29,11 +32,13 @@ export default {
     return {
       startingTileIndex: 0,
       tileIncrementNum: 5,
+      showMap: false
     }
   },
   components: {
     headerBar,
-    propertyTile
+    propertyTile,
+    googleMap
   },
   
   created() {
@@ -123,6 +128,13 @@ export default {
 .ArrowBtn:hover {
   opacity: 1.0;
   transition: 1s;
+}
+
+#mapButton {
+  width: 20rem;
+  margin-top: 15px;
+  align-self: center;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 60em){

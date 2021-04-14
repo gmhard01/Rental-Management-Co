@@ -12,8 +12,8 @@
       </main>
     </div>
     <div class="arrowBar">
-      <img src="@/assets/LeftArrow.png" alt="Prev Arrow" class="ArrowBtn" />
-      <img src="@/assets/RightArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next(getCurrentIndex)" />
+      <img src="@/assets/LeftArrow.png" alt="Prev Arrow" class="ArrowBtn" v-on:click="previous(getCurrentIndex)" />
+      <img v-show="checkForEndOfList" src="@/assets/RightArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next(getCurrentIndex)" />
     </div>
     </body>
   </div>
@@ -56,6 +56,13 @@ export default {
     getCurrentIndex(){
       return parseInt(this.$route.params.page);
     },
+    checkForEndOfList() {
+      let output = true;
+      if (this.$store.state.properties.length < this.tileIncrementNum) {
+        output = false;
+      }
+      return output;
+    },
     // slicedArray(){
     //   let previousIndex = this.getCurrentIndex * 7;
     //   let newIndex = (this.getCurrentIndex + 1) * 7;
@@ -88,9 +95,17 @@ export default {
         this.$store.commit("SET_PROPERTIES", response.data);        
       })
     },
-    previous(){
-      this.startingTileIndex -=15;
-      this.getCurrentListing(this.startingTileIndex);
+    previous(indexNum){
+      let startingTileIndex = indexNum - 1;
+      if (startingTileIndex != 0) {
+        this.$router.push({name: "available-properties", params: {page: startingTileIndex}});
+      }
+      else {
+        this.$router.push("/");
+      }
+      this.saveCurrentSearchIndex();
+      this.getNewPropertyList();
+      window.scrollTo(0, 0);
     },
     getCurrentListing(page){
       PropService.getPropertyList(page).then ((response) => {

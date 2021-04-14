@@ -11,5 +11,8 @@ namespace Capstone.DAO
         Property GetPropertyByRenterID(int renterId);
         List<Property> GetPropertiesByLandlordID(int landlordId);
         bool SetPropertyToUnavailable(int propertyId);
+        bool AddNewProperty(Property propertyToAdd, int landlordId);
+        bool UpdateExistingProperty(Property propertyToUpdate);
+
     }
 }

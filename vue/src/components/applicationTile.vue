@@ -1,7 +1,13 @@
 <template>
-    <div class="transactionTile">
-        <div>Applicant Name: application.firstName application.lastName</div>
-        <div>Phone: application.phone</div>
+    <div class="applicationTile">
+        <div class="leftApplication">
+            <div>Applicant Name: application.firstName application.lastName</div>
+            <div>Phone: application.phone</div>
+        </div>
+        <div class="applicationBtns">
+            <button>Approve</button>
+            <button>Decline</button>
+        </div>
     </div>
 </template>
 
@@ -12,7 +18,7 @@ export default {
 </script>
 
 <style>
-.transactionTile{
+.applicationTile{
   margin-top: .2rem;
   background-color: #fff;
   border-radius: 1.5rem;
@@ -24,5 +30,18 @@ export default {
   flex-direction: row;
   align-items: center;
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
+}
+
+.leftApplication{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.applicationBtns{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 </style>
