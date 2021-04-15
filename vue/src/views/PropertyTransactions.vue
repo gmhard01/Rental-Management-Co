@@ -20,6 +20,63 @@
           <transactionTile v-bind:transaction="transaction" />
         </div>
       </div>
+      <button class="showPayments" v-on:click='showUpdateRentalForm === false ? showUpdateRentalForm = true : showUpdateRentalForm = false'>Show/Hide Update Rental Form</button>
+      <form class="newRentalForm" v-if='showUpdateRentalForm'>
+        <h2>Update Rental Info</h2>
+        <input id="rentalTitle" type="text" placeholder="title" v-model="updateProperty.title" required>
+        <div class="addressForm">
+          <div>
+            <input type="number" placeholder="Street Number" v-model="updateProperty.streetNumber" required>
+            <input type="text" id="streetName" placeholder="Street Name" v-model="updateProperty.streetName" required>
+            <input type="text" placeholder="Unit Number" v-model="updateProperty.unitNumber">
+          </div>
+          <div>
+            <input type="text" placeholder="State Abbreviated" pattern="[A-Za-z]{2}" v-model="updateProperty.state" required>
+            <input type="text" placeholder="City" v-model="updateProperty.city" required>
+            <input type="text" id="county" placeholder="County" v-model="updateProperty.county">
+            <input type="text" placeholder="Zip Code" v-model="updateProperty.zipCode" required>
+          </div>
+        </div>
+        <div class="bedAndBaths">
+          <input type="text" placeholder="Rent Amount" v-model="updateProperty.rentAmount" required>
+          <input type="number" placeholder="Number of Beds" v-model="updateProperty.numberOfBeds" required>
+          <input type="number" placeholder="Number of Baths" v-model="updateProperty.numberOfBaths" required>
+          <input type="number" placeholder="Square Footage" v-model="updateProperty.squareFeet">
+        </div>
+        <div class="inputPictures">
+            <input type="text" placeholder="Picture Url 1" v-model="updateProperty.picture[0]" required>
+            <input type="text" class="photoDescLL" placeholder="Photo Description 1" v-model="updateProperty.picture[1]">
+            <input type="text" placeholder="Picture Url 2" v-model="updateProperty.picture[2]">
+            <input type="text" class="photoDescLL" placeholder="Photo Description 2" v-model="updateProperty.picture[3]">
+        </div>
+        <div class="inputPictures">
+            <input type="text" placeholder="Picture Url 3" v-model="updateProperty.picture[4]">
+            <input type="text" class="photoDescLL" placeholder="Photo Description 3" v-model="updateProperty.picture[5]">
+            <input type="text" placeholder="Picture Url 4" v-model="updateProperty.picture[6]">
+            <input type="text" class="photoDescLL" placeholder="Photo Description 4" v-model="updateProperty.picture[7]">
+        </div>
+        <div>Available Date<input type="date" placeholder="Available Date" v-model="updateProperty.availableDate"></div>
+        <textarea class="textBox" name="description" placeholder="Property description" v-model="updateProperty.propertyDescription"></textarea>
+        <div class="formBtns">
+          <div>
+          <select name="propType" class="dropDownInput" v-model="updateProperty.propertyType" required>
+            <option selected="House" value="House">House</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Townhome">Townhome</option>
+            <option value="Condo">Condo</option>
+          </select>
+          <select name="petsAllowed" class="dropDownInput" v-model="updateProperty.petsAllowed" required>
+            <option selected="noPets" value="0">No pets</option>
+            <option value="1">Pets Allowed</option>
+          </select>      
+            <select name="Available" class="dropDownInput" v-model="updateProperty.available" required>
+              <option selected="1" value="1">Acception Applications</option>
+              <option value="0">Not Accepting Applications</option>
+            </select>
+          </div>
+          <input type="submit" class="submit" value="Update Rental"/> 
+        </div>             
+      </form>
     </body>
   </div>
 </template>
@@ -41,7 +98,32 @@ export default {
       transactionTile,
       maintenanceTile,
       applicationTile,
-   },
+  },
+  data() {
+    return {
+      showUpdateRentalForm: false,
+      updateProperty: {
+        title: "",
+        rentAmount: "",
+        numberOfBeds: "",
+        numberOfBaths: "",
+        picture: [],
+        available: 0,
+        availableDate: "",
+        propertyDescription: "",
+        squareFeet: "",
+        propertyType: "",
+        petsAllowed: "",
+        streetNumber: "",
+        unitNumber: "",
+        streetName: "",
+        state: "",
+        city: "",
+        county: "",
+        zipCode: "",
+      },
+    }
+  },
    created() {
      PropService.getPropertyById(this.getCurrentPropertyId).then ((response) => {
         this.$store.commit("SET_PROPERTY", response.data);        
