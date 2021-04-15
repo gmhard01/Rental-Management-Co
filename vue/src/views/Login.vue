@@ -97,13 +97,12 @@ export default {
 
 #login{
   background-image: url('../assets/PoolApartment.jpg');
-  background-attachment: absolute;
-  background-size: cover;
+  background-attachment: fixed;
+  background-size: cover; 
+  margin: -.5rem;
   padding: 0;
-  margin: 0;
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
   height: 100vh;
-  width: 100vw;
 }
 
 .loginBox{
