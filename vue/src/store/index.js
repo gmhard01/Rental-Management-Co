@@ -78,6 +78,12 @@ export default new Vuex.Store({
     SET_MAINTENANCE_PROPERTIES(state, property) {
       state.propertyMaintenanceRequest = property;
     },
+    LANDLORD_APPROVE_APPLICATION(state, applicationId) {
+      state.landlordApplicationsForProperty.find((response) => {return response.applicationId == applicationId}).approvalStatus = "Approved";
+    },
+    LANDLORD_DECLINE_APPLICATION(state, applicationId) {
+      state.landlordApplicationsForProperty.find((response) => {return response.applicationId == applicationId}).approvalStatus = "Declined";
+    },
     REMOVE_CURRENT_ROUTE(state) {
       state.currentPropertyPath = '';
     },
