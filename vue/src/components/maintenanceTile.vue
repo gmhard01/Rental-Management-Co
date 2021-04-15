@@ -15,6 +15,10 @@
             <input type="text" id="maintenanceUserName" class="assignWorker" placeholder="Maintenance Username" />
             <input type="submit" class="submitUser" name="" value="Assign">
         </div>
+        <div v-if="showMaintSuccess" id="payForm" class="paymentPopup">
+          <h1>Submitted Request</h1>
+          <button v-on:click='showMaintSuccess = false'>Close</button>
+        </div>
     </div>
 </template>
 
@@ -22,7 +26,11 @@
 export default {
     name: "maintenanceTile",
     props: ['requests'],
-
+    data() {
+        return {
+            showMaintSuccess: false,
+        }
+    }
 }
 </script>
 
