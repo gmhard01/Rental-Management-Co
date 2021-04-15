@@ -35,16 +35,16 @@
               <input type="number" placeholder="Square Footage" v-model="newProperty.squareFeet">
             </div>
             <div class="inputPictures">
-                <input type="text" placeholder="Picture Url 1" v-model="newProperty.picture[0]" required>
-                <input type="text" class="photoDescLL" placeholder="Photo Description 1" v-model="newProperty.picture[1]">
-                <input type="text" placeholder="Picture Url 2" v-model="newProperty.picture[2]">
-                <input type="text" class="photoDescLL" placeholder="Photo Description 2" v-model="newProperty.picture[3]">
+                <input type="text" placeholder="Picture Url 1" v-model="newProperty.picture[1]" required>
+                <input type="text" class="photoDescLL" placeholder="Photo Description 1" v-model="newProperty.picture[2]">
+                <input type="text" placeholder="Picture Url 2" v-model="newProperty.picture[3]">
+                <input type="text" class="photoDescLL" placeholder="Photo Description 2" v-model="newProperty.picture[4]">
             </div>
             <div class="inputPictures">
-                <input type="text" placeholder="Picture Url 3" v-model="newProperty.picture[4]">
-                <input type="text" class="photoDescLL" placeholder="Photo Description 3" v-model="newProperty.picture[5]">
-                <input type="text" placeholder="Picture Url 4" v-model="newProperty.picture[6]">
-                <input type="text" class="photoDescLL" placeholder="Photo Description 4" v-model="newProperty.picture[7]">
+                <input type="text" placeholder="Picture Url 3" v-model="newProperty.picture[5]">
+                <input type="text" class="photoDescLL" placeholder="Photo Description 3" v-model="newProperty.picture[6]">
+                <input type="text" placeholder="Picture Url 4" v-model="newProperty.picture[7]">
+                <input type="text" class="photoDescLL" placeholder="Photo Description 4" v-model="newProperty.picture[8]">
             </div>
             <div>Available Date<input type="date" placeholder="Available Date" v-model="newProperty.availableDate"></div>
             <textarea class="textBox" name="description" placeholder="Property description" v-model="newProperty.propertyDescription"></textarea>
@@ -92,7 +92,7 @@ export default {
         rentAmount: "",
         numberOfBeds: "",
         numberOfBaths: "",
-        picture: [],
+        picture: [1],
         available: 0,
         availableDate: "",
         propertyDescription: "",
