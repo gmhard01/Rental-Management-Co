@@ -11,7 +11,7 @@ export default {
     return https.get('/properties/landlord');
   },
   getMaintenanceRequestForProperty(propertyId) {
-      return https.get(`/landlord/maintenancerequest/${propertyId}`);
+      return https.get(`/landlord/maintenance/${propertyId}`);
   },
   getTransactionsForProperty(propertId) {
       return https.get(`/landlord/transactions/${propertId}`);
