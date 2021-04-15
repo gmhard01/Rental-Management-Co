@@ -116,7 +116,7 @@ export default {
       this.$store.commit("SET_LANDLORD_PROPERTIES", response.data);
     })
     this.removeCurrentPropertyFromStore();
-    // this.refresh();
+    this.refresh();
   },
   computed: {
     getProperties() {
