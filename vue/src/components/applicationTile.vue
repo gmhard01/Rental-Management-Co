@@ -5,16 +5,28 @@
             <div>Phone: {{application.applicantPhone}}</div>
         </div>
         <div class="applicationBtns">
-            <button>Approve</button>
-            <button>Decline</button>
+            <button v-on:click="approveApplication()">Approve</button>
+            <button v-on:click="declineApplication()">Decline</button>
         </div>
     </div>
 </template>
 
 <script>
+import LandlordService from '../services/LandlordService.js';
+
 export default {
     name: "applicationTile",
     props: ["application"],
+    methods: {
+        approveApplication() {
+            this.$store.commit('LANDLORD_APPROVE_APPLICATION', this.application.applicationId);
+            LandlordService.updateApplicationApproveDecline(this.application);
+        },
+        declineApplication() {
+            this.$store.commit('LANDLORD_DECLINE_APPLICATION', this.application.applicationId);
+            LandlordService.updateApplicationApproveDecline(this.application);
+        },
+    }
 }
 </script>
 
