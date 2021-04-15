@@ -38,7 +38,7 @@ export default {
                 this.lease.leaseId = response.data.leaseId;
                 LandlordService.createPaySched(this.lease);
             });
-            LandlordService.updatePropertyToUnavailable(this.lease.propertyId);
+            LandlordService.updatePropertyToUnavailable(this.$store.state.currentProperty);
             this.showElements=1;
         },
         declineApplication() {
