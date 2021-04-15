@@ -21,7 +21,7 @@
         </div>
       </div>
       <button class="showPayments" v-on:click='showUpdateRentalForm === false ? showUpdateRentalForm = true : showUpdateRentalForm = false'>Show/Hide Update Rental Form</button>
-      <form class="newRentalForm" v-if='showUpdateRentalForm'>
+      <form class="newRentalForm" v-if='showUpdateRentalForm' @submit.prevent="updatePropertyInServer">
         <h2>Update Rental Info</h2>
         <input id="rentalTitle" type="text" placeholder="title" v-model="updateProperty.title" required>
         <div class="addressForm">
@@ -44,16 +44,16 @@
           <input type="number" placeholder="Square Footage" v-model="updateProperty.squareFeet">
         </div>
         <div class="inputPictures">
-            <input type="text" placeholder="Picture Url 1" v-model="updateProperty.picture[0]" required>
-            <input type="text" class="photoDescLL" placeholder="Photo Description 1" v-model="updateProperty.picture[1]">
-            <input type="text" placeholder="Picture Url 2" v-model="updateProperty.picture[2]">
-            <input type="text" class="photoDescLL" placeholder="Photo Description 2" v-model="updateProperty.picture[3]">
+            <input type="text" placeholder="Picture Url 1" v-model="updateProperty.picture[1]" required>
+            <input type="text" class="photoDescLL" placeholder="Photo Description 1" v-model="updateProperty.picture[2]">
+            <input type="text" placeholder="Picture Url 2" v-model="updateProperty.picture[3]">
+            <input type="text" class="photoDescLL" placeholder="Photo Description 2" v-model="updateProperty.picture[4]">
         </div>
         <div class="inputPictures">
-            <input type="text" placeholder="Picture Url 3" v-model="updateProperty.picture[4]">
-            <input type="text" class="photoDescLL" placeholder="Photo Description 3" v-model="updateProperty.picture[5]">
-            <input type="text" placeholder="Picture Url 4" v-model="updateProperty.picture[6]">
-            <input type="text" class="photoDescLL" placeholder="Photo Description 4" v-model="updateProperty.picture[7]">
+            <input type="text" placeholder="Picture Url 3" v-model="updateProperty.picture[5]">
+            <input type="text" class="photoDescLL" placeholder="Photo Description 3" v-model="updateProperty.picture[6]">
+            <input type="text" placeholder="Picture Url 4" v-model="updateProperty.picture[7]">
+            <input type="text" class="photoDescLL" placeholder="Photo Description 4" v-model="updateProperty.picture[8]">
         </div>
         <div>Available Date<input type="date" placeholder="Available Date" v-model="updateProperty.availableDate"></div>
         <textarea class="textBox" name="description" placeholder="Property description" v-model="updateProperty.propertyDescription"></textarea>
@@ -107,7 +107,7 @@ export default {
         rentAmount: "",
         numberOfBeds: "",
         numberOfBaths: "",
-        picture: [],
+        picture: [1],
         available: 0,
         availableDate: "",
         propertyDescription: "",
@@ -146,12 +146,26 @@ export default {
    },
    methods: {
      updatePropertyInServer() {
-       this.$store.commit("CURRENT_PROPERTY_UPDATE_TITLE", this.updateProperty.title);
-       this.$store.commit("CURRENT_PROPERTY_UPDATE_RENTAMOUNT", this.updateProperty.rentAmount);
-       this.$store.commit("CURRENT_PROPERTY_UPDATE_NUMBEROFBEDS", this.updateProperty.numberOfBeds);
-       this.$store.commit("CURRENT_PROPERTY_UPDATE_NUMBEROFBATHS", this.updateProperty.numberOfBaths);
-       this.$store.commit("CURRENT_PROPERTY_UPDATE_PICTURE", this.updateProperty.picture);
+        this.updateProperty.rentAmount = parseFloat(this.updateProperty.rentAmount);
+        this.updateProperty.numberOfBeds = parseInt(this.updateProperty.numberOfBeds);
+        this.updateProperty.numberOfBaths = parseInt(this.updateProperty.numberOfBaths);
+        this.updateProperty.squareFeet = parseInt(this.updateProperty.squareFeet);
+        this.updateProperty.streetNumber = parseInt(this.updateProperty.streetNumber);
+        this.updateProperty.petsAllowed = Boolean(this.updateProperty.petsAllowed);
+        this.updateProperty.available = Boolean(this.updateProperty.available);
+        LandlordService.updateProperty(this.updateProperty).then((response) => {
+          if (response.status === 201) {
+            this.refresh();
+          }
+        });
+        
      },
+     refresh() {
+      if(!window.location.hash) {
+          window.location = window.location + '#loaded';
+          window.location.reload();
+      }
+    },
    },
    computed: {
      getCurrentPropertyId() {

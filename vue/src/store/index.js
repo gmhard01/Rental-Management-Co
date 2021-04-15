@@ -84,6 +84,9 @@ export default new Vuex.Store({
     LANDLORD_DECLINE_APPLICATION(state, applicationId) {
       state.landlordApplicationsForProperty.find((response) => {return response.applicationId == applicationId}).approvalStatus = "Declined";
     },
+    LANDLORD_PROPERTY_UPDATE(state, updatedProperty) {
+      state.currentProperty = updatedProperty;
+    },
     REMOVE_CURRENT_ROUTE(state) {
       state.currentPropertyPath = '';
     },

@@ -33,5 +33,8 @@ export default {
   },
   addProperty(newProperty) {
     return axios.post(`/addproperty`, newProperty);
+  },
+  updateProperty(propertyToUpdate) {
+    return axios.put('/property-update', propertyToUpdate);
   }
 }
