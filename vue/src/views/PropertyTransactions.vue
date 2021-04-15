@@ -168,6 +168,9 @@ export default {
     },
    },
    computed: {
+     getCurrentProperty() {
+       return this.$store.state.currentProperty;
+     },
      getCurrentPropertyId() {
       return this.$route.params.propertyId;
      },
