@@ -100,7 +100,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPut("/property/unavailable")]
-        //[Authorize]
+        [Authorize(Roles = "landlord")]
         public ActionResult<bool> MakePropertyUnavailable(Property propertyToUpdate)
         {
             bool updated = propertyDAO.SetPropertyToUnavailable(propertyToUpdate.PropertyId);

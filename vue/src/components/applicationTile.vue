@@ -33,6 +33,11 @@ export default {
         approveApplication() {
             this.$store.commit('LANDLORD_APPROVE_APPLICATION', this.application.applicationId);
             LandlordService.updateApplicationApproveDecline(this.application);
+            this.populateLeaseDetails();
+            LandlordService.createLease(this.lease).then((response) => {
+                this.lease.leaseId = response.data.leaseId;
+                LandlordService.createPaySched(this.lease);
+            })
             this.showElements=1;
         },
         declineApplication() {
@@ -40,10 +45,23 @@ export default {
             LandlordService.updateApplicationApproveDecline(this.application);
             this.showElements=2;
         },
+        populateLeaseDetails() {
+            let date = new Date(Date.now());
+            date.setMonth(date.getMonth() + 1);
+            date.setDate(1);
+
+            this.lease.propertyId = this.application.propertyId;
+            this.lease.landlordId = this.$store.state.user.userId;
+            this.lease.renterId = this.application.applicantId;
+            this.lease.monthlyRent = this.$store.state.currentProperty.rentAmount;
+            this.lease.leaseStartDate = date;
+            this.lease.leaseTerm = 12;
+        }
     },
     data() {
     return {
       showElements: 0,
+      lease: {}
     }
     }
 }
