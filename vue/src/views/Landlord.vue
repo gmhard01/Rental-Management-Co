@@ -58,7 +58,7 @@
               </select>
               <select name="petsAllowed" class="dropDownInput" v-model="newProperty.petsAllowed" required>
                 <option selected="noPets" value="0">No pets</option>
-                <option value="pets">Pets Allowed</option>
+                <option value="1">Pets Allowed</option>
               </select>
               </div>
               <input type="submit" class="submit" value="Add Rental"/> 
