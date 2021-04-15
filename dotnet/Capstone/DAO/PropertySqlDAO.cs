@@ -225,16 +225,16 @@ namespace Capstone.DAO
                     
                     using (SqlCommand cmd = new SqlCommand(sqlStringAddress, conn))
                     {
-                    cmd.Parameters.AddWithValue("@street_number", propertyToAdd.StreetNumber);
-                    cmd.Parameters.AddWithValue("@unit_number", propertyToAdd.UnitNumber);
-                    cmd.Parameters.AddWithValue("@street_name", propertyToAdd.StreetName);
-                    cmd.Parameters.AddWithValue("@state_abbreviation", propertyToAdd.State);
-                    cmd.Parameters.AddWithValue("@city", propertyToAdd.City);
-                    cmd.Parameters.AddWithValue("@county", propertyToAdd.County);
-                    cmd.Parameters.AddWithValue("@zip_code", propertyToAdd.ZipCode);
-                    addressId = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.Parameters.AddWithValue("@street_number", propertyToAdd.StreetNumber);
+                        cmd.Parameters.AddWithValue("@unit_number", propertyToAdd.UnitNumber);
+                        cmd.Parameters.AddWithValue("@street_name", propertyToAdd.StreetName);
+                        cmd.Parameters.AddWithValue("@state_abbreviation", propertyToAdd.State);
+                        cmd.Parameters.AddWithValue("@city", propertyToAdd.City);
+                        cmd.Parameters.AddWithValue("@county", propertyToAdd.County);
+                        cmd.Parameters.AddWithValue("@zip_code", propertyToAdd.ZipCode);
+                        addressId = Convert.ToInt32(cmd.ExecuteScalar());
                     }
-                    string sqlStringProperty = "INSERT INTO properties (title, address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed) VALUES (@title, @address_id, @rent_amount, @number_beds, @number_baths, @landlord_id, @picture, @available, @available_date, @property_description, @square_footage, @property_type, @pets_allowed)";
+                    string sqlStringProperty = "INSERT INTO properties (title, address_id, rent_amount, number_beds, number_baths, landlord_id, available, available_date, property_description, square_footage, property_type, pets_allowed) VALUES (@title, @address_id, @rent_amount, @number_beds, @number_baths, @landlord_id, @available, @available_date, @property_description, @square_footage, @property_type, @pets_allowed)";
 
                     using (SqlCommand command = new SqlCommand(sqlStringProperty, conn))
                     {
@@ -244,7 +244,7 @@ namespace Capstone.DAO
                         command.Parameters.AddWithValue("@number_beds", propertyToAdd.NumberOfBeds);
                         command.Parameters.AddWithValue("@number_baths", propertyToAdd.NumberOfBaths);
                         command.Parameters.AddWithValue("@landlord_id", landlordId);
-                        command.Parameters.AddWithValue("@picture", propertyToAdd.Picture);
+                        //command.Parameters.AddWithValue("@picture", propertyToAdd.Picture);
                         command.Parameters.AddWithValue("@available", propertyToAdd.Available);
                         command.Parameters.AddWithValue("@available_date", propertyToAdd.AvailableDate);
                         command.Parameters.AddWithValue("@property_description", propertyToAdd.PropertyDescription);

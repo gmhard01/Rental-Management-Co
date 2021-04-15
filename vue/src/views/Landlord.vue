@@ -57,11 +57,11 @@
                 <option value="Condo">Condo</option>
               </select>
               <select name="petsAllowed" class="dropDownInput" v-model="newProperty.petsAllowed" required>
-                <option selected="noPets" value="0">No pets</option>
-                <option value="1">Pets Allowed</option>
+                <option selected="noPets" value="false">No pets</option>
+                <option value="true">Pets Allowed</option>
               </select>      
                 <select name="Available" class="dropDownInput" v-model="newProperty.available" required>
-                  <option selected="1" value="1">Acception Applications</option>
+                  <option selected="1" value="1">Accepting Applications</option>
                   <option value="0">Not Accepting Applications</option>
                 </select>
               </div>
@@ -105,9 +105,7 @@ export default {
         state: "",
         city: "",
         county: "",
-        zipCode: "",
-        // contactPhone: "",
-        // contactEmail: "",
+        zipCode: ""
       },
     }
   },
@@ -144,6 +142,13 @@ export default {
   },
   methods: {
     addProperty() {
+      this.newProperty.rentAmount = parseFloat(this.newProperty.rentAmount);
+      this.newProperty.numberOfBeds = parseInt(this.newProperty.numberOfBeds);
+      this.newProperty.numberOfBaths = parseInt(this.newProperty.numberOfBaths);
+      this.newProperty.squareFeet = parseInt(this.newProperty.squareFeet);
+      this.newProperty.streetNumber = parseInt(this.newProperty.streetNumber);
+      this.newProperty.petsAllowed = Boolean(this.newProperty.petsAllowed);
+      this.newProperty.available = Boolean(this.newProperty.available);
       return LandlordService.addProperty(this.newProperty);
     },
     refresh() {
