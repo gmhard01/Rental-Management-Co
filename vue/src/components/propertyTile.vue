@@ -40,8 +40,11 @@
               </div>
             </div>
             <div class="titleAndDetails">
-              <p v-if="Date.now() < Date.parse(property.availableDate)">{{property.propertyType}} available {{property.availableDate.slice(5,10)}}-{{property.availableDate.slice(0,4)}}</p>
-              <p v-else>{{property.propertyType}} available now</p>
+              <div id="topRow">
+                <p v-if="Date.now() < Date.parse(property.availableDate)">{{property.propertyType}} available {{property.availableDate.slice(5,10)}}-{{property.availableDate.slice(0,4)}}</p>
+                <p v-else>{{property.propertyType}} available now</p>
+                <img class="alertImg" src="@/assets/Alert-Free-PNG-Image.png" alt="Company Logo" v-if="1==2"/>
+              </div>
               <h1 class="cardHeader">{{property.title}}</h1>
               <p>{{property.streetNumber}} {{property.streetName}} {{property.city}} {{property.state}} {{property.zipCode}}</p>
               <p class="cardDetails">
@@ -134,6 +137,19 @@ export default {
   margin-left: 0;
   object-fit: cover;
 }
+
+.alertImg{
+  width: 4rem;
+  height: 4rem;
+}
+
+#topRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-width: 100%;
+}
+
 .photoDesc{
   display: flex;
   justify-content: center;
@@ -145,6 +161,7 @@ export default {
 }
 .titleAndDetails {
   padding: 2rem;
+  width: 100%;
 }
 
 .cardHeader{
