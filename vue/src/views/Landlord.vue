@@ -46,20 +46,24 @@
                 <input type="text" placeholder="Picture Url 4" v-model="newProperty.picture[6]">
                 <input type="text" class="photoDescLL" placeholder="Photo Description 4" v-model="newProperty.picture[7]">
             </div>
-            <input type="date" placeholder="Available Date" v-model="newProperty.availableDate">
+            <div>Available Date<input type="date" placeholder="Available Date" v-model="newProperty.availableDate"></div>
             <textarea class="textBox" name="description" placeholder="Property description" v-model="newProperty.propertyDescription"></textarea>
             <div class="formBtns">
               <div>
               <select name="propType" class="dropDownInput" v-model="newProperty.propertyType" required>
                 <option selected="House" value="House">House</option>
                 <option value="Apartment">Apartment</option>
-                <option value="Apartment">Townhome</option>
-                <option value="Apartment">Condo</option>
+                <option value="Townhome">Townhome</option>
+                <option value="Condo">Condo</option>
               </select>
               <select name="petsAllowed" class="dropDownInput" v-model="newProperty.petsAllowed" required>
                 <option selected="noPets" value="0">No pets</option>
                 <option value="1">Pets Allowed</option>
-              </select>
+              </select>      
+                <select name="Available" class="dropDownInput" v-model="newProperty.available" required>
+                  <option selected="1" value="1">Acception Applications</option>
+                  <option value="0">Not Accepting Applications</option>
+                </select>
               </div>
               <input type="submit" class="submit" value="Add Rental"/> 
             </div>             
@@ -89,7 +93,7 @@ export default {
         numberOfBeds: "",
         numberOfBaths: "",
         picture: [],
-        available: false,
+        available: 0,
         availableDate: "",
         propertyDescription: "",
         squareFeet: "",
@@ -238,6 +242,14 @@ export default {
 
 #streetName, #county{
   width: 13rem;
+}
+
+.newRentalForm textarea{
+  text-align: left;
+}
+
+.dropDownInput{
+  width: 16rem;
 }
 
 @media only screen and (max-width: 60em){
