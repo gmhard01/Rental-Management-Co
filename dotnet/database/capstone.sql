@@ -119,7 +119,7 @@ CREATE TABLE applications (
 
 CREATE TABLE property_photos (
 	property_id int NOT NULL,
-	primary_photo int NOT NULL,
+	primary_photo varchar(2) NOT NULL,
 	photo_url1 varchar (500) NOT NULL,
 	photo_description1 varchar(100),
 	photo_url2 varchar (500),

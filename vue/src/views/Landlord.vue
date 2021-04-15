@@ -92,7 +92,7 @@ export default {
         rentAmount: "",
         numberOfBeds: "",
         numberOfBaths: "",
-        picture: [1],
+        picture: ["1"],
         available: 0,
         availableDate: "",
         propertyDescription: "",
