@@ -13,6 +13,7 @@ namespace Capstone.DAO
         bool SetPropertyToUnavailable(int propertyId);
         bool AddNewProperty(Property propertyToAdd, int landlordId);
         bool UpdateExistingProperty(Property propertyToUpdate);
+        List<Property> GetPropertiesByMaintWorkerID(int maintWorkerId);
 
     }
 }
