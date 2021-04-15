@@ -148,12 +148,12 @@ ALTER TABLE applications ADD CONSTRAINT FK_application_property FOREIGN KEY (pro
 ALTER TABLE property_photos ADD CONSTRAINT FK_property_photos FOREIGN KEY (property_id) REFERENCES properties(property_id);
 
 --create some starting data
-INSERT INTO users (username, password_hash, salt, user_role, phone, email)
-VALUES ('Rob', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Landlord', '1231006789', 'rob@gmail.com'),
-	   ('Eli', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Renter', '2222222222', 'eli@gmail.com'),
-	   ('Nate', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Renter', '3333333333', 'nate@gmail.com'),
-	   ('Graham', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Landlord', '4444444444', 'graham@gmail.com'),
-	   ('Joe', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Maintenance', '5555555555', 'joe@gmail.com');
+INSERT INTO users (username, password_hash, salt, user_role, phone, email, first_name, last_name)
+VALUES ('Rob', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Landlord', '1231006789', 'rob@gmail.com', 'Robby', 'Borchardt'),
+	   ('Eli', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Renter', '2222222222', 'eli@gmail.com', 'Elijah', 'Jackson'),
+	   ('Nate', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Renter', '3333333333', 'nate@gmail.com', 'Nathan', 'Groehl'),
+	   ('Graham', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Landlord', '4444444444', 'graham@gmail.com', 'Graham', 'Hardaway'),
+	   ('Joe', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Maintenance', '5555555555', 'joe@gmail.com', 'Joe', 'Riggs');
 
 INSERT INTO addresses (street_number, unit_number, street_name, state_abbreviation, city, county, zip_code)
 VALUES (1733, '1', 'Garden Ln', 'OH', 'Cincinnati', NULL, '45237'),
@@ -371,6 +371,14 @@ GROUP BY  ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date
 ORDER BY lease_id, ps.due_date;
 */
 
+/*SELECT ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date, (ps.installment_number * ps.amount_due) AS lease_aggregate_amount_due, sum(p.amount_paid) AS total_paid_to_date, (ps.installment_number * ps.amount_due) - sum(p.amount_paid) AS balance_due
+FROM payment_schedule ps
+JOIN payments p ON p.lease_id = ps.lease_id
+WHERE ps.lease_id = 1 AND ps.due_date = (
+	SELECT Max(ps.due_date <= GETDATE())  
+GROUP BY  ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date
+ORDER BY lease_id, ps.due_date;*/
+
 /*
 --OVER BY on aggregate amount due ONLY
 SELECT ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date, sum(ps.amount_due) OVER (order by due_date rows unbounded preceding) AS lease_aggregate_amount_due, sum(p.amount_paid) AS total_paid_to_date, (ps.installment_number * ps.amount_due) - sum(p.amount_paid) AS balance_due
@@ -380,8 +388,6 @@ WHERE ps.due_date <= GETDATE() AND ps.lease_id = 1
 GROUP BY  ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date
 ORDER BY lease_id, ps.due_date;
 */
-
-
 
 
 /*--get future payments by lease id
