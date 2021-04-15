@@ -29,11 +29,15 @@
         </div>
       </div>
       <div class="maintenanceBox">
-        <form class="formHolder" v-on:submit.prevent="submitMaintReq">
+        <form class="formHolder" v-if="!showRenterSuccess" v-on:submit.prevent="submitMaintReq">
           <h1>Maintenance Request</h1>
           <textarea class="textBox" name="description" v-model="maintReq.details"></textarea>
           <input v-on:click="showMakePayment = false" type="submit" class="submit" name="" value="Submit">
         </form>
+        <div v-if="showRenterSuccess" id="payForm" class="paymentPopup">
+          <h1>Created Maintenance Request</h1>
+          <button v-on:click='showRenterSuccess = false'>Close</button>
+        </div>
       <!-- <router-link class="btnHolder" :to="this.$store.state.currentSearchIndex"><button class= "backToSearch">Maintenance Request</button></router-link> -->
       </div>
     </body>
@@ -64,6 +68,7 @@ export default {
       showMakePayment: false,
       payment: {amountPaid: null},
       isPaymentSuccessful: false,
+      showRenterSuccess: false,
       maintReq: {
         details: "",
         requesterId: this.$store.state.user.userId,
@@ -112,6 +117,7 @@ methods: {
         propertyId: null
       };
     })
+    this.showRenterSuccess=true;
   }
 }
 }

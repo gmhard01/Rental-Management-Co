@@ -43,9 +43,10 @@ export default {
 }
 
 .clientInfo{
-    min-width: 14rem;
+    min-width: 28rem;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 .landlordInputs{

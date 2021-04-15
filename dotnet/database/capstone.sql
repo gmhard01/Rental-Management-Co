@@ -148,12 +148,12 @@ ALTER TABLE applications ADD CONSTRAINT FK_application_property FOREIGN KEY (pro
 ALTER TABLE property_photos ADD CONSTRAINT FK_property_photos FOREIGN KEY (property_id) REFERENCES properties(property_id);
 
 --create some starting data
-INSERT INTO users (username, password_hash, salt, user_role, phone, email)
-VALUES ('Rob', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Landlord', '1231006789', 'rob@gmail.com'),
-	   ('Eli', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Renter', '2222222222', 'eli@gmail.com'),
-	   ('Nate', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Renter', '3333333333', 'nate@gmail.com'),
-	   ('Graham', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Landlord', '4444444444', 'graham@gmail.com'),
-	   ('Joe', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Maintenance', '5555555555', 'joe@gmail.com');
+INSERT INTO users (username, password_hash, salt, user_role, phone, email, first_name, last_name)
+VALUES ('Rob', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Landlord', '1231006789', 'rob@gmail.com', 'Robby', 'Borchardt'),
+	   ('Eli', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Renter', '2222222222', 'eli@gmail.com', 'Elijah', 'Jackson'),
+	   ('Nate', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Renter', '3333333333', 'nate@gmail.com', 'Nathan', 'Groehl'),
+	   ('Graham', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Landlord', '4444444444', 'graham@gmail.com', 'Graham', 'Hardaway'),
+	   ('Joe', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Maintenance', '5555555555', 'joe@gmail.com', 'Joe', 'Riggs');
 
 INSERT INTO addresses (street_number, unit_number, street_name, state_abbreviation, city, county, zip_code)
 VALUES (1733, '1', 'Garden Ln', 'OH', 'Cincinnati', NULL, '45237'),
@@ -287,7 +287,7 @@ VALUES (2, '2020-10-01', 1, 1100.50),
 	   (3, '2021-02-01', 2, 1400),
 	   (3, '2021-03-01', 2, 1400),
 	   (2, '2021-03-01', 1, 600.50),
-	   (2, '2021-03-07', 1, 500),
+	   (2, '2021-03-07', 1, 600),
 	   (2, '2021-04-01', 1, 1100.50),
 	   (3, '2021-04-01', 2, 1400);
 	   
@@ -296,6 +296,17 @@ VALUES (2, '2020-10-01', 1, 1100.50),
 INSERT INTO applications (applicant_id, property_id, approval_status, applicant_first_name, applicant_last_name, applicant_phone)
 VALUES (3, 127, 'Pending', 'Nathan', 'Groehl', '5551238888'),
        (2, 126, 'Pending', 'Elijah', 'Jackson', '1235558080');
+
+
+--create maintenance requests--
+
+	--completed Request
+INSERT INTO maintenance_requests (property_id, requester_id, maintenance_worker_id, request_status, details, date_received, date_completed)
+VALUES (100, 2, 5, 'Complete', 'My toilet is clogged. Please help!', '2021-04-10', '2021-04-11');
+
+	--new request
+INSERT INTO maintenance_requests (property_id, requester_id, request_status, details, date_received)
+VALUES (101, 2, 'New', 'I have a leak in my ceiling above the bathroom toilet.', '2021-04-10');
 
 
 --SELECT payment_id, payer_id, paid_date, lease_id, amount_paid FROM payments WHERE payer_id = 2 ORDER BY paid_date ASC;
@@ -310,6 +321,7 @@ select * from addresses;
 select * from properties;
 select * from property_photos;
 select * from lease_agreements;
+select * from maintenance_requests;
 select * from applications;
 update users SET user_role = 'renter' where user_id = 1 OR user_id = 3;
 SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email FROM properties  JOIN addresses ON properties.address_id = addresses.address_id JOIN users ON properties.landlord_id = users.user_id WHERE available = 1;
@@ -359,6 +371,13 @@ GROUP BY  ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date
 ORDER BY lease_id, ps.due_date;
 */
 
+/*SELECT ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date, (ps.installment_number * ps.amount_due) AS lease_aggregate_amount_due, sum(p.amount_paid) AS total_paid_to_date, (ps.installment_number * ps.amount_due) - sum(p.amount_paid) AS balance_due
+FROM payment_schedule ps
+JOIN payments p ON p.lease_id = ps.lease_id
+WHERE ps.lease_id = 1 AND ps.due_date = (
+	SELECT Max(ps.due_date <= GETDATE())  
+GROUP BY  ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date
+ORDER BY lease_id, ps.due_date;*/
 
 /*
 --OVER BY on aggregate amount due ONLY

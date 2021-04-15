@@ -55,7 +55,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT installment_number, payment_schedule.lease_id, due_date, amount_due FROM payment_schedule JOIN lease_agreements ON payment_schedule.lease_id = lease_agreements.lease_id WHERE renter_id = @payerId AND due_date >= GETDATE(); ";
+                    string sqlString = "SELECT installment_number, payment_schedule.lease_id, due_date, amount_due FROM payment_schedule JOIN lease_agreements ON payment_schedule.lease_id = lease_agreements.lease_id WHERE renter_id = @payerId AND due_date >= GETDATE() ORDER BY due_date ASC; ";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     cmd.Parameters.AddWithValue("@payerId", payerId);
                     SqlDataReader reader = cmd.ExecuteReader();
