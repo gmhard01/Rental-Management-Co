@@ -371,13 +371,13 @@ GROUP BY  ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date
 ORDER BY lease_id, ps.due_date;
 */
 
-SELECT ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date, (ps.installment_number * ps.amount_due) AS lease_aggregate_amount_due, sum(p.amount_paid) AS total_paid_to_date, (ps.installment_number * ps.amount_due) - sum(p.amount_paid) AS balance_due
+/*SELECT ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date, (ps.installment_number * ps.amount_due) AS lease_aggregate_amount_due, sum(p.amount_paid) AS total_paid_to_date, (ps.installment_number * ps.amount_due) - sum(p.amount_paid) AS balance_due
 FROM payment_schedule ps
 JOIN payments p ON p.lease_id = ps.lease_id
 WHERE ps.lease_id = 1 AND ps.due_date = (
 	SELECT Max(ps.due_date <= GETDATE())  
 GROUP BY  ps.installment_number, ps.lease_id, ps.amount_due, ps.due_date
-ORDER BY lease_id, ps.due_date;
+ORDER BY lease_id, ps.due_date;*/
 
 /*
 --OVER BY on aggregate amount due ONLY
