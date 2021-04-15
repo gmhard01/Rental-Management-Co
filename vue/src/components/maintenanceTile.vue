@@ -44,6 +44,8 @@ export default {
 
 .clientInfo{
     min-width: 14rem;
+    display: flex;
+    flex-direction: row;
 }
 
 .landlordInputs{

@@ -46,20 +46,24 @@
                 <input type="text" placeholder="Picture Url 4" v-model="newProperty.picture[6]">
                 <input type="text" class="photoDescLL" placeholder="Photo Description 4" v-model="newProperty.picture[7]">
             </div>
-            <input type="date" placeholder="Available Date" v-model="newProperty.availableDate">
+            <div>Available Date<input type="date" placeholder="Available Date" v-model="newProperty.availableDate"></div>
             <textarea class="textBox" name="description" placeholder="Property description" v-model="newProperty.propertyDescription"></textarea>
             <div class="formBtns">
               <div>
               <select name="propType" class="dropDownInput" v-model="newProperty.propertyType" required>
                 <option selected="House" value="House">House</option>
                 <option value="Apartment">Apartment</option>
-                <option value="Apartment">Townhome</option>
-                <option value="Apartment">Condo</option>
+                <option value="Townhome">Townhome</option>
+                <option value="Condo">Condo</option>
               </select>
               <select name="petsAllowed" class="dropDownInput" v-model="newProperty.petsAllowed" required>
-                <option selected="noPets" value="0">No pets</option>
-                <option value="1">Pets Allowed</option>
-              </select>
+                <option selected="noPets" value="false">No pets</option>
+                <option value="true">Pets Allowed</option>
+              </select>      
+                <select name="Available" class="dropDownInput" v-model="newProperty.available" required>
+                  <option selected="1" value="1">Accepting Applications</option>
+                  <option value="0">Not Accepting Applications</option>
+                </select>
               </div>
               <input type="submit" class="submit" value="Add Rental"/> 
             </div>             
@@ -89,7 +93,7 @@ export default {
         numberOfBeds: "",
         numberOfBaths: "",
         picture: [],
-        available: false,
+        available: 0,
         availableDate: "",
         propertyDescription: "",
         squareFeet: "",
@@ -101,9 +105,7 @@ export default {
         state: "",
         city: "",
         county: "",
-        zipCode: "",
-        // contactPhone: "",
-        // contactEmail: "",
+        zipCode: ""
       },
     }
   },
@@ -140,6 +142,13 @@ export default {
   },
   methods: {
     addProperty() {
+      this.newProperty.rentAmount = parseFloat(this.newProperty.rentAmount);
+      this.newProperty.numberOfBeds = parseInt(this.newProperty.numberOfBeds);
+      this.newProperty.numberOfBaths = parseInt(this.newProperty.numberOfBaths);
+      this.newProperty.squareFeet = parseInt(this.newProperty.squareFeet);
+      this.newProperty.streetNumber = parseInt(this.newProperty.streetNumber);
+      this.newProperty.petsAllowed = Boolean(this.newProperty.petsAllowed);
+      this.newProperty.available = Boolean(this.newProperty.available);
       return LandlordService.addProperty(this.newProperty);
     },
     refresh() {
@@ -238,6 +247,14 @@ export default {
 
 #streetName, #county{
   width: 13rem;
+}
+
+.newRentalForm textarea{
+  text-align: left;
+}
+
+.dropDownInput{
+  width: 16rem;
 }
 
 @media only screen and (max-width: 60em){
