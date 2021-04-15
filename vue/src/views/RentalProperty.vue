@@ -8,7 +8,7 @@
       <propertyTile id="propertyTileId" v-bind:property="getPropertyObject" />
     </div>
     <div class="appFormHolder">
-      <form class="applicationBox" @submit.prevent="apply" v-if="!hasApplied && isLoggedIn">
+      <form class="applicationBox" @submit.prevent="apply" v-if="!hasApplied && isLoggedIn && this.$store.state.user.role=='renter'">
         <h1>Apply Here</h1>
         <div class="rowOne">
           <input type="text" class="textInputs" name="" placeholder="Legal First Name" required v-model="applicationForm.applicantFirstName" autofocus>
