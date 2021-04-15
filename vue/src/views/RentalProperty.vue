@@ -161,6 +161,7 @@ body{
   width: 13rem;
   border-radius: .5rem;
   border-color:rgba(128, 128, 128, 0.377);
+  text-align: center;
 }
 
 button{
@@ -172,7 +173,7 @@ button{
 
 .rowOne{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 h1{

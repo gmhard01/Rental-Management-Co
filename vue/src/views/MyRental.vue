@@ -17,18 +17,22 @@
       </div>
       <button class= "showPayments" id='paymentBtn' v-on:click='showMakePayment = true'>Make a payment</button>
       <div class="paymentContainer" v-if='showMakePayment'>
-        <div id="payForm" class="paymentPopup">
+        <div v-if="!isPaymentSuccessful" id="payForm" class="paymentPopup">
           <h1>Payment Amount</h1>
           <input v-model="payment.amountPaid" type='number' class="paymentInput" placeholder='$0.00'>
           <input v-on:click='submitPayment' type="submit" class="confirmBtn" name="" value="Confirm Payment">
           <button v-on:click='showMakePayment = false'>Close</button>
+        </div>
+        <div v-else id="payForm" class="paymentPopup">
+          <h1>Payment Successful</h1>
+          <button v-on:click='showMakePayment = false; isPaymentSuccessful=false'>Close</button>
         </div>
       </div>
       <div class="maintenanceBox">
         <form class="formHolder" v-on:submit.prevent="submitMaintReq">
           <h1>Maintenance Request</h1>
           <textarea class="textBox" name="description" v-model="maintReq.details"></textarea>
-          <input type="submit" class="submit" name="" value="Submit">
+          <input v-on:click="showMakePayment = false" type="submit" class="submit" name="" value="Submit">
         </form>
       <!-- <router-link class="btnHolder" :to="this.$store.state.currentSearchIndex"><button class= "backToSearch">Maintenance Request</button></router-link> -->
       </div>
@@ -59,6 +63,7 @@ export default {
       showUpcomingPayments: false,
       showMakePayment: false,
       payment: {amountPaid: null},
+      isPaymentSuccessful: false,
       maintReq: {
         details: "",
         requesterId: this.$store.state.user.userId,
@@ -95,9 +100,9 @@ methods: {
     this.payment.amountPaid = parseFloat(this.payment.amountPaid);
     UserService.makePayment(this.payment)
     .then(() => {
-      this.showMakePayment = false;
+      this.isPaymentSuccessful = true;
     })
-    },
+  },
     submitMaintReq() {
     UserService.postMaintReq(this.maintReq)
     .then(() => {
@@ -107,7 +112,7 @@ methods: {
         propertyId: null
       };
     })
-    }
+  }
 }
 }
 </script>
