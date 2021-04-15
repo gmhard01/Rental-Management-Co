@@ -1,12 +1,24 @@
 <template>
-    <div class="applicationTile">
-        <div class="leftApplication">
-            <div>Applicant Name: {{application.applicantFirstName}} {{application.applicantLastName}}</div>
-            <div>Phone: {{application.applicantPhone}}</div>
+    <div>
+        <div class="applicationTile" v-if="showElements==0">
+            <div class="leftApplication">
+                <div>Applicant Name: {{application.applicantFirstName}} {{application.applicantLastName}}</div>
+                <div>Phone: {{application.applicantPhone}}</div>
+            </div>
+            <div class="applicationBtns">
+                <button id="approve" v-on:click="approveApplication()">Approve</button>
+                <button id="decline" v-on:click="declineApplication()">Decline</button>
+            </div>
         </div>
-        <div class="applicationBtns">
-            <button id="approve" v-on:click="approveApplication()">Approve</button>
-            <button id="decline" v-on:click="declineApplication()">Decline</button>
+        <div class="applicationTile" v-if="showElements==1">
+            <div class="leftApplication">
+                <div>Applicant Name: {{application.applicantFirstName}} {{application.applicantLastName}} has been approved</div>
+            </div>
+        </div>
+        <div class="applicationTile" v-if="showElements==2">
+            <div class="leftApplication">
+                <div>Applicant Name: {{application.applicantFirstName}} {{application.applicantLastName}} has been denied</div>
+            </div>
         </div>
     </div>
 </template>
@@ -21,11 +33,18 @@ export default {
         approveApplication() {
             this.$store.commit('LANDLORD_APPROVE_APPLICATION', this.application.applicationId);
             LandlordService.updateApplicationApproveDecline(this.application);
+            this.showElements=1;
         },
         declineApplication() {
             this.$store.commit('LANDLORD_DECLINE_APPLICATION', this.application.applicationId);
             LandlordService.updateApplicationApproveDecline(this.application);
+            this.showElements=2;
         },
+    },
+    data() {
+    return {
+      showElements: 0,
+    }
     }
 }
 </script>
