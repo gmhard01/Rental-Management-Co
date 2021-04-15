@@ -22,7 +22,7 @@
 <script>
 import headerBar from '@/components/headerBar.vue';
 import propertyTile from '@/components/propertyTile.vue';
-import LandlordService from '@/services/LandlordService.js';
+import MaintenanceService from '@/services/MaintenanceService.js';
 
 export default {
   name: "landlord",
@@ -38,7 +38,7 @@ export default {
     propertyTile,
   },
   created() {
-    LandlordService.getPropertyByMaintenanceID().then((response) => {
+    MaintenanceService.getPropertyByMaintenanceID().then((response) => {
       this.$store.commit("SET_MAINTENANCE_WORKER_PROPERTIES", response.data);
     });
     this.removeCurrentPropertyFromStore();
