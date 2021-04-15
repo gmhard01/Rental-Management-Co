@@ -26,7 +26,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT payment_id, payer_id, paid_date, lease_id, amount_paid FROM payments WHERE payer_id = @payerId;";
+                    string sqlString = "SELECT payment_id, payer_id, paid_date, lease_id, amount_paid FROM payments WHERE payer_id = @payerId ORDER BY paid_date ASC;";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     cmd.Parameters.AddWithValue("@payerId", payerId);
                     SqlDataReader reader = cmd.ExecuteReader();

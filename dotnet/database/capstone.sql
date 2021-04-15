@@ -117,21 +117,9 @@ CREATE TABLE applications (
 	CONSTRAINT PK_applications PRIMARY KEY (application_id)
 );
 
-/*
-CREATE TABLE property_photos (
-	photo_id int IDENTITY(1000,1) NOT NULL,
-	property_id int NOT NULL,
-	primary_photo bit NOT NULL,
-	photo_url varchar (500) NOT NULL,
-	photo_description varchar(100)
-
-	CONSTRAINT PK_photos PRIMARY KEY (photo_id)
-);
-*/
-
 CREATE TABLE property_photos (
 	property_id int NOT NULL,
-	primary_photo int NOT NULL,
+	primary_photo varchar(2) NOT NULL,
 	photo_url1 varchar (500) NOT NULL,
 	photo_description1 varchar(100),
 	photo_url2 varchar (500),
@@ -160,12 +148,12 @@ ALTER TABLE applications ADD CONSTRAINT FK_application_property FOREIGN KEY (pro
 ALTER TABLE property_photos ADD CONSTRAINT FK_property_photos FOREIGN KEY (property_id) REFERENCES properties(property_id);
 
 --create some starting data
-
 INSERT INTO users (username, password_hash, salt, user_role, phone, email)
-VALUES ('rob', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'landlord', '1231006789', 'rob@gmail.com'),
-	   ('eli', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'renter', NULL, NULL),
-	   ('nate', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'renter', NULL, NULL),
-	   ('graham', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'landlord', NULL, NULL);
+VALUES ('Rob', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Landlord', '1231006789', 'rob@gmail.com'),
+	   ('Eli', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Renter', '2222222222', 'eli@gmail.com'),
+	   ('Nate', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Renter', '3333333333', 'nate@gmail.com'),
+	   ('Graham', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Landlord', '4444444444', 'graham@gmail.com'),
+	   ('Joe', '9/T9UumgqmBZWbIjG/SiB4c3IKY=', 'CN+wxEyhAbs=', 'Maintenance', '5555555555', 'joe@gmail.com');
 
 INSERT INTO addresses (street_number, unit_number, street_name, state_abbreviation, city, county, zip_code)
 VALUES (1733, '1', 'Garden Ln', 'OH', 'Cincinnati', NULL, '45237'),
@@ -228,87 +216,36 @@ VALUES ('Garden Lane Apartments', 1, 925, 3, 2, 1, 1, '2021-07-01', 'NEWLY REMOD
        ('What a townhouse!', 28, 995, 3, 1.5, 4, 1, '2021-04-15', 'The 3 bedrooms are spacious. The guest bath and master bath are connected by the toilet and tub area, each has their own sink. The first floor features the living room, 1/2 bath and eat in kitchen.The entire unit has just been painted and has carpet installed on the steps and upstairs and tile flooring throughout the main floor.', 1500, 'Townhome', 1);
 
 
-
+--Create dummy property photos
 INSERT INTO property_photos (property_id, primary_photo, photo_url1, photo_description1, photo_url2, photo_description2, photo_url3, photo_description3, photo_url4, photo_description4)
-VALUES (100, 1, 'https://photos.zillowstatic.com/fp/64fff432b44365dc7c6c21fa5f482faa-cc_ft_1152.jpg', 'Signage Photo', 'https://photos.zillowstatic.com/fp/8c7ee40cebe2298270a1ded69a0362a7-cc_ft_576.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/89fd0a11f07d52ed22ac6a5cb6c516b0-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/beaadf7884edca521c81a7e6c29135e6-cc_ft_576.jpg', 'Living Room'),
+VALUES (100, 1, 'https://photos.zillowstatic.com/fp/2c72d021bcaf75a894fb5785e542a494-cc_ft_768.jpg', 'Courtyard', 'https://photos.zillowstatic.com/fp/81fae264cadeba0adb8e9cee6a633e4b-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/fced11c34a4eb7de3c97ca38e50fed33-cc_ft_576.jpg', 'Living Room', 'https://photos.zillowstatic.com/fp/6f96ad4df57d3c4c093c963d6993b036-cc_ft_576.jpg', 'Bedroom'),
 	   (101, 1, 'https://photos.zillowstatic.com/fp/9ef655f2f6299b5495f49fadb0bba4eb-cc_ft_576.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/371e6077843202109a59ddd08c4ddc5a-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/8dddfde3807e5ccfaaedf53e9f1c970a-cc_ft_576.jpg', 'Living Room', 'https://photos.zillowstatic.com/fp/ff3e052d250d0c9a7dfbd907c51a6695-cc_ft_576.jpg', 'Bedroom'),
-	   (102, 1,'https://photos.zillowstatic.com/fp/d40d1816680b4194989c4a2e2a4fac45-cc_ft_1152.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/2beaee5cf6b400e3bdcab755467590a7-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/2a71378ccacf906a56f38057855a57bf-cc_ft_576.jpg', 'Bathroom', Null, Null),
-	   (103, 1, 'https://photos.zillowstatic.com/fp/72ec58ae15e034adc0f9d5795fdc8be8-cc_ft_576.jpg', 'Front Photo', Null, Null, Null, Null, Null, Null);
-
-
-/*
---create photo table
-INSERT INTO property_photos (property_id, primary_photo, photo_url, photo_description)
-VALUES (100, 1, 'https://photos.zillowstatic.com/fp/64fff432b44365dc7c6c21fa5f482faa-cc_ft_1152.jpg', 'Signage Photo'),
-       (100, 0, 'https://photos.zillowstatic.com/fp/8c7ee40cebe2298270a1ded69a0362a7-cc_ft_576.jpg', 'Front Photo'),
-	   (100, 0, 'https://photos.zillowstatic.com/fp/89fd0a11f07d52ed22ac6a5cb6c516b0-cc_ft_576.jpg', 'Kitchen'),
-	   (100, 0, 'https://photos.zillowstatic.com/fp/beaadf7884edca521c81a7e6c29135e6-cc_ft_576.jpg', 'Living Room'),
-	   (101, 1, 'https://photos.zillowstatic.com/fp/9ef655f2f6299b5495f49fadb0bba4eb-cc_ft_576.jpg', 'Front Photo'),
-	   (101, 0, 'https://photos.zillowstatic.com/fp/371e6077843202109a59ddd08c4ddc5a-cc_ft_576.jpg', 'Kitchen'),
-	   (101, 0, 'https://photos.zillowstatic.com/fp/8dddfde3807e5ccfaaedf53e9f1c970a-cc_ft_576.jpg', 'Living Room'),
-	   (101, 0, 'https://photos.zillowstatic.com/fp/ff3e052d250d0c9a7dfbd907c51a6695-cc_ft_576.jpg', 'Bedroom'),
-	   (102, 1, 'https://photos.zillowstatic.com/fp/d40d1816680b4194989c4a2e2a4fac45-cc_ft_1152.jpg', 'Front Photo'),
-	   (102, 0, 'https://photos.zillowstatic.com/fp/2beaee5cf6b400e3bdcab755467590a7-cc_ft_576.jpg', 'Kitchen'),
-	   (102, 0, 'https://photos.zillowstatic.com/fp/2a71378ccacf906a56f38057855a57bf-cc_ft_576.jpg', 'Bathroom'),
-	   (102, 0, 'https://photos.zillowstatic.com/fp/dba4412c454648098ea0fb699eddea80-cc_ft_576.jpg', 'Bedroom'),
-	   (103, 1, 'https://photos.zillowstatic.com/fp/72ec58ae15e034adc0f9d5795fdc8be8-cc_ft_576.jpg', 'Front Photo'),
-	   (103, 0, 'https://photos.zillowstatic.com/fp/e5921289ed0ab389faa3c8db4ab947d1-cc_ft_576.jpg', 'Kitchen'),
-	   (103, 0, 'https://photos.zillowstatic.com/fp/70d911961650e193468f39af84b585ab-cc_ft_576.jpg', 'Pool in Backyard'),
-	   (104, 1, 'https://photos.zillowstatic.com/fp/d1152b895baf97f27b1e12b3a6dade26-cc_ft_1152.jpg', 'Front Photo'),
-	   (104, 0, 'https://photos.zillowstatic.com/fp/e36909d965c5819067967f0a6e7b62f0-cc_ft_576.jpg', 'Kitchen and Living Room'),
-	   (104, 0, 'https://photos.zillowstatic.com/fp/8be1a2de8c702eb13724f504ac736cf4-cc_ft_576.jpg', 'Bathroom'),
-	   (105, 1, 'https://photos.zillowstatic.com/fp/c3ada9177483c709fea48a0c18914d85-cc_ft_1152.jpg', 'Front Photo'),
-	   (105, 0, 'https://photos.zillowstatic.com/fp/fe91a73f76b8065c79017cc615ab36a8-cc_ft_576.jpg', 'Bathroom'),
-	   (105, 0, 'https://photos.zillowstatic.com/fp/08a1293f61a90fef6fae9ad70c966c34-cc_ft_576.jpg', 'Kitchen'),
-	   (106, 1, 'https://photos.zillowstatic.com/fp/9d8e0d0bc3cc84ecea41e3e5ed4c5c36-cc_ft_1152.jpg', 'Front Photo'),
-	   (106, 0, 'https://photos.zillowstatic.com/fp/016bbc5df76c7a307cc6b1b5af032217-cc_ft_576.jpg', 'Rooftop Lounge Area'),
-	   (106, 0, 'https://photos.zillowstatic.com/fp/7dd276fd04ec37fc6df61553b6d13f4e-cc_ft_576.jpg', 'Kitchen'),
-	   (106, 0, 'https://photos.zillowstatic.com/fp/e253a99211923b9e3dc9c8ef80b346a8-cc_ft_576.jpg', 'Bedroom'),
-	   (107, 1, 'https://photos.zillowstatic.com/fp/7e77bf044d473a9eed444c54e0beaef5-cc_ft_384.jpg', 'Front Photo'),
-	   (107, 0, 'https://photos.zillowstatic.com/fp/545cd12cfb50ae425840ff3d0bd25f94-cc_ft_384.jpg', 'Kitchen'),
-	   (107, 0, 'https://photos.zillowstatic.com/fp/e82ac94a6761578583d94948525ca6a7-cc_ft_384.jpg', 'Living Room'),
-	   (107, 0, 'https://photos.zillowstatic.com/fp/385b4f64f918ae0421e47bdfd4ef7954-cc_ft_384.jpg', 'Bedroom'),
-	   (108, 1, 'https://photos.zillowstatic.com/fp/d5c48085fb5be4250cb09e7ad54c35bb-cc_ft_576.jpg', 'Front Photo'),
-	   (108, 0, 'https://photos.zillowstatic.com/fp/5d8102376625f2ceecd1bceb6dbe7e50-cc_ft_384.jpg', 'Living Room'),
-	   (108, 0, 'https://photos.zillowstatic.com/fp/9e3fe74a1f7637fed08c6e3b7b2c347a-cc_ft_384.jpg', 'Kitchen'),
-	   (108, 0, 'https://photos.zillowstatic.com/fp/da5b43163fb6f255c622f44cf379f2e2-cc_ft_384.jpg', 'Master Bedroom'),
-	   (109, 1, 'https://photos.zillowstatic.com/fp/cc785d67be7ded86abee7e5943ccb385-cc_ft_576.jpg', 'Front Photo'),
-	   (109, 0, 'https://photos.zillowstatic.com/fp/726bb295cbadc7f3e69b5224972cb9ec-cc_ft_384.jpg', 'Kitchen'),
-	   (109, 0, 'https://photos.zillowstatic.com/fp/be40ae182f63f7c5e76cd73df7351fde-cc_ft_384.jpg', 'Bedroom'),
-	   (109, 0, 'https://photos.zillowstatic.com/fp/0fe17efe211b40e82b8df4eec7c0424c-cc_ft_384.jpg', 'Living Room'),
-	   (110, 1, 'https://photos.zillowstatic.com/fp/dbc20ab41533823739928cc44adf6200-cc_ft_576.jpg', 'Front Photo'),
-	   (110, 0, 'https://photos.zillowstatic.com/fp/37b1545a5d5c5a8cc0037a62b5985590-cc_ft_576.jpg', 'Kitchen'),
-	   (110, 0, 'https://photos.zillowstatic.com/fp/55d2e12b32e2758e0549b46d8117ffb7-cc_ft_576.jpg', 'Bedroom'),
-	   (111, 1, 'https://photos.zillowstatic.com/fp/3f4f6a7cd868400f105c1bd846029427-cc_ft_768.jpg', 'Living Room'),
-	   (111, 0, 'https://photos.zillowstatic.com/fp/a583976e21ee8ae34b51df8762f49f3a-cc_ft_576.jpg', 'Kitchen'),
-	   (112, 1, 'https://photos.zillowstatic.com/fp/1e4134d4492dd9ad22deb4a7f6bc636a-cc_ft_1152.jpg', 'Street View'),
-	   (112, 0, 'https://photos.zillowstatic.com/fp/416984809dcc47ed1c5fa77e5f0933f3-cc_ft_576.jpg', 'Living Room/Kitchen'),
-	   (113, 1, 'https://photos.zillowstatic.com/fp/004f7f7160f8f2912cd5a5d7def00f6f-cc_ft_1152.jpg', 'Front Photo'),
-	   (113, 0, 'https://photos.zillowstatic.com/fp/38e4f0c3a6158fcf274fe3f83c547a5d-cc_ft_576.jpg', 'Kitchen'),
-	   (113, 0, 'https://photos.zillowstatic.com/fp/b590e410648e6e8ae5d4e4853284a5d2-cc_ft_576.jpg', 'Half Bath/Living Room'),
-	   (114, 1, 'https://photos.zillowstatic.com/fp/baca0fc0b14099705accf6286d3ab11a-cc_ft_1152.jpg', 'Front Photo'),
-	   (114, 0, 'https://photos.zillowstatic.com/fp/2a47f216fcf2c654ce54e10992e1118b-cc_ft_576.jpg', 'Kitchen'),
-	   (114, 0, 'https://photos.zillowstatic.com/fp/92549c7b122c2c6522bf080bd197cc1d-cc_ft_576.jpg', 'Bedroom'),
-	   (115, 1, 'https://photos.zillowstatic.com/fp/29fb6c717e67f068e29cbafef4b38764-cc_ft_576.jpg', 'Kitchen and Living Room'),
-	   (115, 0, 'https://photos.zillowstatic.com/fp/1080de63c86326044fcd19f9d006f641-cc_ft_576.jpg', 'Bedroom'),
-	   (115, 0, 'https://photos.zillowstatic.com/fp/34b23d259d268854a7ea22a0be8aa1dd-cc_ft_576.jpg', 'Bathroom'),
-	   (116, 1, 'https://photos.zillowstatic.com/fp/a5fdbb3666f82aa892083f7b968abe8a-cc_ft_768.jpg', 'Front Photo'),
-	   (116, 0, 'https://photos.zillowstatic.com/fp/e9a3a5aee2217a62679f9b1172997623-cc_ft_576.jpg', 'Kitchen'),
-	   (116, 0, 'https://photos.zillowstatic.com/fp/bedbcf9152f1902992c30850d870dc32-cc_ft_576.jpg', 'Bedroom'),
-	   (117, 1, 'https://photos.zillowstatic.com/fp/17afe77797aa980ee46f6de9298140bd-cc_ft_1152.jpg', 'Street View'),
-	   (117, 0, 'https://photos.zillowstatic.com/fp/06b42338ed8b046cc9d670b736591bcc-cc_ft_576.jpg', 'Kitchen'),
-	   (117, 0, 'https://photos.zillowstatic.com/fp/2db5e32144faf7953bf8413db52e06b1-cc_ft_576.jpg', 'Bedroom'),
-	   (118, 1, 'https://photos.zillowstatic.com/fp/3390fda0adf8bbc09e6b63e649aac24c-cc_ft_1152.jpg', 'Front Photo'),
-	   (119, 1, 'https://photos.zillowstatic.com/fp/639355c21fcf379070b86c3a64ac3ea2-cc_ft_1152.jpg', 'Front Photo'),
-	   (120, 1, 'https://photos.zillowstatic.com/fp/a22b5f2101fb66f5fc7c945b2fcf6ee4-cc_ft_576.jpg', 'Kitchen and Living Room'),
-	   (121, 1, 'https://photos.zillowstatic.com/fp/de53a339ba79d39430cb3dc0d517ad36-cc_ft_1152.jpg', 'Front Photo'),
-	   (122, 1, 'https://photos.zillowstatic.com/fp/7384d008a3478420709a2bac9321f990-cc_ft_1152.jpg', 'Front Photo'),
-	   (123, 1, 'https://photos.zillowstatic.com/fp/b69361b63e8ed1c57746c414ecf552fd-cc_ft_1152.jpg', 'Street View'),
-	   (124, 1, 'https://photos.zillowstatic.com/fp/7fc0320b729145f767f0a84019b0146d-cc_ft_1152.jpg', 'Front Photo'),
-	   (125, 1, 'https://photos.zillowstatic.com/fp/3b8857d0767ff188d4077f2060feefbb-cc_ft_1152.jpg', 'Front Photo'),
-	   (126, 1, 'https://photos.zillowstatic.com/fp/898fe9a4e3e3e1c623ecbf65f571c93f-cc_ft_1152.jpg', 'Front Photo'),
-	   (127, 1, 'https://photos.zillowstatic.com/fp/e4788e39650097c4c7f10d03f173ffa6-cc_ft_1152.jpg', 'Front Photo');
-*/
+	   (102, 1, 'https://photos.zillowstatic.com/fp/d40d1816680b4194989c4a2e2a4fac45-cc_ft_1152.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/2beaee5cf6b400e3bdcab755467590a7-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/2a71378ccacf906a56f38057855a57bf-cc_ft_576.jpg', 'Bathroom',  'https://photos.zillowstatic.com/fp/dba4412c454648098ea0fb699eddea80-cc_ft_576.jpg', 'Bedroom'),
+	   (103, 1, 'https://photos.zillowstatic.com/fp/72ec58ae15e034adc0f9d5795fdc8be8-cc_ft_576.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/e5921289ed0ab389faa3c8db4ab947d1-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/70d911961650e193468f39af84b585ab-cc_ft_576.jpg', 'Pool in Backyard', Null, Null),
+	   (104, 1, 'https://photos.zillowstatic.com/fp/d1152b895baf97f27b1e12b3a6dade26-cc_ft_1152.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/e36909d965c5819067967f0a6e7b62f0-cc_ft_576.jpg', 'Kitchen and Living Room', 'https://photos.zillowstatic.com/fp/8be1a2de8c702eb13724f504ac736cf4-cc_ft_576.jpg', 'Bathroom', Null, Null),
+	   (105, 1, 'https://photos.zillowstatic.com/fp/c3ada9177483c709fea48a0c18914d85-cc_ft_1152.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/fe91a73f76b8065c79017cc615ab36a8-cc_ft_576.jpg', 'Bathroom', 'https://photos.zillowstatic.com/fp/08a1293f61a90fef6fae9ad70c966c34-cc_ft_576.jpg', 'Kitchen', Null, Null),
+	   (106, 1, 'https://photos.zillowstatic.com/fp/9d8e0d0bc3cc84ecea41e3e5ed4c5c36-cc_ft_1152.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/016bbc5df76c7a307cc6b1b5af032217-cc_ft_576.jpg', 'Rooftop Lounge Area', 'https://photos.zillowstatic.com/fp/7dd276fd04ec37fc6df61553b6d13f4e-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/e253a99211923b9e3dc9c8ef80b346a8-cc_ft_576.jpg', 'Bedroom'),
+	   (107, 1, 'https://photos.zillowstatic.com/fp/7e77bf044d473a9eed444c54e0beaef5-cc_ft_384.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/545cd12cfb50ae425840ff3d0bd25f94-cc_ft_384.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/e82ac94a6761578583d94948525ca6a7-cc_ft_384.jpg', 'Living Room',  'https://photos.zillowstatic.com/fp/385b4f64f918ae0421e47bdfd4ef7954-cc_ft_384.jpg', 'Bedroom'),
+	   (108, 1, 'https://photos.zillowstatic.com/fp/d5c48085fb5be4250cb09e7ad54c35bb-cc_ft_576.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/5d8102376625f2ceecd1bceb6dbe7e50-cc_ft_384.jpg', 'Living Room',  'https://photos.zillowstatic.com/fp/9e3fe74a1f7637fed08c6e3b7b2c347a-cc_ft_384.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/da5b43163fb6f255c622f44cf379f2e2-cc_ft_384.jpg', 'Master Bedroom'),
+	   (109, 1, 'https://photos.zillowstatic.com/fp/cc785d67be7ded86abee7e5943ccb385-cc_ft_576.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/726bb295cbadc7f3e69b5224972cb9ec-cc_ft_384.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/be40ae182f63f7c5e76cd73df7351fde-cc_ft_384.jpg', 'Bedroom', 'https://photos.zillowstatic.com/fp/0fe17efe211b40e82b8df4eec7c0424c-cc_ft_384.jpg', 'Living Room'),
+	   (110, 1, 'https://photos.zillowstatic.com/fp/dbc20ab41533823739928cc44adf6200-cc_ft_576.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/37b1545a5d5c5a8cc0037a62b5985590-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/55d2e12b32e2758e0549b46d8117ffb7-cc_ft_576.jpg', 'Bedroom', Null, Null),
+	   (111, 1, 'https://photos.zillowstatic.com/fp/3f4f6a7cd868400f105c1bd846029427-cc_ft_768.jpg', 'Living Room',  'https://photos.zillowstatic.com/fp/a583976e21ee8ae34b51df8762f49f3a-cc_ft_576.jpg', 'Kitchen', Null, Null, Null, Null),
+	   (112, 1, 'https://photos.zillowstatic.com/fp/1e4134d4492dd9ad22deb4a7f6bc636a-cc_ft_1152.jpg', 'Street View',  'https://photos.zillowstatic.com/fp/416984809dcc47ed1c5fa77e5f0933f3-cc_ft_576.jpg', 'Living Room/Kitchen', Null, Null, Null, Null),
+	   (113, 1, 'https://photos.zillowstatic.com/fp/004f7f7160f8f2912cd5a5d7def00f6f-cc_ft_1152.jpg', 'Front Photo',  'https://photos.zillowstatic.com/fp/38e4f0c3a6158fcf274fe3f83c547a5d-cc_ft_576.jpg', 'Kitchen',  'https://photos.zillowstatic.com/fp/b590e410648e6e8ae5d4e4853284a5d2-cc_ft_576.jpg', 'Half Bath/Living Room', Null, Null),
+	   (114, 1, 'https://photos.zillowstatic.com/fp/baca0fc0b14099705accf6286d3ab11a-cc_ft_1152.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/2a47f216fcf2c654ce54e10992e1118b-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/92549c7b122c2c6522bf080bd197cc1d-cc_ft_576.jpg', 'Bedroom', Null, Null),
+	   (115, 1, 'https://photos.zillowstatic.com/fp/29fb6c717e67f068e29cbafef4b38764-cc_ft_576.jpg', 'Kitchen and Living Room', 'https://photos.zillowstatic.com/fp/1080de63c86326044fcd19f9d006f641-cc_ft_576.jpg', 'Bedroom',  'https://photos.zillowstatic.com/fp/34b23d259d268854a7ea22a0be8aa1dd-cc_ft_576.jpg', 'Bathroom', Null, Null),
+	   (116, 1, 'https://photos.zillowstatic.com/fp/a5fdbb3666f82aa892083f7b968abe8a-cc_ft_768.jpg', 'Front Photo', 'https://photos.zillowstatic.com/fp/e9a3a5aee2217a62679f9b1172997623-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/bedbcf9152f1902992c30850d870dc32-cc_ft_576.jpg', 'Bedroom', Null, Null),
+	   (117, 1, 'https://photos.zillowstatic.com/fp/17afe77797aa980ee46f6de9298140bd-cc_ft_1152.jpg', 'Street View', 'https://photos.zillowstatic.com/fp/06b42338ed8b046cc9d670b736591bcc-cc_ft_576.jpg', 'Kitchen', 'https://photos.zillowstatic.com/fp/2db5e32144faf7953bf8413db52e06b1-cc_ft_576.jpg', 'Bedroom', Null, Null),
+	   (118, 1, 'https://photos.zillowstatic.com/fp/3390fda0adf8bbc09e6b63e649aac24c-cc_ft_1152.jpg', 'Front Photo', Null, Null, Null, Null, Null, Null),
+	   (119, 1, 'https://photos.zillowstatic.com/fp/639355c21fcf379070b86c3a64ac3ea2-cc_ft_1152.jpg', 'Front Photo', Null, Null, Null, Null, Null, Null),
+	   (120, 1, 'https://photos.zillowstatic.com/fp/a22b5f2101fb66f5fc7c945b2fcf6ee4-cc_ft_576.jpg', 'Kitchen and Living Room', Null, Null, Null, Null, Null, Null),
+	   (121, 1, 'https://photos.zillowstatic.com/fp/de53a339ba79d39430cb3dc0d517ad36-cc_ft_1152.jpg', 'Front Photo', Null, Null, Null, Null, Null, Null),
+	   (122, 1, 'https://photos.zillowstatic.com/fp/7384d008a3478420709a2bac9321f990-cc_ft_1152.jpg', 'Front Photo', Null, Null, Null, Null, Null, Null),
+	   (123, 1, 'https://photos.zillowstatic.com/fp/b69361b63e8ed1c57746c414ecf552fd-cc_ft_1152.jpg', 'Street View', Null, Null, Null, Null, Null, Null),
+	   (124, 1, 'https://photos.zillowstatic.com/fp/7fc0320b729145f767f0a84019b0146d-cc_ft_1152.jpg', 'Front Photo', Null, Null, Null, Null, Null, Null),
+	   (125, 1, 'https://photos.zillowstatic.com/fp/3b8857d0767ff188d4077f2060feefbb-cc_ft_1152.jpg', 'Front Photo', Null, Null, Null, Null, Null, Null),
+	   (126, 1, 'https://photos.zillowstatic.com/fp/898fe9a4e3e3e1c623ecbf65f571c93f-cc_ft_1152.jpg', 'Front Photo', Null, Null, Null, Null, Null, Null),
+	   (127, 1, 'https://photos.zillowstatic.com/fp/e4788e39650097c4c7f10d03f173ffa6-cc_ft_1152.jpg', 'Front Photo', Null, Null, Null, Null, Null, Null);
 
 INSERT INTO lease_agreements (property_id, landlord_id, renter_id, monthly_rent, lease_start_date, lease_term)
 VALUES (102, 1, 2, 1100.50, '2020-10-01', 12),
@@ -341,19 +278,19 @@ VALUES (1, 1, '2020-10-01', 1100.50),
 	   (12, 2, '2021-12-01', 1400);
 
 INSERT INTO payments (payer_id, paid_date, lease_id, amount_paid)
-VALUES (2, '04-01-2021', 1, 1100.50),
-	   (2, '03-01-2021', 1, 600.50),
-	   (2, '03-07-2021', 1, 500),
-	   (2, '02-01-2021', 1, 1100.50),
-	   (2, '01-01-2021', 1, 1100.50),
-	   (2, '12-01-2020', 1, 1100.50),
-	   (2, '11-01-2020', 1, 1100.50),
-	   (2, '10-01-2020', 1, 1100.50),
-	   (3, '04-01-2021', 2, 1400),
-	   (3, '03-01-2021', 2, 1400),
-	   (3, '02-01-2021', 2, 1400),
-	   (3, '01-01-2021', 2, 1400);
-
+VALUES (2, '2020-10-01', 1, 1100.50),
+	   (2, '2020-11-01', 1, 1100.50),
+	   (2, '2020-12-01', 1, 1100.50),
+	   (2, '2021-01-01', 1, 1100.50),
+	   (3, '2021-01-01', 2, 1400),
+	   (2, '2021-02-01', 1, 1100.50),
+	   (3, '2021-02-01', 2, 1400),
+	   (3, '2021-03-01', 2, 1400),
+	   (2, '2021-03-01', 1, 600.50),
+	   (2, '2021-03-07', 1, 500),
+	   (2, '2021-04-01', 1, 1100.50),
+	   (3, '2021-04-01', 2, 1400);
+	   
 
 --create application
 INSERT INTO applications (applicant_id, property_id, approval_status, applicant_first_name, applicant_last_name, applicant_phone)
@@ -361,23 +298,17 @@ VALUES (3, 127, 'Pending', 'Nathan', 'Groehl', '5551238888'),
        (2, 126, 'Pending', 'Elijah', 'Jackson', '1235558080');
 
 
+--SELECT payment_id, payer_id, paid_date, lease_id, amount_paid FROM payments WHERE payer_id = 2 ORDER BY paid_date ASC;
+
 
 --select pending applications for a specific landlord
 --SELECT application_id, applicant_id, properties.property_id, approval_status, applicant_name, applicant_phone FROM applications JOIN properties ON applications.property_id = properties.property_id WHERE landlord_id = 1 AND approval_status = 0;
 
 /*
-ALTER TABLE properties NOCHECK CONSTRAINT FK_property_address;
-ALTER TABLE lease_agreements NOCHECK CONSTRAINT FK_lease_property;
-DELETE FROM addresses;
-DELETE FROM properties;
-ALTER TABLE properties CHECK CONSTRAINT FK_property_address;
-ALTER TABLE lease_agreements CHECK CONSTRAINT FK_lease_property;
-*/
-
-/*
 select * from users;
 select * from addresses;
 select * from properties;
+select * from property_photos;
 select * from lease_agreements;
 select * from applications;
 update users SET user_role = 'renter' where user_id = 1 OR user_id = 3;

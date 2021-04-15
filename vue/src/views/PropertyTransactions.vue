@@ -23,7 +23,7 @@
       <button class="showPayments" v-on:click='showUpdateRentalForm === false ? showUpdateRentalForm = true : showUpdateRentalForm = false'>Show/Hide Update Rental Form</button>
       <form class="newRentalForm" v-if='showUpdateRentalForm' @submit.prevent="updatePropertyInServer">
         <h2>Update Rental Info</h2>
-        <input id="rentalTitle" type="text" placeholder="title" v-model="updateProperty.title" required>
+        <input id="rentalTitle" type="text" placeholder="Title" v-model="updateProperty.title" required>
         <div class="addressForm">
           <div>
             <input type="number" placeholder="Street Number" v-model="updateProperty.streetNumber" required>
@@ -172,7 +172,7 @@ export default {
       return this.$route.params.propertyId;
      },
      getPropertyObject() {
-      return this.$store.state.currentProperty;
+        return this.$store.state.currentProperty;
      },
      getMaintenanceRequestList() {
        return this.$store.state.landlordMaintenanceRequestForProperty;
