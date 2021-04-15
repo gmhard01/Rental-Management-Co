@@ -26,7 +26,11 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email FROM properties JOIN addresses ON properties.address_id = addresses.address_id JOIN users ON properties.landlord_id = users.user_id WHERE available = 1;";
+                    string sqlString = "SELECT p.property_id, p.title, p.address_id, p.rent_amount, p.number_beds, p.number_baths, pp.primary_photo, pp.photo_url1, pp.photo_description1, pp.photo_url2, pp.photo_description2, pp.photo_url3, pp.photo_description3, pp.photo_url4, pp.photo_description4, p.landlord_id, p.available, p.available_date, p.property_description, p.square_footage, p.property_type, p.pets_allowed, a.street_number, a.unit_number, a.street_name, a.state_abbreviation, a.city, a.county, a.zip_code, u.phone, u.email " +
+                        "FROM properties p " +
+                        "JOIN addresses a ON p.address_id = a.address_id " +
+                        "JOIN users u ON p.landlord_id = u.user_id " +
+                        "LEFT JOIN property_photos pp ON p.property_id = pp.property_id WHERE available = 1;";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -55,9 +59,11 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email " + 
-                                       "FROM properties JOIN addresses ON properties.address_id = addresses.address_id " +
+                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, pp.primary_photo, pp.photo_url1, pp.photo_description1, pp.photo_url2, pp.photo_description2, pp.photo_url3, pp.photo_description3, pp.photo_url4, pp.photo_description4, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email " + 
+                                       "FROM properties " +
+                                       "JOIN addresses ON properties.address_id = addresses.address_id " +
                                        "JOIN users ON properties.landlord_id = users.user_id " +
+                                       "LEFT JOIN property_photos pp ON properties.property_id = pp.property_id " +
                                        "WHERE available = 1 " +
                                        "ORDER BY property_id ASC " +
                                        "OFFSET @PageSize *@PageIndex ROWS " +
@@ -92,7 +98,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email FROM properties JOIN addresses ON properties.address_id = addresses.address_id JOIN users ON properties.landlord_id = users.user_id WHERE property_id = @property_id;";
+                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, pp.primary_photo, pp.photo_url1, pp.photo_description1, pp.photo_url2, pp.photo_description2, pp.photo_url3, pp.photo_description3, pp.photo_url4, pp.photo_description4, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email FROM properties JOIN addresses ON properties.address_id = addresses.address_id JOIN users ON properties.landlord_id = users.user_id LEFT JOIN property_photos pp ON properties.property_id = pp.property_id WHERE properties.property_id = @property_id;";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     cmd.Parameters.AddWithValue("@property_id", id);
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -121,12 +127,13 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, properties.landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, users.phone, users.email " + 
+                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, properties.landlord_id, pp.primary_photo, pp.photo_url1, pp.photo_description1, pp.photo_url2, pp.photo_description2, pp.photo_url3, pp.photo_description3, pp.photo_url4, pp.photo_description4, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, users.phone, users.email " + 
                                        "FROM properties " +
                                        "JOIN addresses ON properties.address_id = addresses.address_id " +
                                        "JOIN users ON properties.landlord_id = users.user_id " +
                                        "JOIN lease_agreements ON properties.property_id = lease_agreements.property_id " +
                                        "JOIN users u ON lease_agreements.renter_id = u.user_id " +
+                                       "LEFT JOIN property_photos pp ON properties.property_id = pp.property_id " +
                                        "WHERE renter_id = @renterId;";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     cmd.Parameters.AddWithValue("@renterId", renterId);
@@ -156,10 +163,11 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, properties.landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, users.phone, users.email " +
+                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, properties.landlord_id, pp.primary_photo, pp.photo_url1, pp.photo_description1, pp.photo_url2, pp.photo_description2, pp.photo_url3, pp.photo_description3, pp.photo_url4, pp.photo_description4, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, users.phone, users.email " +
                                        "FROM properties " +
                                        "JOIN addresses ON properties.address_id = addresses.address_id " +
                                        "JOIN users ON properties.landlord_id = users.user_id " +
+                                       "LEFT JOIN property_photos pp ON properties.property_id = pp.property_id " +
                                        "WHERE properties.landlord_id = @landlordId;";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     cmd.Parameters.AddWithValue("@landlordId", landlordId);
@@ -317,7 +325,17 @@ namespace Capstone.DAO
                 NumberOfBeds = Convert.ToInt32(reader["number_beds"]),
                 NumberOfBaths = Convert.ToDecimal(reader["number_baths"]),
                 LandlordId = Convert.ToInt32(reader["landlord_id"]),
-                Picture = Convert.ToString(reader["picture"]),
+                Picture = new string[] {
+                            Convert.ToString(reader["primary_photo"]), 
+                            Convert.ToString(reader["photo_url1"]), 
+                            Convert.ToString(reader["photo_description1"]), 
+                            Convert.ToString(reader["photo_url2"]), 
+                            Convert.ToString(reader["photo_description2"]), 
+                            Convert.ToString(reader["photo_url3"]), 
+                            Convert.ToString(reader["photo_description3"]), 
+                            Convert.ToString(reader["photo_url4"]), 
+                            Convert.ToString(reader["photo_description4"])
+                },
                 Available = Convert.ToBoolean(reader["available"]),
                 //available date may be null in the DB, if it is then set to default datetime (0001-01-01)
                 AvailableDate = (reader["available_date"] == DBNull.Value) ? default(DateTime) : Convert.ToDateTime(reader["available_date"]),

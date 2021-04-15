@@ -13,5 +13,11 @@ export default {
   },
   getUserUpcomingPayments() {
     return https.get("/payments/upcoming");
+  },
+  makePayment(payment) {
+    return axios.post("/submitpayment", payment);
+  },
+  postMaintReq(maintReq) {
+    return axios.post("/submitmaintenancereq", maintReq);
   }
 }

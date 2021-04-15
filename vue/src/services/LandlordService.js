@@ -22,4 +22,7 @@ export default {
   updateApplicationApproveDecline(application) {
     return https.put(`/applications/updatestatus`, application);
   },
+  addProperty(newProperty) {
+    return axios.post(`/addproperty`, newProperty);
+  }
 }

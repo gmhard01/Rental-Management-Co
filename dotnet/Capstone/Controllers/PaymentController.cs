@@ -69,5 +69,14 @@ namespace Capstone.Controllers
                 return StatusCode(400);
             }
         }
+
+        [HttpPost("/submitpayment")]
+        [Authorize(Roles = "renter")]
+        public ActionResult<Payment> PostPayment(Payment payment)
+        {
+            int userId = Convert.ToInt32(User.FindFirst("sub").Value);
+            Payment paymentPosted = paymentDAO.MakePayment(payment, userId);
+            return Created($"", paymentPosted);
+        }
     }
 }

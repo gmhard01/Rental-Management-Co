@@ -109,6 +109,34 @@ namespace Capstone.DAO
             return createdSuccessfully;
         }
 
+        public Payment MakePayment(Payment payment, int userId)
+        {
+            Payment returnPayment = new Payment();
+            int paymentId;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "INSERT INTO payments (payer_id, paid_date, lease_id, amount_paid) VALUES (@userId, GETDATE(), (SELECT lease_id FROM lease_agreements WHERE renter_id = @userId), @amount); SELECT SCOPE_IDENTITY()";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@amount", payment.AmountPaid);
+                    paymentId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    returnPayment = GetPaymentById(paymentId);
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return (returnPayment);
+        }
+
         private Payment GetPaymentFromReader(SqlDataReader reader)
         {
             Payment p = new Payment()
@@ -134,6 +162,35 @@ namespace Capstone.DAO
             };
 
             return p;
+        }
+
+        private Payment GetPaymentById(int paymentId)
+        {
+            Payment returnPayment = new Payment();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT payment_id, payer_id, paid_date, lease_id, amount_paid FROM payments WHERE payment_id = @paymentId";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@paymentId", paymentId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        returnPayment = GetPaymentFromReader(reader);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnPayment;
         }
     }
 }

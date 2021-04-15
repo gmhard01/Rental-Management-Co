@@ -7,7 +7,7 @@
     <div>
       <propertyTile id="propertyTileId" v-bind:property="getPropertyObject" />
     </div>
-    <div>
+    <div class="appFormHolder">
       <form class="applicationBox" @submit.prevent="apply" v-if="!hasApplied && isLoggedIn">
         <h1>Apply Here</h1>
         <div class="rowOne">
@@ -114,6 +114,7 @@ components: {
 .backToSearch {
   background-color: rgb(182, 204, 236);
   border-color: rgba(128, 128, 128, 0.377);
+  text-align: center;
 }
 
 #propertyTileId {
@@ -138,12 +139,19 @@ body{
   align-items: center;
   justify-content: space-between;
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
+  width: 97%;
+}
+
+.appFormHolder{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .needToSignIn{
-display: flex;
-align-content: center;
-justify-content: center;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
 .textInputs, .submit {
@@ -164,7 +172,7 @@ button{
 
 .rowOne{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 h1{
