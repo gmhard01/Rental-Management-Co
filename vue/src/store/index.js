@@ -34,6 +34,7 @@ export default new Vuex.Store({
     landlordApplicationsForProperty: {},
     landlordTransactionsForProperty: {},
     landlordMaintenanceRequestForProperty: {},
+    maintenanceWorkerAssignedProperties: [],
   },
   mutations: {
     SET_PROPERTIES(state, propertyArray){
@@ -87,6 +88,9 @@ export default new Vuex.Store({
     LANDLORD_PROPERTY_UPDATE(state, updatedProperty) {
       state.currentProperty = updatedProperty;
     },
+    SET_MAINTENANCE_WORKER_PROPERTIES(state, propertyList) {
+      state.maintenanceWorkerAssignedProperties = propertyList;
+    },
     REMOVE_CURRENT_ROUTE(state) {
       state.currentPropertyPath = '';
     },
@@ -115,6 +119,7 @@ export default new Vuex.Store({
       state.landlordApplicationsForProperty = {};
       state.landlordTransactionsForProperty = {};
       state.landlordMaintenanceRequestForProperty = {};
+      state.maintenanceWorkerAssignedProperties = [];
     },
   }
 })

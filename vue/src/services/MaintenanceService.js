@@ -5,7 +5,7 @@ const https = axios.create({
 });
 
 export default {
-  getPropertyByMaintenanceID(employeeId) {
-    return https.get(`/maintenance/${employeeId}`)  //needs updated to match c#
+  getPropertyByMaintenanceID() {
+    return https.get('/properties/maintworker');
   },  
 }
