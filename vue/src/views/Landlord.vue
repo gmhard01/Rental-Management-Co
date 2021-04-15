@@ -12,7 +12,7 @@
             </main>
           </div>
           <button class="showPayments" v-on:click='showNewRentalForm === false ? showNewRentalForm = true : showNewRentalForm = false'>Show/Hide New Rental Form</button>
-          <form class="newRentalForm" v-if='showNewRentalForm' @submit.prevent="addProperty">
+          <form class="newRentalForm" v-if='showNewRentalForm && !showSuccess' @submit.prevent="addProperty">
             <h2>Add a rental</h2>
             <input id="rentalTitle" type="text" placeholder="Title" v-model="newProperty.title" required>
             <div class="addressForm">
@@ -65,9 +65,13 @@
                   <option value="0">Not Accepting Applications</option>
                 </select>
               </div>
-              <input type="submit" class="submit" value="Add Rental"/> 
+              <input type="submit" class="submit" value="Add Rental" /> 
             </div>             
           </form>
+          <div v-if="showSuccess" id="payForm" class="paymentPopup">
+            <h1>Created Rental Successfully</h1>
+            <button v-on:click='showSuccess = false'>Close</button>
+          </div>
           <div class="arrowBar">
               <img src="@/assets/RightArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next()" />
           </div>
@@ -87,6 +91,7 @@ export default {
       startingTileIndex: 0,
       tileIncrementNum: 5,      
       showNewRentalForm: false,
+      showSuccess: false,
       newProperty: {
         title: "",
         rentAmount: "",
@@ -149,6 +154,7 @@ export default {
       this.newProperty.streetNumber = parseInt(this.newProperty.streetNumber);
       this.newProperty.petsAllowed = Boolean(this.newProperty.petsAllowed);
       this.newProperty.available = Boolean(this.newProperty.available);
+      this.showSuccess=true;
       return LandlordService.addProperty(this.newProperty);
     },
     refresh() {
