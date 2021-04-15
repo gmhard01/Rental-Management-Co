@@ -66,7 +66,7 @@ namespace Capstone.Controllers
         }
 
         [HttpGet("/properties/renter")]
-        [Authorize(Roles = "renter")]
+        [Authorize(Roles = "Renter")]
         public ActionResult<Property> GetPropertyForRenter()
         {
             int userId = Convert.ToInt32(User.FindFirst("sub").Value);
@@ -83,7 +83,7 @@ namespace Capstone.Controllers
         }
 
         [HttpGet("/properties/landlord")]
-        [Authorize(Roles = "landlord")]
+        [Authorize(Roles = "Landlord")]
         public ActionResult<List<Property>> GetProperiesForLandlord()
         {
             int userId = Convert.ToInt32(User.FindFirst("sub").Value);
@@ -100,7 +100,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPut("/property/unavailable")]
-        [Authorize(Roles = "landlord")]
+        [Authorize(Roles = "Landlord")]
         public ActionResult<bool> MakePropertyUnavailable(Property propertyToUpdate)
         {
             bool updated = propertyDAO.SetPropertyToUnavailable(propertyToUpdate.PropertyId);
@@ -116,7 +116,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPost("/addproperty")]
-        [Authorize(Roles = "landlord, admin")]
+        [Authorize(Roles = "Landlord, Admin")]
         public ActionResult<Property> CreateNewProperty(Property propertyToAdd)
         {
             int landlordId = Convert.ToInt32(User.FindFirst("sub").Value);
@@ -126,7 +126,7 @@ namespace Capstone.Controllers
 
 
         [HttpPut("/property-update")]
-        [Authorize(Roles = "landlord, admin")]
+        [Authorize(Roles = "Landlord, Admin")]
         public ActionResult<Property> UpdateProperty(Property propertyDetailsToUpdate)
         {
 

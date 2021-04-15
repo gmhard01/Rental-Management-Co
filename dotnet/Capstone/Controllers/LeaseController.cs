@@ -21,7 +21,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPost("/newlease")]
-        [Authorize(Roles = "landlord, admin")]
+        [Authorize(Roles = "Landlord, Admin")]
         public ActionResult<LeaseAgreement> CreateLease(LeaseAgreement newLease)
         {
             LeaseAgreement leaseCreated = leaseDAO.CreateNewLease(newLease);

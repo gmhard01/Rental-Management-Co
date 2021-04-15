@@ -21,7 +21,7 @@ namespace Capstone.Controllers
         }
 
         [HttpGet("/maintenance/{propertyId}")]
-        [Authorize(Roles = "landlord, maintenance")]
+        [Authorize(Roles = "Landlord, Maintenance")]
         public ActionResult<List<MaintenanceRequest>> GetMaintenanceRequests(int propertyId)
         {
             List<MaintenanceRequest> requests = maintenanceDAO.GetNewMaintenanceRequestsForProperty(propertyId);
@@ -37,7 +37,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPut("/maintenance/assign")]
-        [Authorize(Roles = "landlord")]
+        [Authorize(Roles = "Landlord")]
         public ActionResult AssignRequestToWorker(MaintenanceRequest requestToAssign)
         {
             bool assignedSuccessfully = maintenanceDAO.AssignMaintReqStatus(requestToAssign.RequestId, requestToAssign.MaintenanceWorkerId);
@@ -53,7 +53,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPost("/submitmaintenancereq")]
-        [Authorize(Roles = "renter")]
+        [Authorize(Roles = "Renter")]
         public ActionResult PostMaintReq(MaintenanceRequest maintReq)
         {
             int userId = Convert.ToInt32(User.FindFirst("sub").Value);

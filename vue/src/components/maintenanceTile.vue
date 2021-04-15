@@ -7,11 +7,11 @@
         <div class="maintDetails">
             <div>Description: Dude this stuff is MESSED up. Like it real bad over here. God help the guy who fixes this bathroom. I dont know how it got on the ceiling.</div>
         </div>
-        <div v-if="this.$store.state.user.role=='maintenance'" class="btn">
+        <div v-if="this.$store.state.user.role=='Maintenance'" class="btn">
             <input type="submit" class="submit" name="" value="In Progress">
             <input type="submit" class="submit" name="" value="Complete">
         </div>
-        <div v-if="this.$store.state.user.role=='landlord'" class="landlordInputs">
+        <div v-if="this.$store.state.user.role=='Landlord'" class="landlordInputs">
             <input type="text" id="maintenanceUserName" class="assignWorker" placeholder="Maintenance Username" />
             <input type="submit" class="submitUser" name="" value="Assign">
         </div>

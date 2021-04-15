@@ -71,7 +71,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPost("/submitpayment")]
-        [Authorize(Roles = "renter")]
+        [Authorize(Roles = "Renter")]
         public ActionResult<Payment> PostPayment(Payment payment)
         {
             int userId = Convert.ToInt32(User.FindFirst("sub").Value);

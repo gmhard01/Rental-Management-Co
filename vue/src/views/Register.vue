@@ -44,9 +44,9 @@
             <input type="tel" id="phoneNumber" class="form-control" placeholder="Phone Number" pattern="[0-9]{10}" v-model="user.phone" required />
             <input type="email" id="email" class="form-control" placeholder="Email" v-model="user.email" required />
             <select name="role" class="dropDownMenu" v-model="user.role" required>
-              <option selected="selected" value="renter">Renter</option>
-              <option value="landlord">Landlord</option>
-              <option value="maintenance">Maintenance</option>
+              <option selected="selected" value="Renter">Renter</option>
+              <option value="Landlord">Landlord</option>
+              <option value="Maintenance">Maintenance</option>
             </select>
             <input
               type="text"

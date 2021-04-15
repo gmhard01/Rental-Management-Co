@@ -21,7 +21,7 @@ namespace Capstone.Controllers
         }
 
         [HttpGet("/applications/{propertyId}")]
-        [Authorize(Roles = "landlord, renter")]
+        [Authorize(Roles = "Landlord, Renter")]
         public ActionResult<List<Application>> GetApplications(int propertyId)
         {
             List<Application> applications = applicationDAO.GetPendingApplicationsForProperty(propertyId);
@@ -37,7 +37,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPost("/newapplication")]
-        [Authorize(Roles = "renter")]
+        [Authorize(Roles = "Renter")]
         public ActionResult<Application> CreateApplication(Application newApp)
         {            
             Application applicationCreated = applicationDAO.CreateNewApplication(newApp.ApplicantId, newApp.PropertyId, newApp.ApplicantFirstName, newApp.ApplicantLastName, newApp.ApplicantPhone);
@@ -45,7 +45,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPut("/applications/updatestatus")]
-        [Authorize(Roles = "landlord")]
+        [Authorize(Roles = "Landlord")]
         public ActionResult ApproveOrRejectApplication(Application appToUpdate)
         {
             bool appUpdatedSuccessfully = applicationDAO.UpdateApplicationStatus(appToUpdate.ApplicationId, appToUpdate.ApprovalStatus);
