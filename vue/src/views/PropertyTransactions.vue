@@ -1,27 +1,31 @@
 <template>
   <div>
-      <body>
-          <propertyTile v-bind:property="getPropertyObject"/>
-          <div v-show="checkForApplicationData">
-          <div v-for="application in getApplicationsList" v-bind:key="application.applicationId">
-            <applicationTile v-bind:application="application" />
-          </div>
-          </div>
-          <div v-show="checkForMaintenanceRequestData">
-          <div v-for="request in getMaintenanceRequestList" v-bind:key="request.id">
-            <maintenanceTile v-bind:request="request" />
-          </div>
-          </div>
-          <div v-show="checkForTransactionData">
-          <div v-for="transaction in getTransactionsList" v-bind:key="transaction.id">
-            <transactionTile v-bind:transaction="transaction" />
-          </div>
-          </div>
-      </body>
+    <body>
+      <header>
+        <headerBar id="headerBarId" />
+      </header>
+      <propertyTile v-bind:property="getPropertyObject" id="propertyTileId"/>
+      <div v-show="checkForApplicationData">
+        <div v-for="application in getApplicationsList" v-bind:key="application.applicationId">
+          <applicationTile v-bind:application="application" />
+        </div>
+      </div>
+      <div v-show="checkForMaintenanceRequestData">
+        <div v-for="request in getMaintenanceRequestList" v-bind:key="request.id">
+          <maintenanceTile v-bind:request="request" />
+        </div>
+      </div>
+      <div v-show="checkForTransactionData">
+        <div v-for="transaction in getTransactionsList" v-bind:key="transaction.id">
+          <transactionTile v-bind:transaction="transaction" />
+        </div>
+      </div>
+    </body>
   </div>
 </template>
 
 <script>
+import headerBar from '@/components/headerBar.vue';
 import propertyTile from '@/components/propertyTile.vue';
 import transactionTile from '@/components/transactionTile.vue';
 import maintenanceTile from '@/components/maintenanceTile.vue';
@@ -32,6 +36,7 @@ import PropService from '@/services/PropService';
 export default {
   name: "propertytransactions",
   components: { 
+      headerBar,
       propertyTile,
       transactionTile,
       maintenanceTile,
@@ -99,5 +104,7 @@ export default {
 </script>
 
 <style>
-
+#propertyTileId {
+  margin-top: 8rem; 
+}
 </style>
