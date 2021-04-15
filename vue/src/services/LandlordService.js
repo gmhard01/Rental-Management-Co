@@ -28,6 +28,9 @@ export default {
   createPaySched(lease) {
     return axios.post(`/createpayschedule`, lease);
   },
+  updatePropertyToUnavailable(property) {
+    return https.put('property/unavailable', property)
+  },
   addProperty(newProperty) {
     return axios.post(`/addproperty`, newProperty);
   }
