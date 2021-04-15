@@ -1,28 +1,48 @@
 <template>
-    <div class="maintenanceTile">
-        <div class="clientInfo">
-            <div>Client Name: John Doe</div>
-            <div>Client Phone: 555-555-5555</div>
+    <div>
+        <div class="maintenanceTile" v-if="!showMaintSuccess">
+            <div class="clientInfo">
+                <div>Client Name: {{$attrs.request.requesterFirstName}} {{$attrs.request.requesterLastName}}</div>
+                <div>Client Phone: {{$attrs.request.requesterPhone}}</div>
+            </div>
+            <div class="maintDetails">
+                <div>Description: {{$attrs.request.details}}</div>
+            </div>
+            <div v-if="this.$store.state.user.role=='Maintenance'" class="btn">
+                <input type="submit" class="submit" name="" value="In Progress">
+                <input type="submit" class="submit" name="" value="Complete">
+            </div>
+            <div v-if="this.$store.state.user.role=='Landlord'" class="landlordInputs">
+                <input v-model="maintWorkerId" type="text" id="maintenanceUserName" class="assignWorker" placeholder="Maintenance Username" />
+                <input v-on:click="assignMaintReq" type="button" class="submitUser" name="" value="Assign">
+            </div>
         </div>
-        <div class="maintDetails">
-            <div>Description: Dude this stuff is MESSED up. Like it real bad over here. God help the guy who fixes this bathroom. I dont know how it got on the ceiling.</div>
-        </div>
-        <div v-if="this.$store.state.user.role=='Maintenance'" class="btn">
-            <input type="submit" class="submit" name="" value="In Progress">
-            <input type="submit" class="submit" name="" value="Complete">
-        </div>
-        <div v-if="this.$store.state.user.role=='Landlord'" class="landlordInputs">
-            <input type="text" id="maintenanceUserName" class="assignWorker" placeholder="Maintenance Username" />
-            <input type="submit" class="submitUser" name="" value="Assign">
+        <div v-else id="payForm" class="paymentPopup">
+          <h1>Submitted Request</h1>
+          <button v-on:click='showMaintSuccess = false'>Close</button>
         </div>
     </div>
 </template>
 
 <script>
+import LandlordService from '@/services/LandlordService.js';
+
 export default {
     name: "maintenanceTile",
     props: ['requests'],
-
+    methods: {
+        assignMaintReq() {
+            this.$attrs.request.maintenanceWorkerId = parseInt(this.maintWorkerId);
+            LandlordService.updateMaintReqWorker(this.$attrs.request);
+            this.showMaintSuccess=true;
+        }
+    },
+    data() {
+        return {
+            maintWorkerId: "",
+            showMaintSuccess: false
+        }
+    }
 }
 </script>
 

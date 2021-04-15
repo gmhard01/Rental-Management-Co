@@ -5,23 +5,26 @@
         <headerBar id="headerBarId" />
       </header>
       <propertyTile v-bind:property="getPropertyObject" id="propertyTileId"/>
+      <div v-if="this.$store.state.user.role=='Landlord'">
       <div v-show="checkForApplicationData">
         <div v-for="application in getApplicationsList" v-bind:key="application.applicationId">
           <applicationTile v-bind:application="application" />
         </div>
+      </div>
       </div>
       <div v-show="checkForMaintenanceRequestData">
         <div v-for="request in getMaintenanceRequestList" v-bind:key="request.id">
           <maintenanceTile v-bind:request="request" />
         </div>
       </div>
+      <div v-if="this.$store.state.user.role=='Landlord'">
       <div v-show="checkForTransactionData">
         <div v-for="transaction in getTransactionsList" v-bind:key="transaction.id">
           <transactionTile v-bind:transaction="transaction" />
         </div>
       </div>
-      <button class="showPayments" v-on:click='showUpdateRentalForm === false ? showUpdateRentalForm = true : showUpdateRentalForm = false'>Show/Hide Update Rental Form</button>
-      <form class="newRentalForm" v-if='showUpdateRentalForm' @submit.prevent="updatePropertyInServer">
+        <button class="showPayments" v-on:click='showUpdateRentalForm === false ? showUpdateRentalForm = true : showUpdateRentalForm = false'>Show/Hide Update Rental Form</button>
+        <form class="newRentalForm" v-if='showUpdateRentalForm' @submit.prevent="updatePropertyInServer">
         <h2>Update Rental Info</h2>
         <input id="rentalTitle" type="text" placeholder="Title" v-model="updateProperty.title" required>
         <div class="addressForm">
@@ -77,6 +80,7 @@
           <input type="submit" class="submit" value="Update Rental"/> 
         </div>             
       </form>
+      </div>
     </body>
   </div>
 </template>

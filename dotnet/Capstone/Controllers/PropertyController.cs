@@ -99,6 +99,23 @@ namespace Capstone.Controllers
             }
         }
 
+        [HttpGet("/properties/maintworker")]
+        [Authorize(Roles = "Maintenance")]
+        public ActionResult<List<Property>> GetProperiesForMaintWorker()
+        {
+            int userId = Convert.ToInt32(User.FindFirst("sub").Value);
+            List<Property> properties = propertyDAO.GetPropertiesByMaintWorkerID(userId);
+
+            if (properties.Count > 0)
+            {
+                return Ok(properties);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpPut("/property/unavailable")]
         [Authorize(Roles = "Landlord")]
         public ActionResult<bool> MakePropertyUnavailable(Property propertyToUpdate)

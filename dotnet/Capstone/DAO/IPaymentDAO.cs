@@ -9,5 +9,6 @@ namespace Capstone.DAO
         public List<PaymentSchedule> GetFuturePaymentsByPayerId(int payerId);
         public bool CreatePaymentSchedule(LeaseAgreement lease);
         Payment MakePayment(Payment payment, int userId);
+        List<Payment> GetPaymentHistoryForProperty(int propertyId);
     }
 }
