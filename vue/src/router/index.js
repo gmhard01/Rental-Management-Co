@@ -11,6 +11,8 @@ import Splash from '../views/Splash.vue'
 import MyApartment from '../views/MyRental.vue'
 import Landlord from '../views/Landlord.vue'
 import Maintenance from '../views/Maintenance.vue'
+import MyProperties from '../views/MyProperties.vue'
+import PropertyTransactions from '../views/PropertyTransactions'
 
 Vue.use(Router)
 
@@ -106,7 +108,23 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
-    }
+    },
+    {
+      path: '/my-properties/:page',
+      name: 'my-properties',
+      component: MyProperties,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/property-transactions/:propertyId',
+      name: 'property-transactions',
+      component: PropertyTransactions,
+      meta: {
+        requiresAuth: false
+      }
+    },
   ]
 })
 

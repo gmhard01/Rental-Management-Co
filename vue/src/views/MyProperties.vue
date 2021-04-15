@@ -12,7 +12,8 @@
               </main>
             </div>
             <div class="arrowBar">
-              <img src="@/assets/RightArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next()" />
+              <img src="@/assets/LeftArrow.png" alt="Prev Arrow" class="ArrowBtn" v-on:click="previous(getCurrentIndex)" />
+              <img v-show="checkForEndOfList" src="@/assets/RightArrow.png" alt="Next Arrow" class="ArrowBtn" v-on:click="next()" />
             </div>
         </body>
     </div>
@@ -29,6 +30,7 @@ export default {
     return {
       startingTileIndex: 0,
       tileIncrementNum: 5,
+      lastTileTocall: 0,
     }
   },
   components: {
@@ -38,7 +40,7 @@ export default {
   created() {
     LandlordService.getPropertyList().then((response) => {
       this.$store.commit("SET_LANDLORD_PROPERTIES", response.data);
-    })
+    });
     this.removeCurrentPropertyFromStore();
     // this.refresh();
   },
@@ -47,8 +49,8 @@ export default {
       return this.$store.state.landlordPropertiesList;
     },
     slicedArray(){
-      let previousIndex = 0;
-      let newIndex = this.tileIncrementNum;
+      let previousIndex = this.getCurrentIndex * this.tileIncrementNum;
+      let newIndex = (this.getCurrentIndex + 1) * this.tileIncrementNum;
       
       if (this.getProperties.length <= newIndex){
         newIndex = this.getProperties.length;
@@ -61,6 +63,16 @@ export default {
 
       return this.getProperties.slice(previousIndex, newIndex);
     },
+    getCurrentIndex(){
+      return parseInt(this.$route.params.page);
+    },
+    checkForEndOfList() {
+      let output = true;
+      if (this.getProperties.length < ((this.getCurrentIndex + 1) * this.tileIncrementNum)) {
+        output = false;
+      }
+      return output;
+    },
   },
   methods: {
     refresh() {
@@ -69,22 +81,30 @@ export default {
         window.location.reload();
     }
   },
-  next(indexNum = 0){
-      let startingTileIndex = indexNum + 1;
+  next(){
+      let startingTileIndex = this.getCurrentIndex + 1;
       this.$router.push({name: "my-properties", params: {page: startingTileIndex}});
       this.saveCurrentSearchIndex();
       window.scrollTo(0, 0);      
     },
-    previous(){
-      this.startingTileIndex -=15;
-      this.getCurrentListing(this.startingTileIndex);
+  previous(){
+      let startingTileIndex = this.getCurrentIndex - 1;
+      if (startingTileIndex != 0) {
+        this.$router.push({name: "my-properties", params: {page: startingTileIndex}});
+      }
+      else {
+        this.$router.push("/my-rentals");
+      }
+      this.saveCurrentSearchIndex();
+    //   this.getNewPropertyList();
+      window.scrollTo(0, 0);
     },
     saveCurrentSearchIndex(){
       this.$store.commit("SAVE_CURRENT_SEARCH_INDEX", this.getCurrentRoute);
     },
     goToProperty(currentProperty){
       this.$router.push({name: "property-transactions", params: {propertyId: currentProperty.propertyId}});
-    },
+    },    
     removeCurrentPropertyFromStore() {
       this.$store.commit("REMOVE_DATA_FOR_CURRENT_LANDLORD_PROPERTY_FROM_STORE");
     },
@@ -109,6 +129,12 @@ export default {
   margin-right: auto;
   cursor: pointer;
   opacity: 0.3;
+}
+
+.arrowBar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .ArrowBtn:hover {

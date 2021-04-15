@@ -30,49 +30,39 @@ export default new Vuex.Store({
     userTransactions: {},
     userUpcomingPayments: {},
     propertyMaintenanceRequest: {},
-    landlordPropertiesList: {},
+    landlordPropertiesList: [],
+    landlordApplicationsForProperty: {},
+    landlordTransactionsForProperty: {},
+    landlordMaintenanceRequestForProperty: {},
   },
   mutations: {
     SET_PROPERTIES(state, propertyArray){
       state.properties = propertyArray;
     },
-    GET_PROPERTIES(state){
-      return state.properties;
-    },
+    // GET_PROPERTIES(state){
+    //   return state.properties;
+    // },
     SET_PROPERTY(state, property){
       state.currentProperty = property;
+    },
+    REMOVE_DATA_FOR_CURRENT_LANDLORD_PROPERTY_FROM_STORE(state) {
+      state.currentProperty = {};
+      state.landlordTransactionsForProperty = {};
+      state.landlordMaintenanceRequestForProperty = {};
+      state.landlordApplicationsForProperty = {};
     },
     SET_LANDLORD_PROPERTIES(state, propertyList) {
       state.landlordPropertiesList = propertyList;
     },
-    UPDATE_LANDLORD_PROPERTY_MAINTENANCE(state, requestList, propertyId) {
-      let findProperty = ((response) => {
-        return response.properyId == propertyId;
-      });
-      state.landlordPropertiesList.find(findProperty).maintenanceRequest = requestList;
+    SET_LANDLORD_PROPERTY_MAINTENANCE(state, requestList) {
+      state.landlordMaintenanceRequestForProperty = requestList;
     },
-    UPDATE_LANDLORD_PROPERTY_TRANSACTIONS(state, transactionList, propertyId) {
-      let findProperty = ((response) => {
-        return response.properyId == propertyId;
-      });
-      state.landlordPropertiesList.find(findProperty).transactions = transactionList;
+    SET_LANDLORD_PROPERTY_TRANSACTIONS(state, transactionList) {
+      state.landlordTransactionsForProperty = transactionList;
     },
-    UPDATE_LANDLORD_PROPERTY_APPLICATIONS(state, applicationsList, propertyId) {
-      let findProperty = ((response) => {
-        return response.properyId == propertyId;
-      });
-      state.landlordPropertiesList.find(findProperty).applications = applicationsList;
+    SET_LANDLORD_PROPERTY_APPLICATIONS(state, applicationsList) {
+      state.landlordApplicationsForProperty = applicationsList;
     },
-    // GET_NEXT_PROPERTY_LIST(state, startingIndex = state.currentIndex, amountToRetreive){
-    //   let start = startingIndex;
-    //   let finish = amountToRetreive;
-    //   if(start + finish >= state.properties.length){
-    //     finish = state.properties.length - start;
-    //   }
-    //   let newPropertyArray = state.properties.slice(start, (start + finish));
-    //   state.currentIndex += finish;
-    //   return newPropertyArray;
-    // },
     SET_USER_RENTAL_PROPERTY(state, rentalProperty) {
       state.userRentalProperty = rentalProperty;
     },
@@ -112,6 +102,10 @@ export default new Vuex.Store({
       state.userRentalProperty = {};
       state.userTransactions = {};
       state.propertyMaintenanceRequest = {};
+      state.landlordPropertiesList = [];
+      state.landlordApplicationsForProperty = {};
+      state.landlordTransactionsForProperty = {};
+      state.landlordMaintenanceRequestForProperty = {};
     },
   }
 })

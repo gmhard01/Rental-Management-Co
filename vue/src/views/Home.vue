@@ -52,21 +52,6 @@ export default {
     propertyList(){
       return this.$store.state.properties;
     },
-    // slicedArray(){
-    //   let previousIndex = 0;
-    //   let newIndex = 7;
-      
-    //   if (this.propertylist.length <= newIndex){
-    //     newIndex = this.propertylist.length;
-    //   }
-
-    //   if (this.propertylist.length <= previousIndex){
-    //     previousIndex = 0;
-    //     newIndex = 1;
-    //   }
-
-    //   return this.propertylist.slice(previousIndex, newIndex);
-    // },
     getCurrentRoute() {
       return this.$route.path;
     },

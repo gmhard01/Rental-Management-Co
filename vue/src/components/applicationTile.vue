@@ -1,8 +1,8 @@
 <template>
     <div class="applicationTile">
         <div class="leftApplication">
-            <div>Applicant Name: {{application.firstName}} {{application.lastName}}</div>
-            <div>Phone: application.phone</div>
+            <div>Applicant Name: {{application.applicantFirstName}} {{application.applicantLastName}}</div>
+            <div>Phone: {{application.applicantPhone}}</div>
         </div>
         <div class="applicationBtns">
             <button>Approve</button>

@@ -1,9 +1,11 @@
 <template>
   <div>
       <body>
-          <propertyTile v-bind:property="property"/>
-          <div v-for="application in getApplicationsForProperty" v-bind:key="application.applicationId">
+          <!-- <propertyTile v-bind:property="property"/> -->
+          <div>
+          <div v-for="application in getApplicationsList" v-bind:key="application.applicationId">
             <applicationTile v-bind:application="application" />
+          </div>
           </div>
           <div v-for="request in getMaintenanceRequestList" v-bind:key="request.id">
             <maintenanceTile v-bind:request="request" />
@@ -16,28 +18,38 @@
 </template>
 
 <script>
-import propertyTile from '@/components/propertyTile.vue';
+// import propertyTile from '@/components/propertyTile.vue';
 import transactionTile from '@/components/transactionTile.vue';
 import maintenanceTile from '@/components/maintenanceTile.vue';
 import LandlordService from '@/services/LandlordService.js';
+import applicationTile from '@/components/applicationTile.vue';
 
 export default {
   name: "proptransactions",
   props: ["property"],
   components: { 
-      propertyTile,
+      // propertyTile,
       transactionTile,
-      maintenanceTile
+      maintenanceTile,
+      applicationTile,
    },
    created() {
-     LandlordService.getMaintenanceRequestForProperty(this.property.propertyId).then((response) => {
-       this.$store.commit("UPDATE_LANDLORD_PROPERTY_MAINTENANCE", response.data, this.property.propertyId);
-     });
-     LandlordService.getTransactionsForProperty(this.property.propertyId).then((response) => {
-       this.$store.commit("UPDATE_LANDLORD_PROPERTY_TRANSACTIONS", response.data, this.property.propertyId);
-     });
+
+    //  this.$store.commit("UPDATE_LANDLORD_PROPERTY_APPLICATIONS", [{
+    //    "propertyId" : 126,
+    //    "firstName" : "elijah",
+    //    "lastName" : "jackson",
+    //    "applicationId": "234"}]);
+    //  LandlordService.getMaintenanceRequestForProperty(this.property.propertyId).then((response) => {
+    //    this.$store.commit("UPDATE_LANDLORD_PROPERTY_MAINTENANCE", response.data, this.property.propertyId);
+    //  });
+    //  LandlordService.getTransactionsForProperty(this.property.propertyId).then((response) => {
+    //    this.$store.commit("UPDATE_LANDLORD_PROPERTY_TRANSACTIONS", response.data, this.property.propertyId);
+    //  });
      LandlordService.getApplicationsForProperty(this.property.propertyId).then((response) => {
-       this.$store.commit("UPDATE_LANDLORD_PROPERTY_APPLICATIONS", response.data, this.property.propertyId);
+         if (response.data.length > 0) {
+          this.$store.commit("UPDATE_LANDLORD_PROPERTY_APPLICATIONS", response.data);
+         }
      });
    },
    computed: {
@@ -55,6 +67,13 @@ export default {
        return this.$store.state.landlordPropertiesList.find((response) => {
          return response.propertyId == this.property.propertyId;
        }).applications;
+     },
+     checkForData() {
+       let output = false;
+       if ('applications' in this.$store.state.landlordPropertiesList.find((response) => {return response.propertyId = this.property.propertyId})) {
+         output = true;
+       }
+       return output;
      },
    },
 }

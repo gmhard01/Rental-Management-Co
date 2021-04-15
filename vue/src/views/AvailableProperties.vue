@@ -63,21 +63,6 @@ export default {
       }
       return output;
     },
-    // slicedArray(){
-    //   let previousIndex = this.getCurrentIndex * 7;
-    //   let newIndex = (this.getCurrentIndex + 1) * 7;
-      
-    //   if (this.propertylist.length <= newIndex){
-    //     newIndex = this.propertylist.length;
-    //   }
-
-    //   if (this.propertylist.length <= previousIndex){
-    //     previousIndex = 0;
-    //     newIndex = 1;
-    //   }
-
-    //   return this.propertylist.slice(previousIndex, newIndex);
-    // },
     getCurrentRoute() {
       return this.$route.path;
     },
