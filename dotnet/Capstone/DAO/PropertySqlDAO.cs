@@ -376,14 +376,14 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, u.phone, u.email " +
+                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, properties.landlord_id, pp.primary_photo, pp.photo_url1, pp.photo_description1, pp.photo_url2, pp.photo_description2, pp.photo_url3, pp.photo_description3, pp.photo_url4, pp.photo_description4, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, u.phone, u.email " +
                                        "FROM properties " +
                                        "JOIN addresses ON properties.address_id = addresses.address_id " +
                                        "JOIN maintenance_requests ON properties.property_id = maintenance_requests.property_id " +
                                        "JOIN users ON maintenance_requests.maintenance_worker_id = users.user_id " +
                                        "JOIN users u ON properties.landlord_id = u.user_id " +
-                                       "WHERE maintenance_worker_id = @maintWorkerId " +
-                                       "ORDER BY properties.property_id ASC";
+                                       "LEFT JOIN property_photos pp ON properties.property_id = pp.property_id " +
+                                       "WHERE maintenance_worker_id = @maintWorkerId;";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     cmd.Parameters.AddWithValue("@maintWorkerId", maintWorkerId);
                     SqlDataReader reader = cmd.ExecuteReader();

@@ -36,6 +36,23 @@ namespace Capstone.Controllers
             }
         }
 
+        [HttpGet("/maintenance/worker")]
+        [Authorize(Roles = "Maintenance")]
+        public ActionResult<List<MaintenanceRequest>> GetMaintReqsForWorker(int workerId)
+        {
+            int userId = Convert.ToInt32(User.FindFirst("sub").Value);
+            List<MaintenanceRequest> requests = maintenanceDAO.GetMaintReqsForWorker(userId);
+
+            if (requests.Count > 0)
+            {
+                return Ok(requests);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpPut("/maintenance/assign")]
         [Authorize(Roles = "Landlord")]
         public ActionResult AssignRequestToWorker(MaintenanceRequest requestToAssign)

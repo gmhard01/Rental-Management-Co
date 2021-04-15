@@ -102,6 +102,36 @@ namespace Capstone.DAO
             return submittedSuccessfuly;
         }
 
+        public List<MaintenanceRequest> GetMaintReqsForWorker(int workerId)
+        {
+            List<MaintenanceRequest> returnRequests = new List<MaintenanceRequest>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT request_id, property_id, requester_id, maintenance_worker_id, request_status, details, date_received, date_completed, first_name, last_name, phone FROM maintenance_requests JOIN users ON maintenance_requests.requester_id = users.user_id WHERE maintenance_worker_id = @workerId;";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@workerId", workerId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        MaintenanceRequest mr = GetMaintRequestFromReader(reader);
+                        returnRequests.Add(mr);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnRequests;
+        }
+
         private MaintenanceRequest GetMaintReqById(int reqId)
         {
             MaintenanceRequest returnReq = new MaintenanceRequest();
