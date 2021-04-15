@@ -13,8 +13,8 @@ export default {
   getMaintenanceRequestForProperty(propertyId) {
       return https.get(`/maintenance/${propertyId}`);
   },
-  getTransactionsForProperty(propertId) {
-      return https.get(`/landlord/transactions/${propertId}`);
+  getTransactionsForProperty(propertyId) {
+      return https.get(`/payments/${propertyId}`);
   },
   getApplicationsForProperty(propertyId) {
     return https.get(`/applications/${propertyId}`);
@@ -36,5 +36,8 @@ export default {
   },
   updateProperty(propertyToUpdate) {
     return axios.put('/property-update', propertyToUpdate);
+  },
+  updateMaintReqWorker(maintReq) {
+    return axios.put('/maintenance/assign', maintReq);
   }
 }

@@ -366,6 +366,43 @@ namespace Capstone.DAO
             return (rowsAffectedAddress > 0 || rowsAffectedProperty > 0 || rowsAffectedPropertyPhotos > 0);
         }
 
+        public List<Property> GetPropertiesByMaintWorkerID(int maintWorkerId)
+        {
+            List<Property> returnProperties = new List<Property>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT properties.property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, u.phone, u.email " +
+                                       "FROM properties " +
+                                       "JOIN addresses ON properties.address_id = addresses.address_id " +
+                                       "JOIN maintenance_requests ON properties.property_id = maintenance_requests.property_id " +
+                                       "JOIN users ON maintenance_requests.maintenance_worker_id = users.user_id " +
+                                       "JOIN users u ON properties.landlord_id = u.user_id " +
+                                       "WHERE maintenance_worker_id = @maintWorkerId " +
+                                       "ORDER BY properties.property_id ASC";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@maintWorkerId", maintWorkerId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Property p = GetPropertyFromReader(reader);
+                        returnProperties.Add(p);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnProperties;
+        }
+
         private Property GetPropertyFromReader(SqlDataReader reader)
         {
             Property p = new Property()

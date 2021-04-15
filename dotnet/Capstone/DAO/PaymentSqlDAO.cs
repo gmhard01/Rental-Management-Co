@@ -137,6 +137,35 @@ namespace Capstone.DAO
             return (returnPayment);
         }
 
+        public List<Payment> GetPaymentHistoryForProperty(int propertyId)
+        {
+            List<Payment> returnPayments = new List<Payment>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT payment_id, payer_id, paid_date, payments.lease_id, amount_paid FROM payments JOIN lease_agreements ON payments.lease_id = lease_agreements.lease_id WHERE property_id = @propertyId ORDER BY paid_date ASC;";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@propertyId", propertyId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        returnPayments.Add(GetPaymentFromReader(reader));
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnPayments;
+        }
+
         private Payment GetPaymentFromReader(SqlDataReader reader)
         {
             Payment p = new Payment()

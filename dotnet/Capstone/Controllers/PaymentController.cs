@@ -54,8 +54,24 @@ namespace Capstone.Controllers
             }
         }
 
+        [HttpGet("/payments/{propertyId}")]
+        [Authorize]
+        public ActionResult<List<Payment>> GetPropertyPayments(int propertyId)
+        {
+            List<Payment> payments = paymentDAO.GetPaymentHistoryForProperty(propertyId);
+
+            if (payments.Count > 0)
+            {
+                return Ok(payments);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpPost("/createpayschedule")]
-        //[Authorize]
+        [Authorize]
         public ActionResult<bool> GeneratePaymentSchedule(LeaseAgreement lease)
         {
             bool created = paymentDAO.CreatePaymentSchedule(lease);
