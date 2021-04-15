@@ -5,8 +5,8 @@
             <div>Phone: {{application.applicantPhone}}</div>
         </div>
         <div class="applicationBtns">
-            <button>Approve</button>
-            <button>Decline</button>
+            <button id="approve">Approve</button>
+            <button id="decline">Decline</button>
         </div>
     </div>
 </template>
@@ -29,20 +29,31 @@ export default {
   padding: 20px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
 }
 
 .leftApplication{
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+    margin: 1rem;
+    min-width: 45rem;
+    font-size: 1.8rem;
 }
 .applicationBtns{
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+    min-width: 20rem;
+}
+
+#approve, #decline{
+    height: 3rem;
+    font-size: 2rem;
+    border-radius: 1rem;
 }
 </style>
