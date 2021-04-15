@@ -144,6 +144,15 @@ export default {
          }
      });
    },
+   methods: {
+     updatePropertyInServer() {
+       this.$store.commit("CURRENT_PROPERTY_UPDATE_TITLE", this.updateProperty.title);
+       this.$store.commit("CURRENT_PROPERTY_UPDATE_RENTAMOUNT", this.updateProperty.rentAmount);
+       this.$store.commit("CURRENT_PROPERTY_UPDATE_NUMBEROFBEDS", this.updateProperty.numberOfBeds);
+       this.$store.commit("CURRENT_PROPERTY_UPDATE_NUMBEROFBATHS", this.updateProperty.numberOfBaths);
+       this.$store.commit("CURRENT_PROPERTY_UPDATE_PICTURE", this.updateProperty.picture);
+     },
+   },
    computed: {
      getCurrentPropertyId() {
       return this.$route.params.propertyId;
