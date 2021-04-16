@@ -100,6 +100,7 @@ export default {
   background-attachment: fixed;
   background-size: cover; 
   margin: -.5rem;
+  margin-top: -1rem;
   padding: 0;
   font-family: "Oswald", "Arial", "Helvetica", "sans-serif";
   height: 100vh;
