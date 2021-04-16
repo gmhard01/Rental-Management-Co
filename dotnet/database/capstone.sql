@@ -323,6 +323,7 @@ select * from property_photos;
 select * from lease_agreements;
 select * from maintenance_requests;
 select * from applications;
+select * from payments
 update users SET user_role = 'renter' where user_id = 1 OR user_id = 3;
 SELECT property_id, title, properties.address_id, rent_amount, number_beds, number_baths, landlord_id, picture, available, available_date, property_description, square_footage, property_type, pets_allowed, street_number, unit_number, street_name, state_abbreviation, city, county, zip_code, phone, email FROM properties  JOIN addresses ON properties.address_id = addresses.address_id JOIN users ON properties.landlord_id = users.user_id WHERE available = 1;
 */
@@ -386,7 +387,15 @@ ORDER BY lease_id, ps.due_date;
 SELECT sum(amount_due) OVER (order by due_date rows unbounded preceding) - sum(p.amount_paid) AS balance_due
 FROM payment_schedule ps
 JOIN payments p ON p.lease_id = ps.lease_id
-WHERE ps.due_date <= GETDATE() AND ps.lease_id = 1
+WHERE ps.due_date <= GETDATE() AND p.payer_id = 2
+GROUP BY  ps.lease_id, ps.amount_due, ps.due_date;
+*/
+
+/*
+SELECT sum(amount_due) OVER (order by due_date rows unbounded preceding) - sum(p.amount_paid) AS balance_due
+FROM payment_schedule ps
+JOIN payments p ON p.lease_id = ps.lease_id
+WHERE ps.due_date <= GETDATE() AND ps.lease_id = (SELECT lease_id FROM lease_agreements WHERE renter_id = 1 OR landlord_id = 1)
 GROUP BY  ps.lease_id, ps.amount_due, ps.due_date;
 */
 
