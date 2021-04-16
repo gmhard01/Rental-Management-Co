@@ -4,13 +4,13 @@
       <header>
         <headerBar id="headerBarId" />
       </header>
-      <propertyTile v-bind:property="getPropertyObject" id="propertyTileId"/>
+      <propertyTile v-bind:property="getPropertyObject" id="propertyTileId" />
       <div v-if="this.$store.state.user.role=='Landlord'">
-      <div v-show="checkForApplicationData">
-        <div v-for="application in getApplicationsList" v-bind:key="application.applicationId">
-          <applicationTile v-bind:application="application" />
+        <div v-show="checkForApplicationData">
+          <div v-for="application in getApplicationsList" v-bind:key="application.applicationId">
+            <applicationTile v-bind:application="application" />
+          </div>
         </div>
-      </div>
       </div>
       <div v-show="checkForMaintenanceRequestData">
         <button class="showBtn" v-on:click='showMaintReqs === false ? showMaintReqs = true : showMaintReqs = false'>Show/Hide Maintenance Requests</button>

@@ -10,7 +10,7 @@
                 <div>Status: {{$attrs.request.requestStatus}}</div>
             </div>
             <div v-if="this.$store.state.user.role=='Maintenance'" class="btn">
-                <input type="submit" class="submit" name="" value="Complete">
+                <input type="submit" class="submit" name="" value="Complete" v-on:click="showMaintSuccess=true">
             </div>
             <div v-if="this.$store.state.user.role=='Landlord'" class="landlordInputs">
                 <input v-model="maintWorkerId" type="text" id="maintenanceUserName" class="assignWorker" placeholder="Maintenance UserID" />
