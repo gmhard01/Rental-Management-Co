@@ -13,17 +13,19 @@
       </div>
       </div>
       <div v-show="checkForMaintenanceRequestData">
+        <button class="showBtn" v-on:click='showMaintReqs === false ? showMaintReqs = true : showMaintReqs = false'>Show/Hide Maintenance Requests</button>
         <div v-for="request in getMaintenanceRequestList" v-bind:key="request.id">
-          <maintenanceTile v-bind:request="request" />
+          <maintenanceTile v-show="showMaintReqs" v-bind:request="request" />
         </div>
       </div>
       <div v-if="this.$store.state.user.role=='Landlord'">
       <div v-show="checkForTransactionData">
+        <button class="showBtn" v-on:click='showPaymentHistory === false ? showPaymentHistory = true : showPaymentHistory = false'>Show/Hide Payment History</button>
         <div v-for="transaction in getTransactionsList" v-bind:key="transaction.id">
-          <transactionTile v-bind:transaction="transaction" />
+          <transactionTile v-show="showPaymentHistory" v-bind:transaction="transaction" />
         </div>
       </div>
-        <button class="showPayments" v-on:click='showUpdateRentalForm === false ? showUpdateRentalForm = true : showUpdateRentalForm = false'>Show/Hide Update Rental Form</button>
+        <button class="showBtn" v-on:click='showUpdateRentalForm === false ? showUpdateRentalForm = true : showUpdateRentalForm = false'>Show/Hide Update Rental Form</button>
         <form class="newRentalForm" v-if='showUpdateRentalForm' @submit.prevent="updatePropertyInServer">
         <h2>Update Rental Info</h2>
         <input id="rentalTitle" type="text" placeholder="Title" v-model="updateProperty.title" required>
@@ -106,6 +108,8 @@ export default {
   data() {
     return {
       showUpdateRentalForm: false,
+      showMaintReqs: false,
+      showPaymentHistory: false,
       updateProperty: {
         title: "",
         rentAmount: "",
