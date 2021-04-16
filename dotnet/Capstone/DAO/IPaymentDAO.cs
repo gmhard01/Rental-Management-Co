@@ -1,4 +1,5 @@
 ﻿using Capstone.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Capstone.DAO
@@ -10,5 +11,6 @@ namespace Capstone.DAO
         public bool CreatePaymentSchedule(LeaseAgreement lease);
         Payment MakePayment(Payment payment, int userId);
         List<Payment> GetPaymentHistoryForProperty(int propertyId);
+        Decimal GetBalanceDue(int leaseId);
     }
 }

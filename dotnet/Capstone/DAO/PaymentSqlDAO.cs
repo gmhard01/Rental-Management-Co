@@ -74,6 +74,50 @@ namespace Capstone.DAO
             return returnPayments;
         }
 
+        public Decimal GetBalanceDue(int leaseId)
+        {
+            List<Decimal> nums = new List<Decimal>();
+            Decimal currentBalance;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT sum(amount_due) OVER (order by due_date rows unbounded preceding) - sum(p.amount_paid) AS balance_due " +
+                                       "FROM payment_schedule ps " +
+                                       "JOIN payments p ON p.lease_id = ps.lease_id " +
+                                       "WHERE ps.due_date <= GETDATE() AND ps.lease_id = @leaseId " +
+                                       "GROUP BY  ps.lease_id, ps.amount_due, ps.due_date;";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@payerId", leaseId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        nums.Add(GetBalanceFromReader(reader));
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            currentBalance = nums[0];
+
+            foreach (Decimal num in nums)
+            {
+                if (num > currentBalance)
+                {
+                    currentBalance = num;
+                }
+            }
+
+            return currentBalance;
+        }
+
         public bool CreatePaymentSchedule(LeaseAgreement lease)
         {
             bool createdSuccessfully = false;
@@ -220,6 +264,12 @@ namespace Capstone.DAO
             }
 
             return returnPayment;
+        }
+
+        private Decimal GetBalanceFromReader(SqlDataReader reader)
+        {
+            Decimal num = Convert.ToDecimal(reader["balance_due"]);
+            return num;
         }
     }
 }
