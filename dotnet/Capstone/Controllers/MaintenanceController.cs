@@ -27,7 +27,6 @@ namespace Capstone.Controllers
             List<MaintenanceRequest> requests = new List<MaintenanceRequest>();
             string userRole = Convert.ToString(User.FindFirst("http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value);
 
-
             if (userRole == "Landlord")
             {
                 requests = maintenanceDAO.GetLandlordMaintenanceRequestsForProperty(propertyId);
