@@ -25,12 +25,12 @@ import propertyTile from '@/components/propertyTile.vue';
 import MaintenanceService from '@/services/MaintenanceService.js';
 
 export default {
-  name: "landlord",
+  name: "maintenance",
   data() {
     return {
       startingTileIndex: 0,
       tileIncrementNum: 5,
-      lastTileTocall: 0,
+      //lastTileTocall: 0,
     }
   },
   components: {
@@ -42,14 +42,15 @@ export default {
       this.$store.commit("SET_MAINTENANCE_WORKER_PROPERTIES", response.data);
     });
     this.removeCurrentPropertyFromStore();
+    this.refresh();
   },
   computed: {
     getProperties() {
       return this.$store.state.maintenanceWorkerAssignedProperties;
     },
     slicedArray(){
-      let previousIndex = this.getCurrentIndex * this.tileIncrementNum;
-      let newIndex = (this.getCurrentIndex + 1) * this.tileIncrementNum;
+      let previousIndex = 0;
+      let newIndex = this.tileIncrementNum;
       
       if (this.getProperties.length <= newIndex){
         newIndex = this.getProperties.length;

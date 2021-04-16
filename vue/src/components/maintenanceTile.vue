@@ -7,14 +7,15 @@
             </div>
             <div class="maintDetails">
                 <div>Description: {{$attrs.request.details}}</div>
+                <div>Status: {{$attrs.request.requestStatus}}</div>
             </div>
             <div v-if="this.$store.state.user.role=='Maintenance'" class="btn">
-                <input type="submit" class="submit" name="" value="In Progress">
                 <input type="submit" class="submit" name="" value="Complete">
             </div>
             <div v-if="this.$store.state.user.role=='Landlord'" class="landlordInputs">
-                <input v-model="maintWorkerId" type="text" id="maintenanceUserName" class="assignWorker" placeholder="Maintenance Username" />
-                <input v-on:click="assignMaintReq" type="button" class="submitUser" name="" value="Assign">
+                <input v-model="maintWorkerId" type="text" id="maintenanceUserName" class="assignWorker" placeholder="Maintenance UserID" />
+                <input v-show="$attrs.request.requestStatus === 'New'" v-on:click="assignMaintReq" type="button" class="submitUser" name="" value="Assign">
+                <input v-show="$attrs.request.requestStatus === 'In Progress'" v-on:click="assignMaintReq" type="button" class="submitUser" name="" value="Re-Assign">
             </div>
         </div>
         <div v-else id="payForm" class="paymentPopup">

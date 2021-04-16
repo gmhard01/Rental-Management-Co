@@ -84,7 +84,7 @@ namespace Capstone.Controllers
 
         [HttpGet("/properties/landlord")]
         [Authorize(Roles = "Landlord")]
-        public ActionResult<List<Property>> GetProperiesForLandlord()
+        public ActionResult<List<Property>> GetPropertiesForLandlord()
         {
             int userId = Convert.ToInt32(User.FindFirst("sub").Value);
             List<Property> properties = propertyDAO.GetPropertiesByLandlordID(userId);
@@ -101,7 +101,7 @@ namespace Capstone.Controllers
 
         [HttpGet("/properties/maintworker")]
         [Authorize(Roles = "Maintenance")]
-        public ActionResult<List<Property>> GetProperiesForMaintWorker()
+        public ActionResult<List<Property>> GetPropertiesForMaintWorker()
         {
             int userId = Convert.ToInt32(User.FindFirst("sub").Value);
             List<Property> properties = propertyDAO.GetPropertiesByMaintWorkerID(userId);

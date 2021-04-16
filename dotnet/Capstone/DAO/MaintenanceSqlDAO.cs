@@ -16,7 +16,7 @@ namespace Capstone.DAO
             connectionString = dbConnectionString;
         }
 
-        public List<MaintenanceRequest> GetNewMaintenanceRequestsForProperty(int propertyId)
+        public List<MaintenanceRequest> GetLandlordMaintenanceRequestsForProperty(int propertyId)
         {
             List<MaintenanceRequest> returnRequests = new List<MaintenanceRequest>();
 
@@ -26,7 +26,37 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sqlString = "SELECT request_id, property_id, requester_id, maintenance_worker_id, request_status, details, date_received, date_completed, first_name, last_name, phone FROM maintenance_requests JOIN users ON maintenance_requests.requester_id = users.user_id WHERE property_id = @propertyId AND request_status = 'New';";
+                    string sqlString = "SELECT request_id, property_id, requester_id, maintenance_worker_id, request_status, details, date_received, date_completed, first_name, last_name, phone FROM maintenance_requests JOIN users ON maintenance_requests.requester_id = users.user_id WHERE property_id = @propertyId AND (request_status = 'New' OR request_status = 'In Progress') ORDER BY request_id DESC;";
+                    SqlCommand cmd = new SqlCommand(sqlString, conn);
+                    cmd.Parameters.AddWithValue("@propertyId", propertyId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        MaintenanceRequest mr = GetMaintRequestFromReader(reader);
+                        returnRequests.Add(mr);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnRequests;
+        }
+
+        public List<MaintenanceRequest> GetWorkerMaintenanceRequestsForProperty(int propertyId)
+        {
+            List<MaintenanceRequest> returnRequests = new List<MaintenanceRequest>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sqlString = "SELECT request_id, property_id, requester_id, maintenance_worker_id, request_status, details, date_received, date_completed, first_name, last_name, phone FROM maintenance_requests JOIN users ON maintenance_requests.requester_id = users.user_id WHERE property_id = @propertyId AND request_status = 'In Progress' ORDER BY request_id DESC;";
                     SqlCommand cmd = new SqlCommand(sqlString, conn);
                     cmd.Parameters.AddWithValue("@propertyId", propertyId);
                     SqlDataReader reader = cmd.ExecuteReader();

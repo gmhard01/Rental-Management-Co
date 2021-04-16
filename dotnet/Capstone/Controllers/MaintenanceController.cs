@@ -24,7 +24,17 @@ namespace Capstone.Controllers
         [Authorize(Roles = "Landlord, Maintenance")]
         public ActionResult<List<MaintenanceRequest>> GetMaintenanceRequests(int propertyId)
         {
-            List<MaintenanceRequest> requests = maintenanceDAO.GetNewMaintenanceRequestsForProperty(propertyId);
+            List<MaintenanceRequest> requests = new List<MaintenanceRequest>();
+            string userRole = Convert.ToString(User.FindFirst("http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value);
+
+            if (userRole == "Landlord")
+            {
+                requests = maintenanceDAO.GetLandlordMaintenanceRequestsForProperty(propertyId);
+            }
+            else if (userRole == "Maintenance")
+            {
+                requests = maintenanceDAO.GetWorkerMaintenanceRequestsForProperty(propertyId);
+            }
 
             if(requests.Count > 0)
             {
@@ -38,7 +48,7 @@ namespace Capstone.Controllers
 
         [HttpGet("/maintenance/worker")]
         [Authorize(Roles = "Maintenance")]
-        public ActionResult<List<MaintenanceRequest>> GetMaintReqsForWorker(int workerId)
+        public ActionResult<List<MaintenanceRequest>> GetMaintReqsForWorker()
         {
             int userId = Convert.ToInt32(User.FindFirst("sub").Value);
             List<MaintenanceRequest> requests = maintenanceDAO.GetMaintReqsForWorker(userId);
